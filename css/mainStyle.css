@@ -1,0 +1,97 @@
+@charset "utf-8";
+html, body{
+	font-family: "Trebuchet MS", Helvetica, sans-serif;
+	height: 100%;
+	width: 100%;15
+	padding: 0;
+	margin: 0;
+}
+body{
+	position: fixed;
+	padding-top: 1%;
+	padding-left: 1%;
+	color: #333;
+}
+header{
+	padding: 15px;
+	position: fixed;
+	top: -10px;
+	display: block;
+	text-align: center;
+	font-weight: bold;
+	color: #D7D7D7;
+	left: 20%;
+}
+section{
+	min-height: 400px;
+	margin: 4%;
+	padding-bottom: 5%;
+}
+footer{
+	z-index: 2;
+	background-color: rgba(255,255,255,0.66);
+	font-size: 8px;
+	position: fixed;
+	left: 20%;
+	top: 90%;
+}
+
+img{
+	white-space:pre;
+}
+#buttons{
+	
+	
+}
+#bg{
+	z-index: -2;
+	min-height: 100%;
+	min-width: 100%;
+	width: 100%;
+	height: auto;
+	position: fixed;
+	top: 0;
+	left: 0;
+}
+#banner{
+	z-index: 1;
+	min-height: 10%;
+	min-width: 10%;
+	width: 20%;
+	height: auto;
+	position: fixed;
+	top: 0;
+	left:0;
+}
+#question{
+	z-index: 1;
+	height: 50px;
+	width: 50px;
+	right: 32%;
+	top: -1%;
+	position: fixed;
+}
+#camera1{
+	z-index: 1;
+	min-height: 12%;
+	min-width: 12%;
+	width: 22%;
+	left: 5%;
+	top: 58%;
+	position: fixed;
+}
+#camera2{
+	z-index: 3;
+	min-height: 12%;
+	min-width: 12%;
+	width: 22%;
+	right: 0px;
+	top: 69%;
+	position: fixed;
+}
+#map{
+	border: 8px solid #D7D7D7;
+	height: 600px;
+	width: 90%;
+	left: 9.5%;
+}
