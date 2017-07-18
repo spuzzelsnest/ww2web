@@ -1,20 +1,21 @@
 <!doctype html>
 <html>
 <head>
-	<meta  name="WW2Web" content="HTML5,CSS3,JavaScript" charset="utf-8">
+	<meta  name="WW2Web" content="Html5,CSS3,JavaScript" charset="utf-8">
 	<meta name="viewport" content="target-densitydpi=device-dpi">
 	<!--[if IE]>
 	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
-	{!! HTML::script('http://maps.google.com/maps/api/js?sensor=false') !!}
-	{!! HTML::script('js/markerclusterer.js') !!}
 	
-	{!! HTML::script('//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js') !!}
-	{!! HTML::script('//code.jquery.com/ui/1.11.1/jquery-ui.js') !!}
+	<script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+	<script src="js/markerclusterer.js"></script>
 
-	{!! HTML::style('css/mainStyle.css') !!}
-	{!! HTML::style('css/bootstrap.min.css') !!}
-	{!! HTML::style('//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css') !!}
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+
+	<link href="css/mainStyle.css" rel="stylesheet" >
+	<link href="css/bootstrap.min.css" rel="stylesheet" >
+	<link href="/code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" rel="stylesheet" >
 
 	<Title>{{ $title }}</Title>
 		<script>
