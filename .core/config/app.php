@@ -166,6 +166,8 @@ return [
 
 	Intervention\Image\ImageServiceProvider::class,
 	Collective\Html\HtmlServiceProvider::class,
+	Jenssegers\Date\DateServiceProvider::class,
+	
         /*
          * Package Service Providers...
          */
@@ -232,6 +234,7 @@ return [
 	'Image' => Intervention\Image\Facades\Image::class,
 	'Form' => Collective\Html\FormFacade::class,
 	'Html' => Collective\Html\HtmlFacade::class,
+	'Date' => Jenssegers\Date\Date::class,
     ],
 
 ];
