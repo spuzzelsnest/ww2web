@@ -4,7 +4,7 @@
 
 	<div id="map"></div>
 	<div id="popUp"></div>
-	
+
 <script>
 $(function() {
 	var iconType = {};
@@ -31,7 +31,7 @@ $(function() {
 
 		var dif			= data[i].typeId;
 		var cusIcon		= iconType[dif];
-		var shortdesc	= data[i].shortdesc;
+		var shortdesc		= data[i].shortdesc;
 		var name		= data[i].name;
 		var place		= data[i].place;
 		var source		= data[i].source;
