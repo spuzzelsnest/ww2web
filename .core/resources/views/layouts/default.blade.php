@@ -11,7 +11,7 @@
 	<script src="js/markerclusterer.js"></script>
 
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-	<script src="code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+	<script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
 
 	<link href="css/mainStyle.css" rel="stylesheet" >
 	<link href="css/bootstrap.min.css" rel="stylesheet" >
