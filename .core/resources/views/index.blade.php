@@ -40,7 +40,7 @@ $(function() {
 		var remarks		= data[i].remarks;
 
 		if (dif < 3) {
-			html = "<p><center><img src=\"imjquery dialoge ages/"+name+".jpg\" alt=\""+shortdesc+"\"></center>";
+			html = "<p><center><img src=\"images/"+name+".jpg\" alt=\""+shortdesc+"\"></center>";
 		} else {
 			html = "<p><center><video id=\""+name+"\" poster=\"media/"+name+"/"+name+".jpg\" width=\"480\" height=\"360\" controls=\"autoplay\"><source src=\"media/"+name+"/"+name+".mp4\" type=\"video/mp4\"><source src=\"media/"+name+"/"+name+".ogg\" type=\"video/ogg\"></center>";
 		}
