@@ -2,7 +2,7 @@
 
 @section('mainbody')
 
-{!! HTML::script('http://maps.googleapis.com/maps/api/js?sensor=false') !!}
+<script src="//maps.googleapis.com/maps/api/js?key=AIzaSyAF7IPUAyR60tGxGYXPoyNobdtOJJm8cIc&callback=initMap"></script>
 <div class="container">
 		<script type="text/javascript">
 			function updateMarkerStatus(str) {

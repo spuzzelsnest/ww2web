@@ -1,2 +1,4 @@
+.AppleDouble/
 /images/*
 /media/*
+/.core/composer.lock
