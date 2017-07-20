@@ -12,4 +12,4 @@
 */
 
     Route::get('/','HomeController@index');
-    Route::resource('admin', 'AdminController', ['only'=>['index']]);
+    Route::resource('/admin', 'AdminController');
