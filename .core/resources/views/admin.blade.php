@@ -47,9 +47,8 @@
 		<div id="mapAdmin"></div>
 	</div>
 		<div class="formLayout">
-{{--SELECT MEDIA--}}
+{{--open form--}}
 
-	</div>
-</div>
+
+
 @endsection
-

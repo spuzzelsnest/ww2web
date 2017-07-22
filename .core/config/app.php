@@ -162,12 +162,11 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-	
 
 	Intervention\Image\ImageServiceProvider::class,
 	Collective\Html\HtmlServiceProvider::class,
 	Jenssegers\Date\DateServiceProvider::class,
-	
+
         /*
          * Package Service Providers...
          */
