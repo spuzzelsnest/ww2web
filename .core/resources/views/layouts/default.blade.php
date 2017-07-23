@@ -2,12 +2,12 @@
 <html>
 <head>
 	<meta  name="WW2Web" content="Html5,CSS3,JavaScript" charset="utf-8">
-	<meta name="viewport" content="target-densitydpi=device-dpi">
+	<meta name="viewport" content="width=device-width">
 	<!--[if IE]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
 
-	<script src="//maps.googleapis.com/maps/api/js?key=AIzaSyAF7IPUAyR60tGxGYXPoyNobdtOJJm8cIc&callback=initMap"></script>
+	<script src="//maps.googleapis.com/maps/api/js?key=AIzaSyAF7IPUAyR60tGxGYXPoyNobdtOJJm8cIc&callback"></script>
 	<script src="js/markerclusterer.js"></script>
 
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
