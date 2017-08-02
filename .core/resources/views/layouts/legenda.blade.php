@@ -1,5 +1,6 @@
-<header>
+<legenda>
 <div id="mediaCount">
+<center>
 	{!! Form::open(array('footages')) !!}
 		@foreach($count as $c)
 			{!! Form::checkbox('type', $c->typeId, true) !!}
@@ -8,5 +9,6 @@
 			{!! $c->description !!}
 		@endforeach
 	{!! Form::close() !!}
+</center>
 	</div>
-</header>
+</legenda>

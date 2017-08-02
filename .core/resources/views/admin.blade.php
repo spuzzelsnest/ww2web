@@ -117,14 +117,14 @@
 			{{--Published--}}
 						<div class="form-group">
 								{!! Form::label('published', 'Published: ', array('class' => 'col-lg-3 control-label')) !!}
-								{!! Form::checkbox('published')!!}
+								{!! Form::checkbox('published') !!}
 						</div>
 			{{--ADD MEDIA--}}
-						<div class="form-group">
-								{!! Form::label('Foto', 'Upload Picture: ', array('class' => 'col-lg-3 control-label')) !!}
-								{!! Form::file('file') !!}
-								<div id='message'>Upload your File...</div>
-						</div>
+				<div class="form-group">
+					{!! Form::label('Foto', 'Upload Picture: ', array('class' => 'col-lg-3 control-label')) !!}
+					{!! Form::file('file') !!}
+					<div id='message'>Upload your File...</div>
+				</div>
 						{!! Form::submit('Aanmaken', array('class' => 'btn btn-success')) !!}
 						{!! link_to_route('admin.index', 'Cancel', null, array('class' => 'btn btn-warning')) !!}
 					</div>

@@ -1,6 +1,8 @@
 <footer>
 <table width="980" border="0" align="center">
     <tr>
+    <td width="50">
+    </td>
     <td width="150">
     <!-- START OF HIT COUNTER CODE -->
 <script language="JavaScript" src="http://www.counter160.com/js.js?img=7"></script>
@@ -11,13 +13,11 @@
     <td>
    <div align="center">
    <p STYLE="font-size: 10px;">
-    This Site is up since nov 2012. Many respect goes out to all combat journalists and people in conflict zones.
-   <br>Thanks goes to the contributers of the pictures, they are not my property!
-   <br>Copyright &copy;2012-{{ date('y') }}&nbsp; {{$_SERVER['HTTP_HOST'] }} &nbsp;&nbsp; | &nbsp;&nbsp;
-    <!-- Please do not remove Core link, leave it in somehow... c'mon help me a little bit for giving this to you all free -->
-    Coded: <a href="http://spuzelsnest.net63.net/" target="_blank">SFU</a>
+    This Project was started in nov 2007. Many respect goes out to all combat journalists and people in conflict zones.
+   <br>Many thanks also to the many contributers, the journalist , the historians, the locals who helped me along the way. Most of the material is not my property!
+   <br>Copyright &copy;2007-{{ date('yyyy') }}&nbsp; {{$_SERVER['HTTP_HOST'] }} &nbsp;&nbsp; | &nbsp;&nbsp;
+    Coded by: <a href="http://spuzelsnest.net63.net/" target="_blank">SFU</a>
     </p>
-    <!-- End Please do not remove Core link -->
     </div>
     </td>
   </tr>

@@ -12,15 +12,17 @@ body{
 	padding-left: 1%;
 	color: #333;
 }
-header{
+legenda{
+	background-color: rgba(255,255,255,0.66);
 	padding: 15px;
 	position: fixed;
-	top: -10px;
+	bottom: 15%;
 	display: block;
 	text-align: center;
 	font-weight: bold;
-	color: #D7D7D7;
-	left: 20%;
+	color: black;
+	left: 29%;
+
 }
 section{
 	min-height: 400px;
@@ -35,7 +37,6 @@ footer{
 	left: 20%;
 	top: 90%;
 }
-
 img{
 	white-space:pre;
 }
@@ -61,14 +62,14 @@ img{
 	height: auto;
 	position: fixed;
 	top: 0;
-	left:0;
+	left:37%;
 }
 #question{
 	z-index: 1;
 	height: 50px;
 	width: 50px;
 	right: 32%;
-	top: -1%;
+	top: 0%;
 	position: fixed;
 }
 #camera1{
@@ -76,8 +77,8 @@ img{
 	min-height: 12%;
 	min-width: 12%;
 	width: 22%;
-	left: 5%;
-	top: 58%;
+	left: 0;
+	bottom: 0;
 	position: fixed;
 }
 #camera2{
@@ -86,12 +87,12 @@ img{
 	min-width: 12%;
 	width: 22%;
 	right: 0px;
-	top: 69%;
+	bottom: 0;
 	position: fixed;
 }
 #map{
 	border: 8px solid #D7D7D7;
 	height: 600px;
 	width: 90%;
-	left: 9.5%;
+	left: 7.5%;
 }

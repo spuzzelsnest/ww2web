@@ -28,10 +28,10 @@
 	<img src="img/question.png" id="question" alt="question" title="Click the checkbox to add / remove the markers. Scroll into the map to see more details"/>
 	<img src="img/camera1.png" id="camera1"/>
 	<img src="img/camera2.png" id="camera2"/>
-		@include('layouts.header')
 	<section>
 		@yield('mainbody')
 	</section>
+	@include('layouts.legenda')
 	@include('layouts.footer')
 	<script src="js/bootstrap.min.js"></script>
 </body>
