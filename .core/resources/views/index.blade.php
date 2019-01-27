@@ -21,8 +21,8 @@ $(function() {
 	cluster.setMap(null);
 
 	var map = new google.maps.Map(document.getElementById("map"), {
-		center: new google.maps.LatLng(47.9, 12),
-	    zoom: 5,
+		center: new google.maps.LatLng(48.9, 4),
+	    zoom: 6,
 	    mapTypeId: 'satellite',
 	    mapTypeControl: true
 	});
