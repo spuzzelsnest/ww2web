@@ -21,7 +21,7 @@ class HomeController extends Controller
     {
 
 		$mediaCount = DB::table('footages')
-			->select(DB::Raw('count(0) as cnt, typeId, type, description'))
+			->select(DB::Raw('count(0) as cnt, typeId, type, description, published'))
 			->join('types','footages.typeId','=','types.id')
 			->groupBy('footages.typeId')
 			->get();
@@ -32,15 +32,14 @@ class HomeController extends Controller
 			->with('count', $mediaCount);
     }
 
-    
+
     public function test(){
-    	
+
     	$lastUpdated = DB::table('footages')
     		->select('updated_at')
     		->orderBy('updated_at', 'desc')
     		->first();
-    		
-    	
+
     	$mediaCount = DB::table('footages')
 			->select(DB::Raw('count(0) as cnt, typeId, type, description'))
 			->join('types','footages.typeId','=','types.id')
@@ -52,8 +51,6 @@ class HomeController extends Controller
 			->with('lastUpdated',  $lastUpdated)
 			->with('footages', Footage::join('types','footages.typeId', '=', 'types.id')->get(array('footages.*','types.*')))
 			->with('count', $mediaCount);
-    	 
-    	
-    }
+	}
 
 }
