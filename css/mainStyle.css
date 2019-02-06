@@ -15,7 +15,7 @@ body{
         z-index: 1;
         height: 50px;
         width: 50px;
-        right: 5%;
+        left: 5%;
         top: 0%;
         position: fixed;
 }

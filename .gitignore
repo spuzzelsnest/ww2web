@@ -1,5 +1,7 @@
+.git*/
 .AppleDouble/
-/images/*
-/media/*
-/.core/composer.lock
+
+images/*
+media/*
 /img
+.core/composer.lock
