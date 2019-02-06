@@ -1,98 +1,112 @@
 @charset "utf-8";
 html, body{
-	font-family: "Trebuchet MS", Helvetica, sans-serif;
+	font-family: Impact, Charcoal, sans-serif;
 	height: 100%;
 	width: 100%;
 	padding: 0;
 	margin: 0;
 }
 body{
-	position: fixed;
+	background-image: url("/img/bg.jpg");
 	padding-top: 1%;
 	padding-left: 1%;
-	color: #333;
 }
-legenda{
-	background-color: rgba(255,255,255,0.66);
-	padding: 15px;
-	position: fixed;
-	bottom: 15%;
-	display: block;
-	text-align: center;
-	font-weight: bold;
-	color: black;
-	left: 29%;
+#banner{
+        z-index: 1;
+        min-height: 10%;
+        min-width: 10%;
+        width: 20%;
+        height: auto;
+        position: fixed;
+        top: 0;
+        left:37%;
+}
+#question{
+        z-index: 1;
+        height: 50px;
+        width: 50px;
+        right: 32%;
+        top: 0%;
+        position: fixed;
+}
+.split {
+  z-index: 1;
+  top: 15%;
+  height: 100%;
+  width: 30%;
+  position: fixed;
+}
 
+.left {
+  left: 0;
 }
-section{
-	min-height: 400px;
-	margin: 4%;
-	padding-bottom: 5%;
+
+.right {
+  right: 0;
 }
 footer{
-	z-index: 2;
-	background-color: rgba(255,255,255,0.66);
-	font-size: 8px;
-	position: fixed;
-	left: 20%;
-	top: 90%;
+  z-index: 2;
+  background-color: rgba(255,255,255,0.66);
+  font-size: 9px;
+  text-align: center;
+  position: fixed;
+  left: 10%;
+  right: 10%;
+  bottom: 1%;
 }
 img{
 	white-space:pre;
 }
-#buttons{
-	
-	
+#head-title{
+  z-index: 2;
+  font-size: 16px;
+  text-align: center;
+  position: fixed;
+  left: 10%;
+  right: 10%;
 }
-#bg{
-	z-index: -2;
-	min-height: 100%;
-	min-width: 100%;
-	width: 100%;
-	height: auto;
-	position: fixed;
-	top: 0;
-	left: 0;
-}
-#banner{
-	z-index: 1;
-	min-height: 10%;
-	min-width: 10%;
-	width: 20%;
-	height: auto;
-	position: fixed;
-	top: 0;
-	left:37%;
-}
-#question{
-	z-index: 1;
-	height: 50px;
-	width: 50px;
-	right: 32%;
-	top: 0%;
-	position: fixed;
-}
-#camera1{
-	z-index: 1;
-	min-height: 12%;
-	min-width: 12%;
-	width: 22%;
-	left: 0;
-	bottom: 0;
-	position: fixed;
-}
-#camera2{
-	z-index: 3;
-	min-height: 12%;
-	min-width: 12%;
-	width: 22%;
-	right: 0px;
-	bottom: 0;
-	position: fixed;
+#head-subtitle{
+  z-index: 2;
+  font-size: 13px;
+  text-align: center;
+  position: fixed;
+  left: 10%;
+  right: 10%;
 }
 #map{
-	border: 8px solid #D7D7D7;
-	height: 600px;
-	width: 90%;
-	left: 7.5%;
+  border: 6px solid #D7D7D7;
+  position: fixed;
+  height: 79%;
+  width: 55%;
+  left: 2.5%;
+}
+#markerInfo{
+  z-index: 3;
+  font-size: 12px;
+  background-color: rgba(255,255,255,0.66);
+  padding-top: 12px;
+  padding-left: 12px;
+  position: fixed;
+  width: 38%;
+  height: 79%;
+  right:  2.5%;
+  overflow: auto;
+}
+#speakButton{
+  z-index:4;
+  font-size: 11px;
+  position: fixed;
+  right: 5%;
+}
+legenda{
+        z-index: 3;
+        background-color: rgba(255,255,255,0.66);
+        padding: 15px;
+        position: fixed;
+        bottom: 15%;
+        display: block;
+        text-align: center;
+        font-weight: bold;
+        color: black;
+        left: 29%;
 }

@@ -28,9 +28,9 @@ class HomeController extends Controller
 
 		return View::make('index')
 			->with('title' , 'WW2: The Presswar')
-			->with('footages', Footage::join('types','footages.typeId', '=', 'types.id')->get(array('footages.*','types.*')))
+			->with('footages', Footage::where('published', '=', '1')->join('types','footages.typeId', '=', 'types.id')->get(array('footages.*','types.*')))
 			->with('count', $mediaCount);
-    }
+}
 
 
     public function test(){
