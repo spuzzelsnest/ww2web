@@ -11,16 +11,6 @@ body{
 	padding-top: 1%;
 	padding-left: 1%;
 }
-#banner{
-        z-index: 1;
-        min-height: 10%;
-        min-width: 10%;
-        width: 20%;
-        height: auto;
-        position: fixed;
-        top: 0;
-        left:37%;
-}
 #question{
         z-index: 1;
         height: 50px;
@@ -73,6 +63,18 @@ img{
   left: 10%;
   right: 10%;
 }
+#legenda{
+  z-index: 2;
+  background-color: rgba(255,255,255,0.66);
+  padding: 5px;
+  position: fixed;
+  top: 9%;
+  left: 2.5%;
+  display: block;
+  text-align: center;
+  font-weight: bold;
+  color: black;      
+}
 #map{
   border: 6px solid #D7D7D7;
   position: fixed;
@@ -97,16 +99,4 @@ img{
   font-size: 11px;
   position: fixed;
   right: 5%;
-}
-legenda{
-        z-index: 3;
-        background-color: rgba(255,255,255,0.66);
-        padding: 15px;
-        position: fixed;
-        bottom: 15%;
-        display: block;
-        text-align: center;
-        font-weight: bold;
-        color: black;
-        left: 29%;
 }
