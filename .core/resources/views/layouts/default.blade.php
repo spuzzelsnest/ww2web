@@ -24,9 +24,9 @@
 	<Title>{{ $title }}</Title>
 </head>
 <body>
-	<img src="img/question.png" id="question" alt="question" title="Click the checkbox to add / remove the markers. Scroll into the map to see more details"/>
-	@yield('mainbody')
+	@include('layouts.header')
 	@include('layouts.legenda')
+	@yield('mainbody')
 	@include('layouts.footer')
 </body>
 </html>
