@@ -15,7 +15,7 @@
 
 $(function() {
 
-        var map = L.map('map').setView([50.1, 6], 5);
+        var map = L.map('map').setView([50.1, 6], 6);
         mapLink = '<a href="http://www.esri.com/">Esri</a>';
         wholink = 'i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community';
 
