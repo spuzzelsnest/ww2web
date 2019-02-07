@@ -60,22 +60,21 @@ $(function() {
                 var lat                 = markers[i].lat;
                 var lng                 = markers[i].lng;
                 var dif                 = markers[i].typeId;
-                var cusIcon             = iconType[dif];
-                var shortdesc           = markers[i].shortdesc;
-                var name                = markers[i].name;
+                var title		= markers[i].shortdesc;
+                var img			= markers[i].name;
                 var place               = markers[i].place;
+		var country		= markers[i].country;
                 var source              = markers[i].source;
                 var date                = markers[i].date;
                 var info                = markers[i].info;
                 var remarks             = markers[i].remarks;
 
                 if (dif < 3) {
-                        customCode = "<p><center><img src=\"images/"+name+".jpg\" alt=\""+shortdesc+"\"></center>";
+                        customCode = "<big><u>"+title+" "+place+" ("+country+")</u></big><p><center><img src='/images/" + img + ".jpg' width='350px'/></center><br>"+date+"<br>"+info;
                 } else {
-                        customCode = "<p><center><video id=\""+name+"\" poster=\"media/"+name+"/"+name+".jpg\" width=\"480\" height=\"360\" controls=\"autoplay\"><source src=\"media/"+name+"/"+name+".mp4\" type=\"video/mp4\"><source src=\"media/"+name+"/"+name+".ogg\" type=\"video/ogg\"></center>";
-                }
+                        customCode = "<big><u>"+title+" "+place+" ("+country+")</u></big><p><center><video id=\""+img+"\" poster=\"media/"+img+"/"+img+".jpg\" width=\"480\" height=\"360\" controls=\"autoplay\"><source src=\"media/"+img+"/"+img+".mp4\" type=\"video/mp4\"><source src=\"media/"+img+"/"+img+".ogg\" type=\"video/ogg\"></center><br>"+date+"<br>"+info;
 
-                customCode += "<br><b>"+place+" - </b>"+date+"<br>source: "+source+"<p>"+info;
+                }
 
                 var marker = L.marker([lat, lng], {icon: new LeafIcon({iconUrl:[iconType[dif]]})});
                 marker.html = customCode;
@@ -93,14 +92,14 @@ $(function() {
                 var info = this.info;
                 if (info !== ''){
                         document.getElementById('speakButton').innerHTML = "<p><button onclick='read(`"+info+"`);'>Read Me</button>";
-                }
-                document.getElementById('markerInfo').innerHTML = text;
+               }
+
+	document.getElementById('markerInfo').innerHTML = text;
+
         }
 
-        function read(info){
-                var text = info;
-                responsiveVoice.speak(text);
-        }
+ 	function read(info){responsiveVoice.speak(info);}
+
         $("input:checkbox").bind( "change", function(){
             $.each(markers, function(index, i){
                 if($("input:checkbox[name='type'][value='"+i.typeId+"']").is(':checked')){

@@ -15,12 +15,11 @@
 	<link href="css/leaflet.css" rel="stylesheet" >
 	<script src="js/leaflet.js"></script>
 
+	<script src="js/responsivevoice.js"></script>
 
 	<link href="css/Markercluster.css" rel="stylesheet" >
 	<link href="css/Markercluster.default.css" rel="stylesheet" >
 	<script src="js/leaflet.markercluster-src.js"></script>
-
-	<script src="js/responsivevoice.js"></script>
 	<Title>{{ $title }}</Title>
 </head>
 <body>
