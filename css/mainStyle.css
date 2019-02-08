@@ -19,6 +19,18 @@ body{
         top: 0%;
         position: fixed;
 }
+#legenda{
+  z-index: 2;
+  background-color: rgba(255,255,255,0.66);
+  padding: 5px;
+  position: fixed;
+  top: 9%;
+  left: 2.5%;
+  display: block;
+  text-align: center;
+  font-weight: bold;
+  color: black;      
+}
 .split {
   z-index: 1;
   top: 15%;
@@ -34,19 +46,6 @@ body{
 .right {
   right: 0;
 }
-footer{
-  z-index: 2;
-  background-color: rgba(255,255,255,0.66);
-  font-size: 6px;
-  text-align: center;
-  position: fixed;
-  left: 5%;
-  right: 5%;
-  bottom: 1%;
-}
-img{
-	white-space:pre;
-}
 #head-title{
   z-index: 2;
   font-size: 16px;
@@ -54,26 +53,6 @@ img{
   position: fixed;
   left: 10%;
   right: 10%;
-}
-#head-subtitle{
-  z-index: 2;
-  font-size: 13px;
-  text-align: center;
-  position: fixed;
-  left: 10%;
-  right: 10%;
-}
-#legenda{
-  z-index: 2;
-  background-color: rgba(255,255,255,0.66);
-  padding: 5px;
-  position: fixed;
-  top: 9%;
-  left: 2.5%;
-  display: block;
-  text-align: center;
-  font-weight: bold;
-  color: black;      
 }
 #map{
   border: 6px solid #D7D7D7;
@@ -99,4 +78,14 @@ img{
   font-size: 11px;
   position: fixed;
   right: 5%;
+}
+footer{
+  z-index: 2;
+  background-color: rgba(255,255,255,0.66);
+  font-size: 6px;
+  text-align: center;
+  position: fixed;
+  left: 5%;
+  right: 5%;
+  bottom: 1%;
 }

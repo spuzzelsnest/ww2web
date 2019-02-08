@@ -8,7 +8,7 @@
 <div class="split right">
 	<div id='title'></div>
 	<div id='speakButton'></div>
-	<div id='markerInfo'></div>
+	<div id='markerInfo'>Click the Map items to find the information!</div>
 </div>
 
 <script>
@@ -90,16 +90,15 @@ $(function() {
         function sideDiv(e){
                 var text= this.html;
                 var info = this.info;
-                if (info !== ''){
-                        document.getElementById('speakButton').innerHTML = "<p><button onclick='read(`"+info+"`);'>Read Me</button>";
-               }
+                 	 if (info !== ''){
+                        document.getElementById('speakButton').innerHTML = "<p><button onclick='responsiveVoice.speak(`"+info+"`);'>Read Me</button>";
+		}else{
+        		document.getElementById('speakButton').innerHTML = "";
+    		}
 
-	document.getElementById('markerInfo').innerHTML = text;
+		document.getElementById('markerInfo').innerHTML = text;
 
-        }
-
- 	function read(info){responsiveVoice.speak(info);}
-
+        	}
         $("input:checkbox").bind( "change", function(){
             $.each(markers, function(index, i){
                 if($("input:checkbox[name='type'][value='"+i.typeId+"']").is(':checked')){
