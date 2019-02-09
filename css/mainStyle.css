@@ -38,13 +38,17 @@ body{
   width: 30%;
   position: fixed;
 }
-
 .left {
   left: 0;
 }
-
 .right {
   right: 0;
+}
+#search{
+    z-index: 2;
+    position: fixed;
+    right: 5%;
+    top: 2%;
 }
 #head-title{
   z-index: 2;

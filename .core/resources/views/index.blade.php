@@ -1,7 +1,7 @@
 @extends ('layouts.default')
 
 @section('mainbody')
-
+<div id="search"><input placeholder="Search for a name" type=text class="searchField"/> <button onclick="search()">Search</button></div>
 <div class="split left">
 	<div id="map"></div>
 </div>
@@ -15,6 +15,7 @@
 
 $(function() {
 
+        var markers = {!!$footages!!};
 	var iconType = {};
                 iconType['1'] = 'img/Afoto.png';
                 iconType['2'] = 'img/Xfoto.png';
@@ -53,8 +54,6 @@ $(function() {
                 }
         });
 
-        var markers = {!!$footages!!};
-
         for(var i in markers){
 
                 var lat                 = markers[i].lat;
@@ -81,11 +80,9 @@ $(function() {
                 marker.info = info.replace("'","&#39;");
                 marker.on('click', sideDiv);
                 cluster.addLayer(marker);
-
         }
 
         map.addLayer(cluster);
-
 
         function sideDiv(e){
                 var text= this.html;
@@ -97,8 +94,9 @@ $(function() {
     		}
 
 		document.getElementById('markerInfo').innerHTML = text;
+        }
 
-        	}
+
         $("input:checkbox").bind( "change", function(){
             $.each(markers, function(index, i){
                 if($("input:checkbox[name='type'][value='"+i.typeId+"']").is(':checked')){
@@ -110,6 +108,33 @@ $(function() {
                 })
         });
 });
+
+ function search(){
+
+        var markers = {!!$footages!!};
+	document.getElementById('speakButton').innerHTML = "";
+	document.getElementById('markerInfo').innerHTML ="";
+
+	var results =[];
+	var term = document.getElementsByClassName('searchField')[0].value;
+
+	var regex = new RegExp( term, 'ig');
+
+	if (term == ''){
+                        document.getElementById('markerInfo').innerHTML = "What are you looking for?";
+                }else{
+                        document.getElementById('markerInfo').innerHTML = "";
+                        for (m in markers) {
+                                name = JSON.stringify(markers[m].info);
+
+                                if (name.match(regex)){
+                                        results.push(name);
+                                        document.getElementById('markerInfo').innerHTML += "<li class='list-group-item link-class'>"+markers[m].shortdesc+" | <span class='text-muted'>"+markers[m].info+"</span></li>";
+                                }
+                        }
+                 document.getElementById('markerInfo').innerHTML += "Found: "+results.length+" results for "+term;
+                }
+        }
 
 </script>
 
