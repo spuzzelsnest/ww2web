@@ -17,7 +17,7 @@
 
 $(function() {
 
-        var markers = {!!$footages!!};
+    var markers = {!!$footages!!};
 
     var iconType = {};
         iconType['1'] = '/img/Afoto.png';
@@ -131,6 +131,7 @@ $(function() {
 });
 
 function search(){
+    var markers = {!!$footages!!};
 
     var titleDiv = document.getElementById('title');
     var infoDiv = document.getElementById('markerInfo');
@@ -149,11 +150,11 @@ function search(){
         titleDiv.innerHTML = "<h3><u>Search</u></h3>";
         infoDiv.innerHTML = "";
         for (m in markers) {
-            name = JSON.stringify(markers[m].Name);
-            if (name.match(regex)){
-                results.push(name);
+            info = JSON.stringify(markers[m].info);
+            if (info.match(regex)){
+                results.push(info);
 
-                infoDiv.innerHTML += "<li id="+m+" class='list-group-item link-class'><a href='#' onclick='fucntion(){map.setView(latLng("+markers[m].Lat+","+markers[m].Lng+"), 13, {animation: true});};'>"+markers[m].Name+"</a> | <span class='text-muted'>"+markers[m].Address+"</span></li>";
+                infoDiv.innerHTML += "<li id="+m+" class='list-group-item link-class'><a href='#' onclick='fucntion(){map.setView(latLng("+markers[m].lat+","+markers[m].lng+"), 13, {animation: true});};'>"+markers[m].shortdesc+"</a> | <span class='text-muted'>"+markers[m].info+"</span></li>";
 
                 document.getElementById(m).onClick = function(e){map.setView(markers[m].getLatLng(), '13', {animation: true});}
             }
@@ -161,7 +162,6 @@ function search(){
         titleDiv.innerHTML += "Found: "+results.length+" results for "+term;
     }
 }
-
 
 </script>
 
