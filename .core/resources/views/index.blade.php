@@ -23,7 +23,7 @@ $(function() {
         iconType['0'] = '/img/Afoto.png';
         iconType['1'] = '/img/Xfoto.png';
         iconType['2'] = '/img/Avideo.png';
-        iconType['3'] = '/img/XVideo.png';
+        iconType['3'] = '/img/Xvideo.png';
 
      var legName = {};
          legName['0'] = "Allied photo\'s";
@@ -90,9 +90,9 @@ $(function() {
             var title = place+" - "+date;
 
             if (dif < 3){
-                var cusCode = "<p><center><img src='/images/" + img + ".jpg' alt='' width='350px'/></center><br><u><h3>"+head+"</h3></u><br>"+info;
+                var cusCode = "<p><center><img src='/images/" + img + ".jpg' alt='' width='350px'/></center><br>"+info;
             }else{
-                var cusCode = "<p>    <center><video id=\""+img+"\" poster=\"media/"+img+"/"+img+".jpg\" width=\"480\" height=\"360\" controls=\"autoplay\"><source src=\"media/"+img+"/"+img+".mp4\" type=\"video/mp4\"><source src=\"media/"+img+"/"+img+".ogg\" type=\"video/ogg\"></center><br>"+head+"<br>"+info;
+                var cusCode = "<p>    <center><video id=\""+img+"\" poster=\"media/"+img+"/"+img+".jpg\" width=\"480\" height=\"360\" controls=\"autoplay\"><source src=\"media/"+img+"/"+img+".mp4\" type=\"video/mp4\"><source src=\"media/"+img+"/"+img+".ogg\" type=\"video/ogg\"></center><br>"+info;
             }
 
             var marker = L.marker([lat, lng], {icon:   new LeafIcon({iconUrl:[iconType[i]]})});
@@ -104,7 +104,7 @@ $(function() {
 
             catLayers[i].addLayer(marker);
         }
-    	catLayers[i].addTo(map);
+    	    catLayers[i].addTo(map);
             distCount = catData.length;
             var icon            = document.createElement('img');
                 icon.width      = 20;
