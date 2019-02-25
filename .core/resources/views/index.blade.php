@@ -159,17 +159,13 @@ $(function() {
 });
 
 function search(){
-    var markers = {!!$footages!!};
 
+    var markers = {!!$footages!!};
     var titleDiv = document.getElementById('title');
     var infoDiv = document.getElementById('markerInfo');
     var results =[];
     var term = document.getElementsByClassName('searchField')[0].value;
     var regex = new RegExp( term, 'ig');
-
-    titleDiv.onclick = function() {return false;};
-    titleDiv.onmouseover = function(){return false;};
-    titleDiv.onmouseout = function(){return false;};
 
     if (term == ''){
         titleDiv.innerHTML = "<h3><u>Search</u></h3>";
@@ -182,9 +178,9 @@ function search(){
             if (info.match(regex)){
                 results.push(info);
 
-                infoDiv.innerHTML += "<li id="+m+" class='list-group-item link-class'><a href='#' onclick='fucntion(){map.setView(latLng("+markers[m].lat+","+markers[m].lng+"), 13, {animation: true});};'>"+markers[m].shortdesc+"</a> | <span class='text-muted'>"+markers[m].info+"</span></li>";
+                infoDiv.innerHTML += "<li id="+m+" class='list-group-item link-class'>"+markers[m].shortdesc+"</a> | <span class='text-muted'>"+markers[m].place+"</span></li>";
 
-                document.getElementById(m).onClick = function(e){map.setView(markers[m].getLatLng(), '13', {animation: true});}
+                document.getElementById(m).onClick = function(e){map.setView(latLng(markers[m].Lat,markers[m].Lng), '13', {animation: true});};
             }
         }
         titleDiv.innerHTML += "Found: "+results.length+" results for "+term;
