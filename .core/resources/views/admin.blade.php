@@ -3,48 +3,36 @@
 @section('mainbody')
 
 <div class="container">
-		<script type="text/javascript">
-			function updateMarkerStatus(str) {
-			  document.getElementById('markerStatus').innerHTML = str;
-			}
+<div class="row">
+	<script type="text/javascript">
+		$(function() {
+			var tileLayer = new L.TileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',{
+  				attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
+			});
 
-			function updateMarkerPosition(latLng) {
-				document.getElementById('lat').value = latLng.lat();
-				document.getElementById('lng').value = latLng.lng();
-			}
+			var map = new L.Map('map', {
+  				'center': [51.441767, 5.480247],
+  				'zoom': 4,
+  				'layers': [tileLayer]
+			});
 
-			function initialize() {
-				var latLng = new google.maps.LatLng(49,1);
-				  var map = new google.maps.Map(document.getElementById('mapAdmin'), {
-				    zoom: 4,
-				    center: latLng,
-				    mapTypeId: 'hybrid'
-				  });
-				  var marker = new google.maps.Marker({
-				    position: latLng,
-				    map: map,
-				    draggable: true
-				  });
+			var marker = L.marker([51.441767, 5.470247],{
+  				draggable: true
+			}).addTo(map);
 
-			  updateMarkerPosition(latLng);
-
-			  google.maps.event.addListener(marker, 'drag', function() {
-			    updateMarkerStatus('Dragging...');
-			    updateMarkerPosition(marker.getPosition());
-			  });
-
-			  google.maps.event.addListener(marker, 'dragend', function() {
-			    updateMarkerStatus('Dragg ended ');
-			    geocodePosition(marker.getPosition());
-			  });
-			}
-
-			google.maps.event.addDomListener(window, 'load', initialize);
-		</script>
-	<div class='col-lg-8'>
+			marker.on('dragend', function (e) {
+				document.getElementById('lat').value = marker.getLatLng().lat;
+  				document.getElementById('lng').value = marker.getLatLng().lng;
+			});
+});
+	</script>
+	<div class='col-sm'>
 		<div id="markerStatus"><i>Click and drag the marker.</i></div>
-		<div id="mapAdmin"></div>
+		<div id="map"></div>
 	</div>
+
+	<div class='col-sm'>'
+
 		<div class="formLayout">
 			{!! Form::open(array('route' => 'admin.store', 'files' => true)) !!}
 
@@ -125,10 +113,11 @@
 					{!! Form::file('file') !!}
 					<div id='message'>Upload your File...</div>
 				</div>
-						{!! Form::submit('Aanmaken', array('class' => 'btn btn-success')) !!}
-						{!! link_to_route('admin.index', 'Cancel', null, array('class' => 'btn btn-warning')) !!}
-					</div>
+					{!! Form::submit('Aanmaken', array('class' => 'btn btn-success')) !!}
+					{!! link_to_route('admin.index', 'Cancel', null, array('class' => 'btn btn-warning')) !!}
+				</div>
 			{!! Form::close() !!}
 	</div>
+</div>
 </div>
 @endsection

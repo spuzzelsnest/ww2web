@@ -6,14 +6,14 @@
   <!--[if IE]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
+        <link href="css/adminStyle.css" rel="stylesheet" >
+        <script src="js/jquery-3.3.1.slim.min.js"></script>
+        <link href="css/bootstrap.min.css" rel="stylesheet" >
+        <script src="js/bootstrap.min.js"></script>
 
-  <link href="css/adminStyle.css" rel="stylesheet">
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-  <link href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" rel="stylesheet">
+        <link href="css/leaflet.css" rel="stylesheet" >
+        <script src="js/leaflet.js"></script>
 
-  <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyAF7IPUAyR60tGxGYXPoyNobdtOJJm8cIc&callback=initMap"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-  <script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
   <Title>{!! $title !!}</Title>
     <script>
 	@yield('script')
@@ -23,6 +23,5 @@
    <section>
 	@yield('mainbody')
   </section>
-	 <script src="js/bootstrap.min.js"></script>
 </body>
 </html>

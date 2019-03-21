@@ -22,7 +22,16 @@ section{
 	top: 0;
 	left: 0;
 }
-#mapAdmin{
-	width: 600px;
-	min-height: 650px;
+#map{
+    height: 79%;
+    width: 550px;
+    left: 2.5%;
 }
+#infodiv{  
+  position: fixed;
+  width: 38%;
+  height: 79%;
+  right:  55%;
+  overflow: auto;
+}
+
