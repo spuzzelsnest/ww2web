@@ -20,13 +20,13 @@ body{
 #legenda{
   z-index: 2;
   background-color: rgba(255,255,255,0.66);
-  padding: 5px;
-  top: 9%;
+  padding: 1%;
+  top: 5.7%;
   left: 5%;
+  right: 2.5%;
   text-align: center;
   font-weight: bold;
   color: black;
-  width: 55%;
   position: fixed;
 }
 .split {
