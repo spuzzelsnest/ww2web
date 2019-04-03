@@ -119,7 +119,7 @@ $(function() {
 
             var label = document.createElement('label')
                 label.htmlFor = i;
-                label.appendChild(document.createTextNode(" "+distCount +" "+legName[i]+" . "));
+                label.appendChild(document.createTextNode("\u00A0\u00A0\u00A0"+distCount+"\u00A0\u00A0"+legName[i]+"\u00A0\u00A0.\u00A0\u00A0"));
 
             legenda.appendChild(checkbox);
             legenda.appendChild(icon);
