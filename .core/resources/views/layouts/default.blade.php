@@ -23,6 +23,7 @@
 	<Title>{{ $title }}</Title>
 </head>
 <body>
+ <div id="map"></div>
 	@include('layouts.header')
 	@yield('mainbody')
 	@include('layouts.footer')

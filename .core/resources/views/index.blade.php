@@ -3,7 +3,6 @@
 @section('mainbody')
 <div id="search"><input placeholder="Search for a name" type=text class="searchField"/> <button onclick="search()">Search</button></div>
 <div class="split left">
-	<div id="map"></div>
 </div>
 <div class="split right">
    <div id='speakButton'></div>
