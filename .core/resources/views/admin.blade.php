@@ -1,9 +1,6 @@
-@extends ('layouts.admin')
+@extends ('layouts.default')
 
 @section('mainbody')
-
-<div class="container">
-<div class="row">
 	<script type="text/javascript">
 		$(function() {
 			var tileLayer = new L.TileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',{
@@ -24,17 +21,13 @@
 				document.getElementById('lat').value = marker.getLatLng().lat;
   				document.getElementById('lng').value = marker.getLatLng().lng;
 			});
-});
+		});
 	</script>
-	<div class='col-sm'>
-		<div id="markerStatus"><i>Click and drag the marker.</i></div>
-		<div id="map"></div>
-	</div>
 
-	<div class='col-sm'>'
-
-		<div class="formLayout">
-			{!! Form::open(array('route' => 'admin.store', 'files' => true)) !!}
+	<div id="legenda">EDIT THE DB: <i>Drag the marker and fill out the info</i></div>
+<div class='split right'>
+	<div id='infoDiv'>
+		{!! Form::open(array('route' => 'admin.store', 'files' => true)) !!}
 
 	   		{{--SELECT MEDIA--}}
 	   			<div class="form-group">
@@ -43,81 +36,68 @@
 						{{$type->description}}
 					@endforeach
 				</div>
-			<div class='col-lg-4'>
 			{{--NAME--}}
-						<div class="form-group">
-							{!! Form::label('name','Name: ', array('class' => 'col-lg-3 control-label')) !!}
-							{!! Form::text('name') !!}
-						</div>
+				{!! Form::label('name','Name: ', array('class' => 'col-lg-3 control-label')) !!}
+				{!! Form::text('name') !!}
+			<br>
 			{{--SELECT DATE--}}
-						<div class="form-group">
-							{!! Form::label('date','Date: ',  array('class' => 'col-lg-3 control-label')) !!}
-							{!! Form::macro('date', function($name, $default = '1944/06/06', $attrs = array()){
-									$item = '<input type="date" name="'. $name .'" ';
-			 						if ($default) {	$item .= 'value="'. $default .'" ';}
-			 						if (is_array($attrs)){
-			 						 foreach ($attrs as $a => $k)
-			      							$item .= $a .'="'. $k .'" ';
-			  							} $item .= ">";
-			 						  return $item;}); !!}
-			 				{!!Form::date('date')!!}
-						</div>
+				{!! Form::label('date','Date: ',  array('class' => 'col-lg-3 control-label')) !!}
+				{!! Form::macro('date', function($name, $default = '1944/06/06', $attrs = array()){
+					$item = '<input type="date" name="'. $name .'" ';
+			 		if ($default) {	$item .= 'value="'. $default .'" ';}
+			 		if (is_array($attrs)){
+						foreach ($attrs as $a => $k)
+			      			$item .= $a .'="'. $k .'" ';
+					} $item .= ">";
+			 		return $item;}); !!}
+			 		{!!Form::date('date')!!}
+			<br>
 			{{--PLACE--}}
-						<div class="form-group">
-								{!! Form::label('place','Place: ', array('class' => 'col-lg-3 control-label')) !!}
-								{!! Form::text('place') !!}
-						</div>
+				{!! Form::label('place','Place: ', array('class' => 'col-lg-3 control-label')) !!}
+				{!! Form::text('place') !!}
+			<br>
 			{{--COUNTRY--}}
-						<div class="form-group">
-								{!! Form::label('country','Country: ', array('class' => 'col-lg-3 control-label')) !!}
-								{!! Form::text('country') !!}
-						</div>
+				{!! Form::label('country','Country: ', array('class' => 'col-lg-3 control-label')) !!}
+				{!! Form::text('country') !!}
+			<br>
 			{{--SOURCE--}}
-						<div class="form-group">
-								{!! Form::label('source','Source: ', array('class' => 'col-lg-3 control-label')) !!}
-								{!! Form::text('source') !!}
-						</div>
+				{!! Form::label('source','Source: ', array('class' => 'col-lg-3 control-label')) !!}
+				{!! Form::text('source') !!}
+			<br>
 			{{--SCHORTDESC--}}
-						<div class="form-group">
-								{!! Form::label('shortdesc','Title: ', array('class' => 'col-lg-3 control-label')) !!}
-								{!! Form::text('shortdesc') !!}
-						</div>
+				{!! Form::label('shortdesc','Title: ', array('class' => 'col-lg-3 control-label')) !!}
+				{!! Form::text('shortdesc') !!}
+			<br>
 			{{--INFO--}}
-						<div class="form-group">
-								{!! Form::label('info','Info: ', array('class' => 'col-lg-3 control-label')) !!}
-								{!! Form::textarea('info') !!}
-						</div>
+				{!! Form::label('info','Info: ', array('class' => 'col-lg-3 control-label')) !!}
+				{!! Form::textarea('info') !!}
+			<br>
 			{{--REMARKS--}}
-						<div class="form-group">
-								{!! Form::label('remarks','Remarks: ', array('class' => 'col-lg-3 control-label')) !!}
-								{!! Form::text('remarks') !!}
-						</div>
+				{!! Form::label('remarks','Remarks: ', array('class' => 'col-lg-3 control-label')) !!}
+				{!! Form::text('remarks') !!}
+			<br>
+			<center>
 			{{--LAT--}}
-						<div class="form-group">
-								{!! Form::label('lat','Latitude: ', array('class' => 'col-lg-3 control-label')) !!}
-								{!! Form::text('lat', '', ['id' => 'lat']) !!}
-						</div>
+				{!! Form::label('lat','Lat: ') !!}
+				{!! Form::text('lat', '', ['id' => 'lat']) !!}
+
 			{{--LNG--}}
-						<div class="form-group">
-								{!! Form::label('lng','longitude: ', array('class' => 'col-lg-3 control-label')) !!}
-								{!! Form::text('lng', '', ['id' => 'lng']) !!}
-						</div>
+				{!! Form::label('lng','Lng: ') !!}
+				{!! Form::text('lng', '', ['id' => 'lng']) !!}
+			<br>
 			{{--Published--}}
-						<div class="form-group">
-								{!! Form::label('published', 'Published: ', array('class' => 'col-lg-3 control-label')) !!}
-								{!! Form::checkbox('published') !!}
-						</div>
+				{!! Form::label('published', 'Published: ') !!}
+				{!! Form::checkbox('published') !!}
+			<br>
 			{{--ADD MEDIA--}}
-				<div class="form-group">
-					{!! Form::label('Foto', 'Upload Picture: ', array('class' => 'col-lg-3 control-label')) !!}
-					{!! Form::file('file') !!}
-					<div id='message'>Upload your File...</div>
-				</div>
-					{!! Form::submit('Aanmaken', array('class' => 'btn btn-success')) !!}
-					{!! link_to_route('admin.index', 'Cancel', null, array('class' => 'btn btn-warning')) !!}
-				</div>
-			{!! Form::close() !!}
-	</div>
-</div>
+				{!! Form::label('Foto', 'Upload Picture: ') !!}
+				{!! Form::file('file') !!}
+				<br>
+				<div id='message'>Upload your File...</div>
+
+				{!! Form::submit('Aanmaken', array('class' => 'btn btn-success')) !!}
+				{!! link_to_route('admin.index', 'Cancel', null, array('class' => 'btn btn-warning')) !!}
+			</center>
+		{!! Form::close() !!}
 </div>
 @endsection
