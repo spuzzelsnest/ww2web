@@ -3,10 +3,10 @@
 @section('mainbody')
 <div id="search"><input placeholder="Search" type=text class="searchField"/> <button onclick="search()">Search</button></div>
 <div class="split right">
-   <div id='speakButton'></div>
    <div id='infoDiv'>
  	<div id='title'> </div>
 	<div id='markerInfo'><center>Click the Map items to find the information!</center></div>
+	<div id='speakButton'></div>
    </div>
 </div>
 
@@ -89,7 +89,7 @@ $(function() {
             if (dif < 3){
                 var cusCode = "<p><center><img src='/images/" + img + ".jpg' alt='' width='350px'/></center><br>"+info;
             }else{
-                var cusCode = "<p>    <center><video id=\""+img+"\" poster=\"media/"+img+"/"+img+".jpg\" width=\"480\" height=\"360\" controls=\"autoplay\"><source src=\"media/"+img+"/"+img+".mp4\" type=\"video/mp4\"><source src=\"media/"+img+"/"+img+".ogg\" type=\"video/ogg\"></center><br>"+info;
+                var cusCode = "<p><center><video id=\""+img+"\" poster=\"media/"+img+"/"+img+".jpg\" width=\"480\" height=\"360\" controls=\"autoplay\"><source src=\"media/"+img+"/"+img+".mp4\" type=\"video/mp4\"><source src=\"media/"+img+"/"+img+".ogg\" type=\"video/ogg\"></center><br>"+info;
             }
 
             var marker = L.marker([lat, lng], {icon:   new LeafIcon({iconUrl:[iconType[i]]})});
