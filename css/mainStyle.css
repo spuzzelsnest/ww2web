@@ -1,13 +1,13 @@
 @charset "utf-8";
 html, body{
-	font-family: Impact, Charcoal, sans-serif;
-	height: 100%;
-	width: 100%;
-	padding: 0;
-	margin: 0;
+  font-family: Impact, Charcoal, sans-serif;
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
 }
 body{
-	background-image: url("/img/bg.jpg");
+  background-image: url("/img/bg.jpg");
 }
 #legenda{
   z-index: 2;
@@ -33,11 +33,11 @@ body{
   right: 0;
 }
 #search{
-    z-index: 2;
-    position: fixed;
-    font-size: 10px;
-    right: 5%;
-    top: 52px;
+  z-index: 2;
+  position: fixed;
+  font-size: 10px;
+  right: 5%;
+  top: 52px;
 }
 #head-title{
   z-index: 2;
@@ -61,11 +61,11 @@ body{
   background-color: rgba(255,255,255,0.66);
   padding-top: 7px;
   padding-left: 7px;
-  position: fixed;
   width: 520px;
+  max-height: 560px;
   right:  32px;
-  height: auto;
   overflow: auto;
+  position: fixed;
 }
 #speakButton{
   z-index:4;
