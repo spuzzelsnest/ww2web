@@ -1,28 +1,37 @@
 @extends ('layouts.default')
 
 @section('mainbody')
-	<script type="text/javascript">
-		$(function() {
-			var tileLayer = new L.TileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',{
-  				attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
-			});
+<script type="text/javascript">
+	$(function() {
+		mapLink = '<a href="http://www.esri.com/">Esri</a>';
+		lableLink = '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>';
+		wholink = 'i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community';
 
-			var map = new L.Map('map', {
-  				'center': [51.441767, 5.480247],
-  				'zoom': 4,
-  				'layers': [tileLayer]
-			});
-
-			var marker = L.marker([51.441767, 5.470247],{
-  				draggable: true
-			}).addTo(map);
-
-			marker.on('dragend', function (e) {
-				document.getElementById('lat').value = marker.getLatLng().lat;
-  				document.getElementById('lng').value = marker.getLatLng().lng;
-			});
+		var tileLayer = new L.TileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{
+	               attribution: '&copy; '+mapLink+', '+wholink
 		});
-	</script>
+
+		var lablesLayer = new L.TileLayer('http://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}.png',{
+	            	id: 'cartodb_labels',
+	                attribution: '&copy; '+lableLink
+		});
+
+		var map = new L.Map('map', {
+  			'center': [51.1, 6],
+  			'zoom': 6,
+  			'layers': [tileLayer, lablesLayer]
+		});
+
+		var marker = L.marker([51.441767, 5.470247],{
+  			draggable: true
+		}).addTo(map);
+
+		marker.on('dragend', function (e) {
+			document.getElementById('lat').value = marker.getLatLng().lat;
+  			document.getElementById('lng').value = marker.getLatLng().lng;
+		});
+	});
+</script>
 
 	<div id="legenda">EDIT THE DB: <i>Drag the marker and fill out the info</i></div>
 <div class='split right'>
@@ -76,15 +85,14 @@
 				{!! Form::label('remarks','Remarks: ', array('class' => 'col-lg-3 control-label')) !!}
 				{!! Form::text('remarks') !!}
 			<br>
-			<center>
 			{{--LAT--}}
-				{!! Form::label('lat','Lat: ') !!}
+				{!! Form::label('lat','Lat: ',  array('class' => 'col-lg-3 control-label')) !!}
 				{!! Form::text('lat', '', ['id' => 'lat']) !!}
 
 			{{--LNG--}}
 				{!! Form::label('lng','Lng: ') !!}
 				{!! Form::text('lng', '', ['id' => 'lng']) !!}
-			<br>
+			<center>
 			{{--Published--}}
 				{!! Form::label('published', 'Published: ') !!}
 				{!! Form::checkbox('published') !!}

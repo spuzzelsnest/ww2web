@@ -28,20 +28,26 @@ $(function() {
          legName['2'] = "Allied Video\'s";
          legName['3'] = "Axis Video\'s";
 
-    var map = L.map('map').setView([50.1, 6], 7);
+    var map = L.map('map').setView([50.1, 6], 6);
     mapLink = '<a href="http://www.esri.com/">Esri</a>';
+    lableLink = '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>';
     wholink = 'i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community';
 
-    L.tileLayer( 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{
+    L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{
             attribution: '&copy; '+mapLink+', '+wholink,
             maxZoom: 18,
             }).addTo(map);
 
-        var LeafIcon = L.Icon.extend({
+    L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}.png',{
+	    id: 'cartodb_labels',
+	    attribution: '&copy; '+lableLink
+            }).addTo(map);
+
+    var LeafIcon = L.Icon.extend({
             options: {
                     iconSize:[20, 22]
               }
-        });
+     });
 
     var catLayers = L.markerClusterGroup();
     var legenda = document.getElementById('legenda');
@@ -64,6 +70,7 @@ $(function() {
 		      showCoverageOnHover: false,
 		      zoomToBoundsOnClick: true,
 		      removeOutsideVisibleBounds:true,
+		      disableClusteringAtZoom: 18,
 		      maxClusterRadius: 5,
 		      spiderLegPolylineOptions: {
 				    weight: 1.5,
@@ -87,7 +94,7 @@ $(function() {
             var title = place+" - "+date;
 
             if (dif < 3){
-                var cusCode = "<p><center><img src='/images/" + img + ".jpg' alt='' width='350px'/></center><br>"+info;
+                var cusCode = "<p><center><img src='/images/" + img + ".jpg' alt='' width='450px'/></center><br>"+info;
             }else{
                 var cusCode = "<p><center><video id=\""+img+"\" poster=\"media/"+img+"/"+img+".jpg\" width=\"480\" height=\"360\" controls=\"autoplay\"><source src=\"media/"+img+"/"+img+".mp4\" type=\"video/mp4\"><source src=\"media/"+img+"/"+img+".ogg\" type=\"video/ogg\"></center><br>"+info;
             }
