@@ -48,9 +48,8 @@
 			{{--NAME--}}
 				{!! Form::label('name','Name: ', array('class' => 'col-lg-3 control-label')) !!}
 				{!! Form::text('name') !!}
-			<br>
 			{{--SELECT DATE--}}
-				{!! Form::label('date','Date: ',  array('class' => 'col-lg-3 control-label')) !!}
+				{!! Form::label('date','Date: ') !!}
 				{!! Form::macro('date', function($name, $default = '1944/06/06', $attrs = array()){
 					$item = '<input type="date" name="'. $name .'" ';
 			 		if ($default) {	$item .= 'value="'. $default .'" ';}
@@ -59,7 +58,7 @@
 			      			$item .= $a .'="'. $k .'" ';
 					} $item .= ">";
 			 		return $item;}); !!}
-			 		{!!Form::date('date')!!}
+			 	{!!Form::date('date')!!}
 			<br>
 			{{--PLACE--}}
 				{!! Form::label('place','Place: ', array('class' => 'col-lg-3 control-label')) !!}
