@@ -63,14 +63,9 @@
 			{{--PLACE--}}
 				{!! Form::label('place','Place: ', array('class' => 'col-lg-3 control-label')) !!}
 				{!! Form::text('place') !!}
-			<br>
 			{{--COUNTRY--}}
-				{!! Form::label('country','Country: ', array('class' => 'col-lg-3 control-label')) !!}
+				{!! Form::label('country','Country: ') !!}
 				{!! Form::text('country') !!}
-			<br>
-			{{--SOURCE--}}
-				{!! Form::label('source','Source: ', array('class' => 'col-lg-3 control-label')) !!}
-				{!! Form::text('source') !!}
 			<br>
 			{{--SCHORTDESC--}}
 				{!! Form::label('shortdesc','Title: ', array('class' => 'col-lg-3 control-label')) !!}
@@ -80,8 +75,11 @@
 				{!! Form::label('info','Info: ', array('class' => 'col-lg-3 control-label')) !!}
 				{!! Form::textarea('info') !!}
 			<br>
+                        {{--SOURCE--}}
+                                {!! Form::label('source','Source: ', array('class' => 'col-lg-3 control-label')) !!}
+                                {!! Form::text('source') !!}
 			{{--REMARKS--}}
-				{!! Form::label('remarks','Remarks: ', array('class' => 'col-lg-3 control-label')) !!}
+				{!! Form::label('remarks','Remarks: ') !!}
 				{!! Form::text('remarks') !!}
 			<br>
 			{{--LAT--}}
