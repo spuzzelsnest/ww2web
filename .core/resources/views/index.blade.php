@@ -1,7 +1,7 @@
 @extends ('layouts.default')
 
 @section('mainbody')
-<div id="search"><input placeholder="Search" type=text class="searchField"/> <button onclick="search()">Search</button></div>
+<div id="search"><input placeholder="Search" type="text" class="searchField"/> <button onclick="search()">Search</button></div>
 <div class="split right">
    <div id='infoDiv'>
  	<div id='title'> </div>
