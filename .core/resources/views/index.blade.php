@@ -5,7 +5,7 @@
 <div class="split right">
    <div id='infoDiv'>
  	<div id='title'> </div>
-	 <div id="close" onclick="closeDiv()"><b>X</b><span class="tooltiptext"> Close</span></div>
+	 <div id="close" onclick="closeDiv()"><b>X</b> Close</div>
 	<div id='markerInfo'><center>Click the Map items to find the information!</center></div>
 	<div id='speakButton'></div>
    </div>
