@@ -1,7 +1,7 @@
 <?php namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-//use Carbon\Carbon; 
+//use Carbon\Carbon;
 use Jenssegers\Date\Date;
 Date::setLocale('nl');
 
@@ -20,7 +20,7 @@ class Footage extends Model {
 	{
 		return array('created_at', 'updated_at');
 	}
-	
+
 	public function setDatetAttribute($value)
 	{
 		$this->attributes['date'] =	Date::createFromFormat('Y/m/d', $value);
@@ -33,5 +33,5 @@ class Footage extends Model {
 			'lat' => 'required',
 			'lng' => 'required',
 	);
-	
+
 }

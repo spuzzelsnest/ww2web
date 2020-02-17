@@ -5,6 +5,7 @@
 <div class="split right">
    <div id='infoDiv'>
  	<div id='title'> </div>
+	 <div id="close" onclick="closeDiv()"><b>X</b><span class="tooltiptext"> Close</span></div>
 	<div id='markerInfo'><center>Click the Map items to find the information!</center></div>
 	<div id='speakButton'></div>
    </div>
@@ -143,24 +144,31 @@ $(function() {
 
     function sideDiv(e){
 
-        var title= this.title;
-        var text= this.html;
+        var title = this.title;
+        var text = this.html;
         var info = this.info;
         var latLng = this.latLng;
 
-        titleDiv.innerHTML = "<h3><u>"+title+"</u></h3>";
+	document.getElementById('infoDiv').style.display = 'block';
+
+	titleDiv.innerHTML = "<h3><u>"+title+"</u></h3>";
+        titleDiv.onmouseover = function(){titleDiv.style.color = '#428608';};
+        titleDiv.onmouseout = function(){titleDiv.style.color = 'Black';};
+        titleDiv.onclick = function(e){map.setView(latLng, '20', {animation: true});};
+
         if (info !== ''){
             document.getElementById('speakButton').innerHTML = "<p><button onclick='responsiveVoice.speak(`"+info+"`);'>Read Me</button>";
         }else{
             document.getElementById('speakButton').innerHTML = "";
         }
-        titleDiv.onmouseover = function(){titleDiv.style.color = '#428608';};
-        titleDiv.onmouseout = function(){titleDiv.style.color = 'Black';};
-        titleDiv.onclick = function(e){map.setView(latLng, '20', {animation: true});};
 
         infoDiv.innerHTML = text;
     }
 });
+
+function closeDiv(){
+   document.getElementById('infoDiv').style.display = 'none';
+}
 
 function search(){
 

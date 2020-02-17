@@ -1,19 +1,31 @@
 function loadMap() {
 
-	var map = L.map('map').setView([50.1, 6], 5);
+    var map = L.map('map').setView([50.1, 6], 6);
+        mapLink = '<a href="http://www.esri.com/">Esri</a>';
+        lableLink = '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>';
+        wholink = 'i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community';
 
-	L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
-        var LeafIcon = L.Icon.extend({
+    L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{
+            attribution: '&copy; '+mapLink+', '+wholink,
+            maxZoom: 18,
+            }).addTo(map);
+
+    L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}.png',{
+            id: 'cartodb_labels',
+            attribution: '&copy; '+lableLink
+            }).addTo(map);
+
+    var LeafIcon = L.Icon.extend({
             options: {
-                    iconSize:[20, 25]
+                    iconSize:[20, 22]
               }
-        });
+     });
 
     var iconType = {};
-        iconType['1'] = new LeafIcon({iconUrl: '/img/Afoto.png'});
-        iconType['2'] = new LeafIcon({iconUrl: '/img/Xfoto.png'});
-        iconType['3'] = new LeafIcon({iconUrl: '/img/Avideo.png'});
-        iconType['4'] = new LeafIcon({iconUrl: '/img/XVideo.png'});
+        iconType['1'] = new LeafIcon({iconUrl: 'img/Afoto.png'});
+        iconType['2'] = new LeafIcon({iconUrl: 'img/Xfoto.png'});
+        iconType['3'] = new LeafIcon({iconUrl: 'img/Avideo.png'});
+        iconType['4'] = new LeafIcon({iconUrl: 'img/XVideo.png'});
 
 	var cluster = L.markerClusterGroup({
 
