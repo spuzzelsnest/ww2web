@@ -4,10 +4,10 @@
 <div id="search"><input placeholder="Search" type="text" class="searchField"/> <button onclick="search()">Search</button></div>
 <div class="split right">
    <div id='infoDiv'>
- 	<div id='title'> </div>
-	 <div id="close" onclick="closeDiv()"><b>X</b> Close</div>
-	<div id='markerInfo'><center>Click the Map items to find the information!</center></div>
-	<div id='speakButton'></div>
+ 	<div id="title"> </div>
+	<div id="close" onclick="closeDiv()"><b>X</b> Close</div>
+	<div id="markerInfo"><center>Click the Map items to find the information!</center></div>
+	<div id="speakButton"></div>
    </div>
 </div>
 
