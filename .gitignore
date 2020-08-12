@@ -1,5 +1,15 @@
 .AppleDouble/
+.core/composer.lock
+.core/node_modules
+.core/storage/*
+.core/vendor
+.core/.idea
+.core/.vagrant
+.core/Homestead.json
+.core/Homestead.yaml
+.core/npm-debug.log
+.core/.env
+
 /images/*
 /media/*
-/.core/composer.lock
 /img
