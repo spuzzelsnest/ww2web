@@ -28,8 +28,8 @@ class AdminController extends Controller
     {
 		$mediaCount = DB::table('footages')
 				->select(Db::Raw('count(0) as cnt, type, description'))
-				->join('types','footages.typeId','=','types.id')
-				->groupBy('footages.typeId')
+				->join('types','footages.typeid','=','types.id')
+				->groupBy('footages.typeid')
 				->get();
 
 //		$types = Type::lists('id', 'type', 'description')->all();
@@ -78,7 +78,7 @@ class AdminController extends Controller
 			$f->country = Input::get('country');
 			$f->source = Input::get('source');
 			$f->remarks = Input::get('remarks');
-			$f->typeId = Input::get('typeId');
+			$f->typeid = Input::get('typeid');
 			$f->lat = Input::get('lat');
 			$f->lng = Input::get('lng');
 			$f->published = Input::get('published');
