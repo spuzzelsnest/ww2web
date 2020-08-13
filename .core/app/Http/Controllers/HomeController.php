@@ -22,8 +22,8 @@ class HomeController extends Controller
 
 		$mediaCount = DB::table('footages')
 			->select(DB::Raw('count(0) as cnt, typeid, type, description, published'))->where('published', '=', '1')
-			->join('types','footages.typeId','=','types.id')
-			->groupBy('footages.typeid')
+			->join('types','footages.typeid','=','types.id')
+			->groupBy('footages.typeid','types.type','types.description','footages.published')
 			->get();
 
 		return View::make('index')
