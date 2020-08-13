@@ -2,10 +2,12 @@
 
 ##Prerequisites
 
-Linux:
+
 ``
 sudo apt install curl php-cli php-mbstring git unzip 
+
 ``
+As I am using postgresql I also needed php-pgsql
 
 ##new update
 
