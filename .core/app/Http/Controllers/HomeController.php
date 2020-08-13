@@ -19,14 +19,14 @@ class HomeController extends Controller
     {
 
 		$mediaCount = DB::table('footages')
-			->select(DB::Raw('count(0) as cnt, typeId, type, description, published'))->where('published', '=', '1')
-			->join('types','footages.typeId','=','types.id')
-			->groupBy('footages.typeId')
+			->select(DB::Raw('count(0) as cnt, typeid, type, description, published'))->where('published', '=', '1')
+			->join('types','footages.typeid','=','types.id')
+			->groupBy('footages.typeid','types.id','footages.published')
 			->get();
 
 		return View::make('index')
 			->with('title' , 'WW2: The Presswar')
-			->with('footages', Footage::where('published', '=', '1')->join('types','footages.typeId', '=', 'types.id')
+			->with('footages', Footage::where('published', '=', '1')->join('types','footages.typeid', '=', 'types.id')
 			->get(array('footages.*','types.*')))
 			->with('count', $mediaCount);
     }
