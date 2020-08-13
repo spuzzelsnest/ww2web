@@ -8,7 +8,7 @@ class Type extends Model {
 	protected $primaryKey = 'id' ;
 
 	public function footage(){
-			
+
 		return $this->belongsTo('footages','local_key');
 	}
 
