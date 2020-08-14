@@ -41,7 +41,7 @@
 	   		{{--SELECT MEDIA--}}
 	   			<div class="form-group">
 					@foreach ($types as $type)
-						{!! Form::checkbox('typeId', $type->id) !!}
+						{!! Form::checkbox('typeid', $type->id) !!}
 						{{$type->description}}
 					@endforeach
 				</div>
