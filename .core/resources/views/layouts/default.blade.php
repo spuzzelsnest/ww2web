@@ -2,37 +2,30 @@
 <html>
 <head>
 	<meta  name="WW2Web" content="Html5,CSS3,JavaScript" charset="utf-8">
-	<meta name="viewport" content="width=device-width">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<!--[if IE]>
-	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
 
-	<script src="//maps.googleapis.com/maps/api/js?key=AIzaSyAF7IPUAyR60tGxGYXPoyNobdtOJJm8cIc&callback"></script>
-	<script src="js/markerclusterer.js"></script>
+	<link href="{{ asset('css/mainStyle.css') }}" rel="stylesheet" >
+	<script src="{{ asset('js/jquery-3.3.1.slim.min.js') }}"></script>
+	<link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" >
+	<script src="{{ asset('js/bootstrap.min.js') }}"></script>
 
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-	<script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+	<link href="{{ asset('css/leaflet.css') }}" rel="stylesheet" >
+	<script src="{{ asset('js/leaflet.js') }}"></script>
 
-	<link href="css/mainStyle.css" rel="stylesheet" >
-	<link href="css/bootstrap.min.css" rel="stylesheet" >
-	<link href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" rel="stylesheet" >
+	<script src="{{ asset('js/responsivevoice.js') }}"></script>
 
+	<link href="{{ asset('css/Markercluster.css') }}" rel="stylesheet" >
+	<link href="{{ asset('css/Markercluster.default.css') }}" rel="stylesheet" >
+	<script src="{{ asset('js/leaflet.markercluster-src.js') }}"></script>
 	<Title>{{ $title }}</Title>
-		<script>
-			@yield('script')
-		</script>
 </head>
 <body>
-	<img src="img/bg.jpg" id="bg"/>
-	<img src="img/banner.jpg" id="banner"/>
-	<img src="img/question.png" id="question" alt="question" title="Click the checkbox to add / remove the markers. Scroll into the map to see more details"/>
-	<img src="img/camera1.png" id="camera1"/>
-	<img src="img/camera2.png" id="camera2"/>
-	<section>
-		@yield('mainbody')
-	</section>
-	@include('layouts.legenda')
+ <div id="map"></div>
+	@include('layouts.header')
+	@yield('mainbody')
 	@include('layouts.footer')
-	<script src="js/bootstrap.min.js"></script>
 </body>
 </html>

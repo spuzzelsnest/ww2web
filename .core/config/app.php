@@ -51,7 +51,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost/ww2web'),
+    'url' => env('APP_URL', 'http://localhost'),
 
     /*
     |--------------------------------------------------------------------------
@@ -103,8 +103,7 @@ return [
     |
     */
 
-    'key' => env('APP_KEY','pk3IiHFAoQCopFKUf0zNjWKZCHbABcyNol8CpYhcKRY'),
-
+    'key' => env('APP_KEY','Km20qsfVQ67FX/C3T/oiEGvawNR4cncNAt01OpYhPA='),
     'cipher' => 'AES-256-CBC',
 
     /*

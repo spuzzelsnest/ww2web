@@ -1,91 +1,204 @@
 @extends ('layouts.default')
 
 @section('mainbody')
-
-	<div id="map"></div>
-	<div id="popUp"></div>
+<div id="search"><input placeholder="Search" type="text" class="searchField"/> <button onclick="search()">Search</button></div>
+<div class="split right">
+   <div id='infoDiv'>
+ 	<div id="title"> </div>
+	<div id="close" onclick="closeDiv()"><b>X</b> Close</div>
+	<div id="markerInfo"><center>Click the Map items to find the information!</center></div>
+	<div id="speakButton"></div>
+   </div>
+</div>
 
 <script>
+
 $(function() {
-	var iconType = {};
-		iconType['1'] = 'img/Afoto.png';
-		iconType['2'] = 'img/Xfoto.png';
-		iconType['3'] = 'img/Avideo.png';
-		iconType['4'] = 'img/Xvideo.png';
-		iconType['5'] = 'img/Aadio.png';
-		iconType['6'] = 'img/Xadio.png';
 
-	var markers = [];
-	var data = {!!$footages!!};
-	var cluster = new MarkerClusterer(map, markers, {gridSize:20});
-	cluster.setMap(null);
+    var markers = {!!$footages!!};
 
-	var map = new google.maps.Map(document.getElementById("map"), {
-		center: new google.maps.LatLng(48.9, 4),
-	    zoom: 6,
-	    mapTypeId: 'satellite',
-	    mapTypeControl: true
-	});
+    var iconType = {};
+        iconType['0'] = '/img/Afoto.png';
+        iconType['1'] = '/img/Xfoto.png';
+        iconType['2'] = '/img/Avideo.png';
+        iconType['3'] = '/img/Xvideo.png';
 
-	for(var i = 0; i < data.length; i++){
+     var legName = {};
+         legName['0'] = "Allied photo\'s";
+         legName['1'] = "Axis photo\'s";
+         legName['2'] = "Allied Video\'s";
+         legName['3'] = "Axis Video\'s";
 
-		var dif			= data[i].typeId;
-		var cusIcon		= iconType[dif];
-		var shortdesc		= data[i].shortdesc;
-		var name		= data[i].name;
-		var place		= data[i].place;
-		var source		= data[i].source;
-		var date		= data[i].date;
-		var info		= data[i].info;
-		var remarks		= data[i].remarks;
+    var map = L.map('map').setView([50.1, 6], 6);
+    mapLink = '<a href="http://www.esri.com/">Esri</a>';
+    lableLink = '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>';
+    wholink = 'i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community';
 
-		if (dif < 3) {
-			html = "<p><center><img src=\"images/"+name+".jpg\" alt=\""+shortdesc+"\"></center>";
-		} else {
-			html = "<p><center><video id=\""+name+"\" poster=\"media/"+name+"/"+name+".jpg\" width=\"480\" height=\"360\" controls=\"autoplay\"><source src=\"media/"+name+"/"+name+".mp4\" type=\"video/mp4\"><source src=\"media/"+name+"/"+name+".ogg\" type=\"video/ogg\"></center>";
-		}
-		html += "<br><b>"+place+" - </b>"+date+"<br>source: "+source+"<p>"+info;
+    L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{
+            attribution: '&copy; '+mapLink+', '+wholink,
+            maxZoom: 18,
+            }).addTo(map);
 
-		var point = new google.maps.LatLng( parseFloat(data[i].lat), parseFloat(data[i].lng));
-		var marker = new google.maps.Marker({position: point, icon: cusIcon, type: dif});
+    L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}.png',{
+	    id: 'cartodb_labels',
+	    attribution: '&copy; '+lableLink
+            }).addTo(map);
 
-		markers.push(marker);
-		cluster.addMarkers(markers);
-		showInDiv(marker, html, shortdesc);
+    var LeafIcon = L.Icon.extend({
+            options: {
+                    iconSize:[20, 22]
+              }
+     });
+
+    var catLayers = L.markerClusterGroup();
+    var legenda = document.getElementById('legenda');
+    var titleDiv = document.getElementById('title');
+    var infoDiv = document.getElementById('markerInfo');
+    var cat = [];
+
+    for(i = 0; i< markers.length; i++){
+        if(cat.indexOf(markers[i].typeId) === -1){
+            cat.push(markers[i].typeId);
+        }
+    }
+
+    for(i = 0; i< cat.length; i++){
+
+        catData = jQuery.grep(markers,function(item, c){return(item.typeId == cat[i] && c > 1);});
+
+	catLayers[i] = new L.markerClusterGroup({
+              spiderfyOnMaxZoom: true,
+		      showCoverageOnHover: false,
+		      zoomToBoundsOnClick: true,
+		      removeOutsideVisibleBounds:true,
+		      disableClusteringAtZoom: 18,
+		      maxClusterRadius: 5,
+		      spiderLegPolylineOptions: {
+				    weight: 1.5,
+				    color: '#222',
+				    opacity: 0.5
+		      }
+        });
+
+        for(m in catData){
+
+            var lat     = catData[m].lat;
+            var lng     = catData[m].lng;
+            var dif     = catData[m].typeId;
+            var head    = catData[m].shortdesc;
+            var img     = catData[m].name;
+            var place   = catData[m].place;
+            var country = catData[m].country;
+            var date    = catData[m].date;
+            var info    = catData[m].info;
+
+            var title = place+" - "+date;
+
+            if (dif < 3){
+                var cusCode = "<p><center><img src='/images/" + img + ".jpg' alt='' width='450px'/></center><br>"+info;
+            }else{
+                var cusCode = "<p><center><video id=\""+img+"\" poster=\"media/"+img+"/"+img+".jpg\" width=\"480\" height=\"360\" controls=\"autoplay\"><source src=\"media/"+img+"/"+img+".mp4\" type=\"video/mp4\"><source src=\"media/"+img+"/"+img+".ogg\" type=\"video/ogg\"></center><br>"+info;
+            }
+
+            var marker = L.marker([lat, lng], {icon:   new LeafIcon({iconUrl:[iconType[i]]})});
+            marker.title = title;
+            marker.html = cusCode;
+            marker.latLng = marker.getLatLng();
+            marker.info = info.replace("'","&#39;");
+            marker.on('click', sideDiv);
+
+            catLayers[i].addLayer(marker);
+        }
+    	    catLayers[i].addTo(map);
+            distCount = catData.length;
+            var icon            = document.createElement('img');
+                icon.width      = 20;
+                icon.height     = 20;
+                icon.src        = iconType[i];
+
+            var checkbox        = document.createElement('input');
+                checkbox.type   = 'checkbox';
+                checkbox.name   = 'typeId';
+                checkbox.id     = i;
+                checkbox.checked= true;
+
+            var label = document.createElement('label')
+                label.htmlFor = i;
+                label.appendChild(document.createTextNode("\u00A0\u00A0"+distCount+"\u00A0\u00A0"+legName[i]+"\u00A0\u00A0.\u00A0\u00A0"));
+
+            legenda.appendChild(checkbox);
+            legenda.appendChild(icon);
+            legenda.appendChild(label);
+
+            checkbox.addEventListener('change', function(e){
+                var id = this.id;
+                 console.log (id);
+                if (map.hasLayer(catLayers[id])) {
+                    map.removeLayer(catLayers[id]);
+                } else {
+                    map.addLayer(catLayers[id]);
+                }
+            });
+
 	}
 
-	cluster.setMap(map, markers, {gridSize:20});
+    function sideDiv(e){
 
-	function showInDiv(marker, html, shortdesc) {
-		google.maps.event.addListener(marker, 'click', function() {
-			var sidediv = $('#popUp');
-			sidediv.html(html);
-			sidediv.dialog({
-				modal: true,
-				title: shortdesc,
-				buttons: [{text: "Close", click: function() {$(this).dialog("close")}}],
-				minHeight: "500px",
-				width: "600px",
-				position: { my: "top", at: "top", of: window }
-			});
-		});
-	}
+        var title = this.title;
+        var text = this.html;
+        var info = this.info;
+        var latLng = this.latLng;
 
-	$("input:checkbox").bind( "change", function(){
-	    $.each(data, function(index, i){
-	        if(
-		        $("input:checkbox[name='type'][value='"+i.typeId+"']").is(':checked')
-			){
-	            markers[index].setVisible(true);
-	            cluster.setMap( this.map);
-	        }else{
-	            markers[index].setVisible(false);
-	        }
-		})
-	});
+	document.getElementById('infoDiv').style.display = 'block';
+
+	titleDiv.innerHTML = "<h3><u>"+title+"</u></h3>";
+        titleDiv.onmouseover = function(){titleDiv.style.color = '#428608';};
+        titleDiv.onmouseout = function(){titleDiv.style.color = 'Black';};
+        titleDiv.onclick = function(e){map.setView(latLng, '20', {animation: true});};
+
+        if (info !== ''){
+            document.getElementById('speakButton').innerHTML = "<p><button onclick='responsiveVoice.speak(`"+info+"`);'>Read Me</button>";
+        }else{
+            document.getElementById('speakButton').innerHTML = "";
+        }
+
+        infoDiv.innerHTML = text;
+    }
 });
 
-</script>
+function closeDiv(){
+   document.getElementById('infoDiv').style.display = 'none';
+}
 
+function search(){
+
+    var markers = {!!$footages!!};
+    var titleDiv = document.getElementById('title');
+    var infoDiv = document.getElementById('markerInfo');
+    var results =[];
+    var term = document.getElementsByClassName('searchField')[0].value;
+    var regex = new RegExp( term, 'ig');
+
+    if (term == ''){
+        titleDiv.innerHTML = "<h3><u>Search</u></h3>";
+        infoDiv.innerHTML = "<br>What are you looking for?";
+    }else{
+        titleDiv.innerHTML = "<h3><u>Search</u></h3>";
+        infoDiv.innerHTML = "";
+        for (m in markers) {
+            info = JSON.stringify(markers[m].info);
+            if (info.match(regex)){
+                results.push(info);
+
+                infoDiv.innerHTML += "<li id="+m+" class='list-group-item link-class'>"+markers[m].shortdesc+"</a> | <span class='text-muted'>"+markers[m].place+"</span></li>";
+
+                document.getElementById(m).onClick = function(e){map.setView(latLng(markers[m].Lat,markers[m].Lng), '13', {animation: true});};
+            }
+        }
+        titleDiv.innerHTML += "Found: "+results.length+" results for "+term;
+    }
+}
+
+</script>
 
 @endsection

@@ -78,7 +78,7 @@ class AdminController extends Controller
 			$f->country = Input::get('country');
 			$f->source = Input::get('source');
 			$f->remarks = Input::get('remarks');
-			$f->typeId = Input::get('typeId');
+			$f->typeid = Input::get('typeid');
 			$f->lat = Input::get('lat');
 			$f->lng = Input::get('lng');
 			$f->published = Input::get('published');

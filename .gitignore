@@ -1,3 +1,4 @@
+.git*/
 .AppleDouble/
 .core/composer.lock
 .core/node_modules
@@ -13,3 +14,4 @@
 /images/*
 /media/*
 /img
+.core/composer.lock

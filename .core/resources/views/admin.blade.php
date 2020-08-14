@@ -1,52 +1,42 @@
-@extends ('layouts.admin')
+@extends ('layouts.default')
 
 @section('mainbody')
+<script type="text/javascript">
+	$(function() {
+		mapLink = '<a href="http://www.esri.com/">Esri</a>';
+		lableLink = '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>';
+		wholink = 'i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community';
 
-<div class="container">
-		<script type="text/javascript">
-			function updateMarkerStatus(str) {
-			  document.getElementById('markerStatus').innerHTML = str;
-			}
+		var tileLayer = new L.TileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{
+	               attribution: '&copy; '+mapLink+', '+wholink
+		});
 
-			function updateMarkerPosition(latLng) {
-				document.getElementById('lat').value = latLng.lat();
-				document.getElementById('lng').value = latLng.lng();
-			}
+		var lablesLayer = new L.TileLayer('http://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}.png',{
+	            	id: 'cartodb_labels',
+	                attribution: '&copy; '+lableLink
+		});
 
-			function initialize() {
-				var latLng = new google.maps.LatLng(49,1);
-				  var map = new google.maps.Map(document.getElementById('mapAdmin'), {
-				    zoom: 4,
-				    center: latLng,
-				    mapTypeId: 'hybrid'
-				  });
-				  var marker = new google.maps.Marker({
-				    position: latLng,
-				    map: map,
-				    draggable: true
-				  });
+		var map = new L.Map('map', {
+  			'center': [51.1, 6],
+  			'zoom': 6,
+  			'layers': [tileLayer, lablesLayer]
+		});
 
-			  updateMarkerPosition(latLng);
+		var marker = L.marker([51.441767, 5.470247],{
+  			draggable: true
+		}).addTo(map);
 
-			  google.maps.event.addListener(marker, 'drag', function() {
-			    updateMarkerStatus('Dragging...');
-			    updateMarkerPosition(marker.getPosition());
-			  });
+		marker.on('dragend', function (e) {
+			document.getElementById('lat').value = marker.getLatLng().lat;
+  			document.getElementById('lng').value = marker.getLatLng().lng;
+		});
+	});
+</script>
 
-			  google.maps.event.addListener(marker, 'dragend', function() {
-			    updateMarkerStatus('Dragg ended ');
-			    geocodePosition(marker.getPosition());
-			  });
-			}
-
-			google.maps.event.addDomListener(window, 'load', initialize);
-		</script>
-	<div class='col-lg-8'>
-		<div id="markerStatus"><i>Click and drag the marker.</i></div>
-		<div id="mapAdmin"></div>
-	</div>
-		<div class="formLayout">
-			{!! Form::open(array('route' => 'admin.store', 'files' => true)) !!}
+	<div id="legenda">EDIT THE DB: <i>Drag the marker and fill out the info</i></div>
+<div class='split right'>
+	<div id='infoDiv'>
+		{!! Form::open(array('route' => 'admin.store', 'files' => true)) !!}
 
 	   		{{--SELECT MEDIA--}}
 	   			<div class="form-group">
@@ -55,80 +45,64 @@
 						{{$type->description}}
 					@endforeach
 				</div>
-			<div class='col-lg-4'>
 			{{--NAME--}}
-						<div class="form-group">
-							{!! Form::label('name','Name: ', array('class' => 'col-lg-3 control-label')) !!}
-							{!! Form::text('name') !!}
-						</div>
+				{!! Form::label('name','Name: ', array('class' => 'col-lg-3 control-label')) !!}
+				{!! Form::text('name') !!}
 			{{--SELECT DATE--}}
-						<div class="form-group">
-							{!! Form::label('date','Date: ',  array('class' => 'col-lg-3 control-label')) !!}
-							{!! Form::macro('date', function($name, $default = '1944/06/06', $attrs = array()){
-									$item = '<input type="date" name="'. $name .'" ';
-			 						if ($default) {	$item .= 'value="'. $default .'" ';}
-			 						if (is_array($attrs)){
-			 						 foreach ($attrs as $a => $k)
-			      							$item .= $a .'="'. $k .'" ';
-			  							} $item .= ">";
-			 						  return $item;}); !!}
-			 				{!!Form::date('date')!!}
-						</div>
+				{!! Form::label('date','Date: ') !!}
+				{!! Form::macro('date', function($name, $default = '1944/06/06', $attrs = array()){
+					$item = '<input type="date" name="'. $name .'" ';
+			 		if ($default) {	$item .= 'value="'. $default .'" ';}
+			 		if (is_array($attrs)){
+						foreach ($attrs as $a => $k)
+			      			$item .= $a .'="'. $k .'" ';
+					} $item .= ">";
+			 		return $item;}); !!}
+			 	{!!Form::date('date')!!}
+			<br>
 			{{--PLACE--}}
-						<div class="form-group">
-								{!! Form::label('place','Place: ', array('class' => 'col-lg-3 control-label')) !!}
-								{!! Form::text('place') !!}
-						</div>
+				{!! Form::label('place','Place: ', array('class' => 'col-lg-3 control-label')) !!}
+				{!! Form::text('place') !!}
 			{{--COUNTRY--}}
-						<div class="form-group">
-								{!! Form::label('country','Country: ', array('class' => 'col-lg-3 control-label')) !!}
-								{!! Form::text('country') !!}
-						</div>
-			{{--SOURCE--}}
-						<div class="form-group">
-								{!! Form::label('source','Source: ', array('class' => 'col-lg-3 control-label')) !!}
-								{!! Form::text('source') !!}
-						</div>
+				{!! Form::label('country','Country: ') !!}
+				{!! Form::text('country') !!}
+			<br>
 			{{--SCHORTDESC--}}
-						<div class="form-group">
-								{!! Form::label('shortdesc','Title: ', array('class' => 'col-lg-3 control-label')) !!}
-								{!! Form::text('shortdesc') !!}
-						</div>
+				{!! Form::label('shortdesc','Title: ', array('class' => 'col-lg-3 control-label')) !!}
+				{!! Form::text('shortdesc') !!}
+			<br>
 			{{--INFO--}}
-						<div class="form-group">
-								{!! Form::label('info','Info: ', array('class' => 'col-lg-3 control-label')) !!}
-								{!! Form::textarea('info') !!}
-						</div>
+				{!! Form::label('info','Info: ', array('class' => 'col-lg-3 control-label')) !!}
+				{!! Form::textarea('info') !!}
+			<br>
+                        {{--SOURCE--}}
+                                {!! Form::label('source','Source: ', array('class' => 'col-lg-3 control-label')) !!}
+                                {!! Form::text('source') !!}
 			{{--REMARKS--}}
-						<div class="form-group">
-								{!! Form::label('remarks','Remarks: ', array('class' => 'col-lg-3 control-label')) !!}
-								{!! Form::text('remarks') !!}
-						</div>
+				{!! Form::label('remarks','Remarks: ') !!}
+				{!! Form::text('remarks') !!}
+			<br>
 			{{--LAT--}}
-						<div class="form-group">
-								{!! Form::label('lat','Latitude: ', array('class' => 'col-lg-3 control-label')) !!}
-								{!! Form::text('lat', '', ['id' => 'lat']) !!}
-						</div>
+				{!! Form::label('lat','Lat: ',  array('class' => 'col-lg-3 control-label')) !!}
+				{!! Form::text('lat', '', ['id' => 'lat']) !!}
+
 			{{--LNG--}}
-						<div class="form-group">
-								{!! Form::label('lng','longitude: ', array('class' => 'col-lg-3 control-label')) !!}
-								{!! Form::text('lng', '', ['id' => 'lng']) !!}
-						</div>
+				{!! Form::label('lng','Lng: ') !!}
+				{!! Form::text('lng', '', ['id' => 'lng']) !!}
+			<center>
 			{{--Published--}}
-						<div class="form-group">
-								{!! Form::label('published', 'Published: ', array('class' => 'col-lg-3 control-label')) !!}
-								{!! Form::checkbox('published') !!}
-						</div>
+				{!! Form::label('published', 'Published: ') !!}
+				{!! Form::checkbox('published') !!}
+			<br>
 			{{--ADD MEDIA--}}
-				<div class="form-group">
-					{!! Form::label('Foto', 'Upload Picture: ', array('class' => 'col-lg-3 control-label')) !!}
-					{!! Form::file('file') !!}
-					<div id='message'>Upload your File...</div>
-				</div>
-						{!! Form::submit('Aanmaken', array('class' => 'btn btn-success')) !!}
-						{!! link_to_route('admin.index', 'Cancel', null, array('class' => 'btn btn-warning')) !!}
-					</div>
-			{!! Form::close() !!}
-	</div>
+				{!! Form::label('Foto', 'Upload Picture: ') !!}
+				{!! Form::file('file') !!}
+				<br>
+				<div id='message'>Upload your File...</div>
+
+				{!! Form::submit('Aanmaken', array('class' => 'btn btn-success')) !!}
+				{!! link_to_route('admin.index', 'Cancel', null, array('class' => 'btn btn-warning')) !!}
+			</center>
+		{!! Form::close() !!}
 </div>
 @endsection
