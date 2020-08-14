@@ -7,7 +7,7 @@
 		<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
 
-	<link href="css/mainStyle.css" rel="stylesheet" >
+	<link href="{{ asset('assets/css/mainStyle.css') }}" rel="stylesheet" >
 	<script src="js/jquery-3.3.1.slim.min.js"></script>
 	<link href="css/bootstrap.min.css" rel="stylesheet" >
 	<script src="js/bootstrap.min.js"></script>
