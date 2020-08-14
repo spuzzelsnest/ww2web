@@ -1,6 +1,6 @@
-#Laravel and Leaflet Maps
+# Laravel and Leaflet Maps
 
-##Prerequisites
+## Prerequisites
 
 
 ``
@@ -9,7 +9,7 @@ sudo apt install curl php-cli php-mbstring git unzip
 ``
 As I am using postgresql I also needed php-pgsql
 
-##new update
+## new update
 
 
 how to update a newly downloaded git
@@ -19,23 +19,24 @@ how to update a newly downloaded git
 
 sudo find /path/to/lara/proj -type f -exec chmod 644 {} \;
 sudo find /path/to/lara/proj -type d -exec chmod 755 {} \;
-=======
+
 ``
   sudo apt install curl php-cli php-mbstring git unzip
 
-`` As I am using postgresql I also needed php-pgsql
+`` 
+As I am using postgresql I also needed php-pgsql
 
-##new update
+## new update
 
 how to update a newly downloaded git
 
-##Setting the permissions to the folder
+## Setting the permissions to the folder
 
 sudo find /path/to/lara/proj -type f -exec chmod 644 {} ; sudo find /path/to/lara/proj -type d -exec chmod 755 {} ;
 
 
 
-##New install
+## New install
 
 Key validation 
 
