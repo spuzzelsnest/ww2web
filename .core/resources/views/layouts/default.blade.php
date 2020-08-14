@@ -17,8 +17,8 @@
 
 	<script src="{{ asset('js/responsivevoice.js') }}"></script>
 
-	<link href="{{ asset('css/Markercluster.css') }}" rel="stylesheet" >
-	<link href="{{ asset('css/Markercluster.default.css') }}" rel="stylesheet" >
+	<link href="{{ asset('css/MarkerCluster.css') }}" rel="stylesheet" >
+	<link href="{{ asset('css/MarkerCluster.Default.css') }}" rel="stylesheet" >
 	<script src="{{ asset('js/leaflet.markercluster-src.js') }}"></script>
 	<Title>{{ $title }}</Title>
 </head>

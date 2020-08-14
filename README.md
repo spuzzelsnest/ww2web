@@ -2,7 +2,6 @@
 
 ##Prerequisites
 
-<<<<<<< HEAD
 
 ``
 sudo apt install curl php-cli php-mbstring git unzip 
@@ -14,8 +13,6 @@ As I am using postgresql I also needed php-pgsql
 
 
 how to update a newly downloaded git
-
-
 
 
 ##Setting the permissions to the folder
@@ -46,4 +43,3 @@ Key validation
   composer update
   php artisan key:generate
 ``
->>>>>>> leafletMaps

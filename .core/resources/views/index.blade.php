@@ -57,14 +57,14 @@ $(function() {
     var cat = [];
 
     for(i = 0; i< markers.length; i++){
-        if(cat.indexOf(markers[i].typeId) === -1){
-            cat.push(markers[i].typeId);
+        if(cat.indexOf(markers[i].typeid) === -1){
+            cat.push(markers[i].typeid);
         }
     }
 
     for(i = 0; i< cat.length; i++){
 
-        catData = jQuery.grep(markers,function(item, c){return(item.typeId == cat[i] && c > 1);});
+        catData = jQuery.grep(markers,function(item, c){return(item.typeid == cat[i] && c > 1);});
 
 	catLayers[i] = new L.markerClusterGroup({
               spiderfyOnMaxZoom: true,
@@ -84,7 +84,7 @@ $(function() {
 
             var lat     = catData[m].lat;
             var lng     = catData[m].lng;
-            var dif     = catData[m].typeId;
+            var dif     = catData[m].typeid;
             var head    = catData[m].shortdesc;
             var img     = catData[m].name;
             var place   = catData[m].place;
@@ -118,7 +118,7 @@ $(function() {
 
             var checkbox        = document.createElement('input');
                 checkbox.type   = 'checkbox';
-                checkbox.name   = 'typeId';
+                checkbox.name   = 'typeid';
                 checkbox.id     = i;
                 checkbox.checked= true;
 
