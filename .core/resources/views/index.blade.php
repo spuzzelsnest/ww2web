@@ -173,7 +173,7 @@ function closeDiv(){
 
 function search(){
 
-    var markers = [];
+    var markers = {!! $footages !!};
     var titleDiv = document.getElementById('title');
     var infoDiv = document.getElementById('markerInfo');
     var results =[];
