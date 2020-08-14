@@ -1,3 +1,4 @@
+
 @extends ('layouts.default')
 
 @section('mainbody')
@@ -15,7 +16,7 @@
 
 $(function() {
 
-    var markers = {!!$footages!!};
+    var markers = {!! $footages !!};
 
     var iconType = {};
         iconType['0'] = '/img/Afoto.png';
@@ -172,7 +173,7 @@ function closeDiv(){
 
 function search(){
 
-    var markers = {!!$footages!!};
+    var markers = [];
     var titleDiv = document.getElementById('title');
     var infoDiv = document.getElementById('markerInfo');
     var results =[];
