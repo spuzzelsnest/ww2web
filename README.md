@@ -4,7 +4,9 @@
 
 
 ``
+
 sudo apt install curl php-cli php-mbstring git unzip 
+
 
 ``
 
@@ -22,7 +24,9 @@ sudo find /path/to/lara/proj -type f -exec chmod 644 {} \;
 sudo find /path/to/lara/proj -type d -exec chmod 755 {} \;
 
 ``
-  sudo apt install curl php-cli php-mbstring git unzip
+
+sudo apt install curl php-cli php-mbstring git unzip
+
 
 `` 
 
@@ -35,7 +39,9 @@ how to update a newly downloaded git
 ## Setting the permissions to the folder
 
 ``
+
 sudo find /path/to/lara/proj -type f -exec chmod 644 {} ; sudo find /path/to/lara/proj -type d -exec chmod 755 {} ;
+
 ``
 
 
@@ -44,6 +50,8 @@ sudo find /path/to/lara/proj -type f -exec chmod 644 {} ; sudo find /path/to/lar
 Key validation 
 
 ``
+
   composer update
   php artisan key:generate
+
 ``
