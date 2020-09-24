@@ -20,17 +20,17 @@ $(function() {
 
     var iconType = {};
         iconType['0'] = '/img/Afoto.png';
-        iconType['1'] = '/img/Xfoto.png';
-        iconType['2'] = '/img/Avideo.png';
-        iconType['3'] = '/img/Xvideo.png';
+        iconType['3'] = '/img/Xfoto.png';
+        iconType['1'] = '/img/Avideo.png';
+        iconType['2'] = '/img/Xvideo.png';
 
      var legName = {};
-         legName['0'] = "Allied photo\'s";
-         legName['1'] = "Axis photo\'s";
-         legName['2'] = "Allied Video\'s";
-         legName['3'] = "Axis Video\'s";
+         legName['0'] = "Allied Photo\'s";
+         legName['1'] = "Allied Video\'s";
+         legName['2'] = "Axis Video\'s";
+         legName['3'] = "Axis Photo\'s";
 
-    var map = L.map('map').setView([50.1, 6], 7);
+    var map = L.map('map').setView([50.1, 6], 6);
     mapLink = '<a href="http://www.esri.com/">Esri</a>';
     lableLink = '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>';
     wholink = 'i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community';
@@ -105,7 +105,7 @@ $(function() {
             marker.title = title;
             marker.html = cusCode;
             marker.latLng = marker.getLatLng();
-            marker.info = info.replace("'","&#39;");
+            marker.info = info;
             marker.on('click', sideDiv);
 
             catLayers[i].addLayer(marker);
@@ -133,14 +133,12 @@ $(function() {
 
             checkbox.addEventListener('change', function(e){
                 var id = this.id;
-                 console.log (id);
                 if (map.hasLayer(catLayers[id])) {
                     map.removeLayer(catLayers[id]);
                 } else {
                     map.addLayer(catLayers[id]);
                 }
             });
-
 	}
 
     function sideDiv(e){
