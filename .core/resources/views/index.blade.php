@@ -18,16 +18,20 @@ $(function() {
     var markers = {!! $footages !!};
 
     var iconType = {};
-        iconType['0'] = '/img/Afoto.png';
-        iconType['3'] = '/img/Xfoto.png';
-        iconType['1'] = '/img/Avideo.png';
-        iconType['2'] = '/img/Xvideo.png';
+		iconType['1'] = 'img/Afoto.png';
+		iconType['2'] = 'img/Xfoto.png';
+		iconType['3'] = 'img/Avideo.png';
+		iconType['4'] = 'img/Xvideo.png';
+		iconType['5'] = 'img/Aadio.png';
+		iconType['6'] = 'img/Xadio.png';
 
      var legName = {};
          legName['0'] = "Allied Photo\'s";
          legName['1'] = "Allied Video\'s";
-         legName['2'] = "Axis Video\'s";
-         legName['3'] = "Axis Photo\'s";
+         legName['3'] = "Axis Video\'s";
+         legName['2'] = "Axis Photo\'s";
+         legName['5'] = "Allied Audio";
+		 legName['6'] = "img/Xadio.png";
 
     var map = L.map('map').setView([50.1, 6], 6);
     mapLink = '<a href="http://www.esri.com/">Esri</a>';
