@@ -18,20 +18,17 @@ $(function() {
     var markers = {!! $footages !!};
 
     var iconType = {};
-		iconType['1'] = 'img/Afoto.png';
-		iconType['2'] = 'img/Xfoto.png';
-		iconType['3'] = 'img/Avideo.png';
-		iconType['4'] = 'img/Xvideo.png';
-		iconType['5'] = 'img/Aadio.png';
-		iconType['6'] = 'img/Xadio.png';
+        iconType['0'] = '/img/Afoto.png';
+        iconType['1'] = '/img/Xfoto.png';
+        iconType['2'] = '/img/Avideo.png';
+        iconType['3'] = '/img/Xvideo.png';
 
      var legName = {};
          legName['0'] = "Allied Photo\'s";
-         legName['1'] = "Allied Video\'s";
+         legName['1'] = "Axis Photo\'s";
+         legName['2'] = "Allied Video\'s";
          legName['3'] = "Axis Video\'s";
-         legName['2'] = "Axis Photo\'s";
-         legName['5'] = "Allied Audio";
-		 legName['6'] = "img/Xadio.png";
+         
 
     var map = L.map('map').setView([50.1, 6], 6);
     mapLink = '<a href="http://www.esri.com/">Esri</a>';
@@ -101,7 +98,7 @@ $(function() {
             if (dif < 3){
                 var cusCode = "<p><center><img src='/images/" + img + ".jpg' alt='' width='450px'/></center><br>"+info;
             }else{
-                var cusCode = "<p><center><video id=\""+img+"\" poster=\"media/"+img+"/"+img+".jpg\" width=\"480\" height=\"360\" controls=\"autoplay\"><source src=\"media/"+img+"/"+img+".mp4\" type=\"video/mp4\"><source src=\"media/"+img+"/"+img+".ogg\" type=\"video/ogg\"></center><br>"+info;
+                var cusCode = "<p><center><video id=\"VideoPlayer\" poster=\"media/"+img+"/"+img+".jpg\" width=\"480\" height=\"360\" controls=\"autoplay\"><source src=\"media/"+img+"/"+img+".mp4\" type=\"video/mp4\"><source src=\"media/"+img+"/"+img+".ogg\" type=\"video/ogg\"></center><br>"+info;
             }
 
             var marker = L.marker([lat, lng], {icon:   new LeafIcon({iconUrl:[iconType[i]]})});
@@ -168,8 +165,12 @@ $(function() {
     }
 });
 
+
 function closeDiv(){
    document.getElementById('infoDiv').style.display = 'none';
+   var video = document.getElementById("VideoPlayer");
+   video.pause();
+   video.currentTime = 0;
 }
 
 function search(){

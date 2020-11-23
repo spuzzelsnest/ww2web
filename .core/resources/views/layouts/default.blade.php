@@ -7,6 +7,8 @@
 		<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
 
+	<script src="//maps.googleapis.com/maps/api/js?key=AIzaSyAF7IPUAyR60tGxGYXPoyNobdtOJJm8cIc&callback"></script>
+
 	<link href="{{ asset('css/mainStyle.css') }}" rel="stylesheet" >
 	<script src="{{ asset('js/jquery-3.3.1.slim.min.js') }}"></script>
 	<link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" >
