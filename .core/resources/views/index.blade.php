@@ -3,8 +3,8 @@
 @section('mainbody')
 <div class="split right">
    <div id='infoDiv'>
- 	<div id="title"></div>
-	<div id="close" onclick="closeDiv()"><b>X</b> Close</div>
+	<div id="close" onclick="closeDiv()"><u>Close <big><b>X</b></big></u></div>
+    <div id="title"></div>
 	<div id="speakButton"></div>
 	<div id="markerInfo"><p><center>Scroll to zoom into the map and click the markers to find more information!</center></p></div>
    </div>
@@ -67,17 +67,22 @@ $(function() {
                 var date                = markers[i].date;
                 var info                = markers[i].info;
                 var remarks             = markers[i].remarks;
-                
+
+                var title = place+" - "+date;
+
                 if (dif < 3) {
-                        customCode = "<p><center><img src=\"images/"+name+".jpg\" alt=\""+shortdesc+"\"></center>";
+                        customCode = "<p><center><img src='/images/" + name + ".jpg' alt='' width='450px'/></center><br>";
                 } else {
-                        customCode = "<p><center><video id=\""+name+"\" poster=\"media/"+name+"/"+name+".jpg\" width=\"480\" height=\"360\" controls=\"autoplay\"><source src=\"media/"+name+"/"+name+".mp4\" type=\"video/mp4\"><source src=\"media/"+name+"/"+name+".ogg\" type=\"video/ogg\"></center>";
+                        customCode = "<p><center><video id=\"VideoPlayer\" poster=\"media/"+name+"/"+name+".jpg\" width=\"480\" height=\"360\" controls=\"autoplay\"><source src=\"media/"+name+"/"+name+".mp4\" type=\"video/mp4\"><source src=\"media/"+name+"/"+name+".ogg\" type=\"video/ogg\"></center><br>";
                 }
-                customCode += "<br><b>"+place+" - </b>"+date+"<br>source: "+source+"<p>"+info+"</p>";
 
                 var marker = L.marker([lat, lng], {icon: new LeafIcon({iconUrl:[iconType[dif]]})});
+                marker.title = title;
+                marker.latLng = marker.getLatLng();
                 marker.html = customCode;
-                marker.on('click', sideDiv);
+                marker.info = info;
+                marker.on('click', displayInfo);
+                
                 cluster.addLayer(marker);
         }
         
@@ -85,15 +90,16 @@ $(function() {
 
 
 
-function sideDiv(e){
-
-    var title = this.title;
-    var text = this.html;
-    var info = this.info;
-    var latLng = this.latLng;
+function displayInfo(e){
 
     document.getElementById('infoDiv').style.display = 'block';
 
+    var latLng = this.latLng;
+    var title = this.title;
+    var code = this.html;
+    var info = this.info;
+    
+    var titleDiv = document.getElementById('title');
     titleDiv.innerHTML = "<h3><u>"+title+"</u></h3>";
     titleDiv.onmouseover = function(){titleDiv.style.color = '#428608';};
     titleDiv.onmouseout = function(){titleDiv.style.color = 'Black';};
@@ -105,9 +111,10 @@ function sideDiv(e){
         document.getElementById('speakButton').innerHTML = "";
     }
 
-    infoDiv.innerHTML = text;
+    markerInfo.innerHTML = code + "<p>" + info + "</p>";
 
 }
+});
 
 function closeDiv(){
    document.getElementById('infoDiv').style.display = 'none';
@@ -145,8 +152,6 @@ function search(){
     }
 }
 
-
-});
 </script>
 
 @endsection
