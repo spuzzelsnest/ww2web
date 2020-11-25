@@ -1,13 +1,12 @@
-
 @extends ('layouts.default')
 
 @section('mainbody')
 <div class="split right">
    <div id='infoDiv'>
- 	<div id="title"> </div>
+ 	<div id="title"></div>
 	<div id="close" onclick="closeDiv()"><b>X</b> Close</div>
 	<div id="speakButton"></div>
-	<div id="markerInfo"><center>Zoom into the map and  click the markers to find more information!</center></div>
+	<div id="markerInfo"><p><center>Scroll to zoom into the map and click the markers to find more information!</center></p></div>
    </div>
 </div>
 
@@ -16,19 +15,12 @@
 $(function() {
 
     var markers = {!! $footages !!};
-
+   
     var iconType = {};
-        iconType['0'] = '/img/Afoto.png';
-        iconType['1'] = '/img/Xfoto.png';
-        iconType['2'] = '/img/Avideo.png';
-        iconType['3'] = '/img/Xvideo.png';
-
-     var legName = {};
-         legName['0'] = "Allied Photo\'s";
-         legName['1'] = "Axis Photo\'s";
-         legName['2'] = "Allied Video\'s";
-         legName['3'] = "Axis Video\'s";
-         
+        iconType['1'] = '/img/Afoto.png';
+        iconType['2'] = '/img/Xfoto.png';
+        iconType['3'] = '/img/Avideo.png';
+        iconType['4'] = '/img/Xvideo.png';
 
     var map = L.map('map').setView([50.1, 6], 6);
     mapLink = '<a href="http://www.esri.com/">Esri</a>';
@@ -44,131 +36,82 @@ $(function() {
 	    id: 'cartodb_labels',
 	    attribution: '&copy; '+lableLink
             }).addTo(map);
-
+    
     var LeafIcon = L.Icon.extend({
-            options: {
-                    iconSize:[20, 22]
-              }
+            options: {iconSize:[20, 22]}
      });
 
-    var catLayers = L.markerClusterGroup();
-    var legenda = document.getElementById('legenda');
-    var titleDiv = document.getElementById('title');
-    var infoDiv = document.getElementById('markerInfo');
-    var cat = [];
-
-    for(i = 0; i< markers.length; i++){
-        if(cat.indexOf(markers[i].typeid) === -1){
-            cat.push(markers[i].typeid);
-        }
-    }
-
-    for(i = 0; i< cat.length; i++){
-
-        catData = jQuery.grep(markers,function(item, c){return(item.typeid == cat[i] && c > 1);});
-
-	catLayers[i] = new L.markerClusterGroup({
-              spiderfyOnMaxZoom: true,
-		      showCoverageOnHover: false,
-		      zoomToBoundsOnClick: true,
-		      removeOutsideVisibleBounds:true,
-		      disableClusteringAtZoom: 18,
-		      maxClusterRadius: 5,
-		      spiderLegPolylineOptions: {
-				    weight: 1.5,
-				    color: '#222',
-				    opacity: 0.5
-		      }
+     var cluster = L.markerClusterGroup({
+                spiderfyOnMaxZoom: true,
+                showCoverageOnHover: false,
+                zoomToBoundsOnClick: true,
+                removeOutsideVisibleBounds:true,
+                maxClusterRadius: 20,
+                spiderLegPolylineOptions: {
+                                weight: 1.5,
+                                color: '#222',
+                                opacity: 0.5
+                }
         });
 
-        for(m in catData){
+        for(var i in markers){
 
-            var lat     = catData[m].lat;
-            var lng     = catData[m].lng;
-            var dif     = catData[m].typeid;
-            var head    = catData[m].shortdesc;
-            var img     = catData[m].name;
-            var place   = catData[m].place;
-            var country = catData[m].country;
-            var date    = catData[m].date;
-            var info    = catData[m].info;
-
-            var title = place+" - "+date;
-
-            if (dif < 3){
-                var cusCode = "<p><center><img src='/images/" + img + ".jpg' alt='' width='450px'/></center><br>"+info;
-            }else{
-                var cusCode = "<p><center><video id=\"VideoPlayer\" poster=\"media/"+img+"/"+img+".jpg\" width=\"480\" height=\"360\" controls=\"autoplay\"><source src=\"media/"+img+"/"+img+".mp4\" type=\"video/mp4\"><source src=\"media/"+img+"/"+img+".ogg\" type=\"video/ogg\"></center><br>"+info;
-            }
-
-            var marker = L.marker([lat, lng], {icon:   new LeafIcon({iconUrl:[iconType[i]]})});
-            marker.title = title;
-            marker.html = cusCode;
-            marker.latLng = marker.getLatLng();
-            marker.info = info;
-            marker.on('click', sideDiv);
-
-            catLayers[i].addLayer(marker);
-        }
-    	    catLayers[i].addTo(map);
-            distCount = catData.length;
-            var icon            = document.createElement('img');
-                icon.width      = 20;
-                icon.height     = 20;
-                icon.src        = iconType[i];
-
-            var checkbox        = document.createElement('input');
-                checkbox.type   = 'checkbox';
-                checkbox.name   = 'typeid';
-                checkbox.id     = i;
-                checkbox.checked= true;
-
-            var label = document.createElement('label')
-                label.htmlFor = i;
-                label.appendChild(document.createTextNode("\u00A0\u00A0"+distCount+"\u00A0\u00A0"+legName[i]+"\u00A0\u00A0.\u00A0\u00A0"));
-
-            legenda.appendChild(checkbox);
-            legenda.appendChild(icon);
-            legenda.appendChild(label);
-
-            checkbox.addEventListener('change', function(e){
-                var id = this.id;
-                if (map.hasLayer(catLayers[id])) {
-                    map.removeLayer(catLayers[id]);
+                var lat                 = markers[i].lat;
+                var lng                 = markers[i].lng;
+                var dif                 = markers[i].typeid;
+                var cusIcon             = iconType[dif];
+                var shortdesc           = markers[i].shortdesc;
+                var name                = markers[i].name;
+                var place               = markers[i].place;
+                var source              = markers[i].source;
+                var date                = markers[i].date;
+                var info                = markers[i].info;
+                var remarks             = markers[i].remarks;
+                
+                if (dif < 3) {
+                        customCode = "<p><center><img src=\"images/"+name+".jpg\" alt=\""+shortdesc+"\"></center>";
                 } else {
-                    map.addLayer(catLayers[id]);
+                        customCode = "<p><center><video id=\""+name+"\" poster=\"media/"+name+"/"+name+".jpg\" width=\"480\" height=\"360\" controls=\"autoplay\"><source src=\"media/"+name+"/"+name+".mp4\" type=\"video/mp4\"><source src=\"media/"+name+"/"+name+".ogg\" type=\"video/ogg\"></center>";
                 }
-            });
-	}
+                customCode += "<br><b>"+place+" - </b>"+date+"<br>source: "+source+"<p>"+info+"</p>";
 
-    function sideDiv(e){
-
-        var title = this.title;
-        var text = this.html;
-        var info = this.info;
-        var latLng = this.latLng;
-
-	document.getElementById('infoDiv').style.display = 'block';
-
-	titleDiv.innerHTML = "<h3><u>"+title+"</u></h3>";
-        titleDiv.onmouseover = function(){titleDiv.style.color = '#428608';};
-        titleDiv.onmouseout = function(){titleDiv.style.color = 'Black';};
-        titleDiv.onclick = function(e){map.setView(latLng, '20', {animation: true});};
-
-        if (info !== ''){
-            document.getElementById('speakButton').innerHTML = "<p><button onclick='responsiveVoice.speak(`"+info+"`);'>Read Me</button>";
-        }else{
-            document.getElementById('speakButton').innerHTML = "";
+                var marker = L.marker([lat, lng], {icon: new LeafIcon({iconUrl:[iconType[dif]]})});
+                marker.html = customCode;
+                marker.on('click', sideDiv);
+                cluster.addLayer(marker);
         }
+        
+        map.addLayer(cluster);
 
-	infoDiv.innerHTML = text;
+
+
+function sideDiv(e){
+
+    var title = this.title;
+    var text = this.html;
+    var info = this.info;
+    var latLng = this.latLng;
+
+    document.getElementById('infoDiv').style.display = 'block';
+
+    titleDiv.innerHTML = "<h3><u>"+title+"</u></h3>";
+    titleDiv.onmouseover = function(){titleDiv.style.color = '#428608';};
+    titleDiv.onmouseout = function(){titleDiv.style.color = 'Black';};
+    titleDiv.onclick = function(e){map.setView(latLng, '20', {animation: true});};
+
+    if (info !== ''){
+        document.getElementById('speakButton').innerHTML = "<p><button onclick='responsiveVoice.speak(`"+info+"`);'>Read Me</button>";
+    }else{
+        document.getElementById('speakButton').innerHTML = "";
     }
-});
 
+    infoDiv.innerHTML = text;
+
+}
 
 function closeDiv(){
    document.getElementById('infoDiv').style.display = 'none';
-   var video = document.getElementById("VideoPlayer");
+   var video = document.getElementById('VideoPlayer');
    video.pause();
    video.currentTime = 0;
 }
@@ -202,6 +145,8 @@ function search(){
     }
 }
 
+
+});
 </script>
 
 @endsection
