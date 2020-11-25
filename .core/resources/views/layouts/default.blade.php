@@ -26,7 +26,7 @@
 </head>
 <body>
  <div id="map"></div>
-	@include('layouts.header')
+	@include('layouts.legenda')
 	@yield('mainbody')
 	@include('layouts.footer')
 </body>

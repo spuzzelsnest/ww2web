@@ -21,6 +21,8 @@ $(function() {
         iconType['2'] = '/img/Xfoto.png';
         iconType['3'] = '/img/Avideo.png';
         iconType['4'] = '/img/Xvideo.png';
+        iconType['5'] = 'img/Aadio.png';
+		iconType['6'] = 'img/Xadio.png';
 
     var map = L.map('map').setView([50.1, 6], 6);
     mapLink = '<a href="http://www.esri.com/">Esri</a>';
@@ -59,14 +61,14 @@ $(function() {
                 var lat                 = markers[i].lat;
                 var lng                 = markers[i].lng;
                 var dif                 = markers[i].typeid;
-                var cusIcon             = iconType[dif];
                 var shortdesc           = markers[i].shortdesc;
                 var name                = markers[i].name;
                 var place               = markers[i].place;
-                var source              = markers[i].source;
                 var date                = markers[i].date;
                 var info                = markers[i].info;
+                var source              = markers[i].source;
                 var remarks             = markers[i].remarks;
+                var cusIcon             = iconType[dif];
 
                 var title = place+" - "+date;
 
@@ -81,6 +83,7 @@ $(function() {
                 marker.latLng = marker.getLatLng();
                 marker.html = customCode;
                 marker.info = info;
+                marker.source = source;
                 marker.on('click', displayInfo);
                 
                 cluster.addLayer(marker);
@@ -111,7 +114,7 @@ function displayInfo(e){
         document.getElementById('speakButton').innerHTML = "";
     }
 
-    markerInfo.innerHTML = code + "<p>" + info + "</p>";
+    markerInfo.innerHTML = code + "<p>" + info + "<br>"+ "<small><i>"+source+"</i></small></p>";
 
 }
 });
