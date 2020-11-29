@@ -104,5 +104,6 @@
                                 {!! link_to_route('admin.index', 'Cancel', null, array('class' => 'btn btn-warning')) !!}
                         </center>
                 {!! Form::close() !!}
+                </p>
 </div>
 @endsection

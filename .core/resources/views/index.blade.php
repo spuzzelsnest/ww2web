@@ -1,5 +1,5 @@
 @extends ('layouts.default')
-
+@include('layouts.legenda')
 @section('mainbody')
 <div class="split right">
    <div id='infoDiv'>
