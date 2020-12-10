@@ -164,7 +164,8 @@ return [
 
 	Intervention\Image\ImageServiceProvider::class,
 	Collective\Html\HtmlServiceProvider::class,
-	Jenssegers\Date\DateServiceProvider::class,
+    Jenssegers\Date\DateServiceProvider::class,
+    Davmixcool\MetaManager\MetaServiceProvider::class,
 
         /*
          * Package Service Providers...
