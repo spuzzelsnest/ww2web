@@ -59,7 +59,7 @@ return [
     | engines understand it better. 
     |
     */
-	'title'	=> '',
+	'title'	=> 'WW2 History: The Press War',
 
 	/*
     |--------------------------------------------------------------------------
@@ -70,7 +70,7 @@ return [
     | help search engines understand it better. 
     |
     */
-	'description' => '',
+	'description' => 'World War 2 then and now footage from 1939 to 1945 pinned on the more or less original location.',
 
 	/*
     |--------------------------------------------------------------------------
@@ -94,7 +94,7 @@ return [
     | or a specific page page.
     |
     */
-	'author' => '',
+	'author' => 'WW2Maps',
 
 
 	/*
@@ -106,7 +106,7 @@ return [
     | for your business.
     |
     */
-	'geo_region' => '', //e.g: Lagos
+	'geo_region' => 'Belgium', //e.g: Lagos
 	'geo_position' => '', //e.g(lng,lat): 4.870467,6.993388
 
 
@@ -118,7 +118,7 @@ return [
     | Here you may provide your twitter @username of your account
     |
     */
-	'twitter_site' => '',
+	'twitter_site' => '@ww2web',
 
 	/*
     |--------------------------------------------------------------------------
@@ -152,7 +152,7 @@ return [
     | Here you may provide keywords relevant to your website and the specific page.
     |
     */
-	'keywords' => '',
+	'keywords' => 'then and now, world war 2, tracesofwar, pictures, footages, Fall Gelb, D-Day, Battle for Normandy, Market Garden, Battle of the Bulge, Liberation of France, Liberation of Belgium',
 
 
 ];
