@@ -1,8 +1,8 @@
 <!doctype html>
 <html>
 <head>
-	<meta  name="WW2Web" content="Html5,CSS3,JavaScript" charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="destription" content="World War 2 then and now picture pinned on the more or less original location." charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<!--[if IE]>
 		<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
