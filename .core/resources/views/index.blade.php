@@ -6,7 +6,14 @@
 	<div id="close" onclick="closeDiv()"><u>Close <big><b>X</b></big></u></div>
     <div id="title"></div>
 	<div id="speakButton"></div>
-	<div id="markerInfo"><p><center>Scroll to zoom into the map and click the markers to find more information!</center></p></div>
+	    <div id="markerInfo">
+            <p>
+            <center><H1>Welcome,</h1>
+            to this page showing a collection of then and now footage from the Second World War. It's a work in progress and being updated regularly.</p>
+            <p>Scroll to zoom into the map and click the markers to find more information!
+            </center>
+            </p>
+        </div>
    </div>
 </div>
 
@@ -26,22 +33,22 @@ $(function() {
 		iconType['6'] = '/img/Xadio.png';
 
     var map = L.map('map').setView([50.1, 6], 6);
-    mapLink = '<a href="http://www.esri.com/">Esri</a>';
-    lableLink = '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>';
-    wholink = 'This Project is for Historic reference Only';
+    mapLink = '<a href="https://www.esri.com/">Esri</a>';
+    lableLink = '<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://cartodb.com/attributions">CartoDB</a>';
+    wholink = 'This Project is meant as Historic reference only';
 
-    L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{
-            attribution: '&copy; '+wholink+', '+mapLink,
-            maxZoom: 18,
-            }).addTo(map);
-
-    L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}.png',{
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}.png',{
 	    id: 'cartodb_labels',
 	    attribution: '&copy; '+lableLink
             }).addTo(map);
+
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{
+            attribution: '&copy; '+mapLink+', '+wholink,
+            maxZoom: 18,
+            }).addTo(map);
     
     var LeafIcon = L.Icon.extend({
-            options: {iconSize:[20, 22]}
+            options: {iconSize:[18, 22]}
      });
 
      var cluster = L.markerClusterGroup({
@@ -117,8 +124,6 @@ $(function() {
     }
 
     $("input:checkbox").bind( "change", function(){
-
-        console.log('change!!!');
 
 	    $.each(data, function(index, i){
 
