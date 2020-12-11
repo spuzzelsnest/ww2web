@@ -9,7 +9,7 @@
 	    <div id="markerInfo">
             <p>
             <center><H1>Welcome,</h1>
-            to this page showing a collection of then and now footage from the Second World War. It's a work in progress and being updated regularly.</p>
+            to this page showing you a collection of footage from the Second World War pinned to their original location. It's a work in progress and will be updated regularly.</p>
             <p>Scroll to zoom into the map and click the markers to find more information!
             </center>
             </p>
