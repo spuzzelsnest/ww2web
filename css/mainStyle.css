@@ -14,7 +14,7 @@ html, body{
     background-color: rgba(255,255,255,0.66);
     padding-top: 1rem;
     top: 0.5rem;
-    left: 4rem;
+    left: 3.5rem;
     right: 0.5rem;
     text-align: center;
     font-weight: bold;
@@ -65,7 +65,7 @@ html, body{
   padding-left: 0.5rem;
   top: 2rem;
   min-width: 24.8rem;
-  max-height: 30rem;
+  max-height: 35rem;
   right: 0.5rem;
   overflow: auto;
   position: absolute;
