@@ -14,7 +14,7 @@ html, body{
     background-color: rgba(255,255,255,0.66);
     padding-top: 1rem;
     top: 0.5rem;
-    left: 3.5rem;
+    left: 4rem;
     right: 0.5rem;
     text-align: center;
     font-weight: bold;
@@ -22,7 +22,7 @@ html, body{
     color: black;
     position: fixed;
   }
-  @media (max-width: 768px) {
+  @media (max-width: 850px) {
   .item-label {
     display: none;
   }
@@ -92,5 +92,5 @@ footer{
   position: fixed;
   left: 0.5rem;
   right:  0.5rem;
-  bottom: 1.5rem;
+  bottom: 2rem;
 }
