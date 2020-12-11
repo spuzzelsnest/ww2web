@@ -28,10 +28,10 @@ $(function() {
     var map = L.map('map').setView([50.1, 6], 6);
     mapLink = '<a href="http://www.esri.com/">Esri</a>';
     lableLink = '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>';
-    wholink = 'i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community';
+    wholink = 'This Project is for Historic reference Only';
 
     L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{
-            attribution: '&copy; '+mapLink+', '+wholink,
+            attribution: '&copy; '+wholink+', '+mapLink,
             maxZoom: 18,
             }).addTo(map);
 
@@ -74,7 +74,7 @@ $(function() {
                 var title = place+" - "+date;
 
                 if (dif < 3) {
-                        customCode = "<p><center><img src='/images/" + name + ".jpg' alt='' width='350px'/></center><br>";
+                        customCode = "<p><center><img src='/images/"+name+".jpg' alt='"+shortdesc+"' width='350px'/></center><br>";
                 } else {
                         customCode = "<p><center><video id=\"VideoPlayer\" poster=\"media/"+name+"/"+name+".jpg\" width=\"350\" height=\"263\" controls=\"autoplay\"><source src=\"media/"+name+"/"+name+".mp4\" type=\"video/mp4\"><source src=\"media/"+name+"/"+name+".ogg\" type=\"video/ogg\"></center><br>";
                 }
@@ -135,10 +135,7 @@ $(function() {
 
 function closeDiv(){
    document.getElementById('infoDiv').style.display = 'none';
-
-
    var video = document.getElementById('VideoPlayer');
-   
    video.pause();
    video.currentTime = 0;
 }

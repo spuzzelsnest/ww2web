@@ -1,9 +1,10 @@
 <!doctype html>
 <html>
 <head>
-	<meta name="destription" content="World War 2 then and now footage from 1939 to 1945 pinned on the more or less original location." charset="utf-8">
+	<meta name="description" content="World War 2 then and now footage from 1939 to 1945 pinned on the more or less original location." charset="utf-8">
 	<meta name="keywords" content="then and now, world war 2, tracesofwar, pictures, footages, Fall Gelb, D-Day, Battle for Normandy, Market Garden, Battle of the Bulge, Liberation of France, Liberation of Belgium">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
 	<!--[if IE]>
 		<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
