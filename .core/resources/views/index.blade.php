@@ -32,19 +32,18 @@ $(function() {
         iconType['5'] = '/img/Aadio.png';
 		iconType['6'] = '/img/Xadio.png';
 
-    var map = L.map('map').setView([50.1, 6], 6);
+    var map = L.map('map').setView([49.1, 4], 6);
     mapLink = '<a href="https://www.esri.com/">Esri</a>';
     lableLink = '<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://cartodb.com/attributions">CartoDB</a>';
     wholink = 'This Project is meant as Historic reference only';
 
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}.png',{
-	    id: 'cartodb_labels',
-	    attribution: '&copy; '+lableLink
-            }).addTo(map);
-
     L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{
-            attribution: '&copy; '+mapLink+', '+wholink,
+            attribution: '&copy; '+mapLink,
             maxZoom: 18,
+            }).addTo(map);
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}.png',{
+	    id: 'cartodb_labels',
+	    attribution: '&copy; '+lableLink+', '+wholink
             }).addTo(map);
     
     var LeafIcon = L.Icon.extend({
