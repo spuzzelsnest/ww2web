@@ -8,8 +8,8 @@
 	<div id="speakButton"></div>
 	    <div id="markerInfo">
             <p>
-            <center><H1>Welcome</h1>
-            This page is dedicated to a collection of footage from the Second World War pinned to its original location. It's a work in progress and will be updated regularly.
+            <center><h1>WW 2 Maps</h1>
+            This page is dedicated to footage from the Second World War, pinned to its original location. It's a work in progress and will be updated regularly.
             </p>
             <p>Scroll to zoom into the map and click the markers to find more information!</p>
             </center>
