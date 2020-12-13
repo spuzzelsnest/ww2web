@@ -32,7 +32,7 @@ $(function() {
         iconType['5'] = '/img/Aadio.png';
 		iconType['6'] = '/img/Xadio.png';
 
-    var map = L.map('map').setView([49.1, 4], 6);
+    var map = L.map('map').setView([50.1, 4], 7);
     mapLink = '<a href="https://www.esri.com/">Esri</a>';
     lableLink = '<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://cartodb.com/attributions">CartoDB</a>';
     wholink = 'This Project is meant as Historic reference only';
@@ -80,7 +80,7 @@ $(function() {
                 var title = place+" - "+date;
 
                 if (dif < 3) {
-                        customCode = "<p><center><img src='/images/"+name+".jpg' alt='"+shortdesc+"' width='350px'/></center><br>";
+                        customCode = "<p><center><img src='/images/"+name+".jpg' alt='"+shortdesc+"' class='img' width='350px'/></center><br>";
                 } else {
                         customCode = "<p><center><video id=\"VideoPlayer\" poster=\"media/"+name+"/"+name+".jpg\" width=\"350\" height=\"263\" controls=\"autoplay\"><source src=\"media/"+name+"/"+name+".mp4\" type=\"video/mp4\"><source src=\"media/"+name+"/"+name+".ogg\" type=\"video/ogg\"></center><br>";
                 }
