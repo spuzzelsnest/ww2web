@@ -120,7 +120,7 @@ $(function() {
             document.getElementById('speakButton').innerHTML = "";
         }
 
-        markerInfo.innerHTML = code + "<p>" + info + "<br><small><i>"+source+"</i></small></p>";
+        markerInfo.innerHTML = code + "<p>" + info + "<br><small><i>"+source+" "+remarks+"</i></small></p>";
     }
 
     $("input:checkbox").bind( "change", function(){
