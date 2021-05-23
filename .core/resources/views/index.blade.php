@@ -27,7 +27,7 @@ $(function() {
         iconType['2'] = '/img/Xfoto.png';
         iconType['3'] = '/img/Avideo.png';
         iconType['4'] = '/img/Xvideo.png';
-        iconType['5'] = '/img/Aadio.png';
+        iconType['5'] = '/img/Aaudio.png';
 		iconType['6'] = '/img/Xadio.png';
 
     var map = L.map('map').setView([50.1, 4], 7);
