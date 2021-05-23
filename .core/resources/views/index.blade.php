@@ -89,6 +89,7 @@ $(function() {
                     marker.html = customCode;
                     marker.info = info;
                     marker.source = source;
+                    marker.remarks = remarks;
                     marker.on('click', displayInfo);
                 markers.push(marker);
                 cluster.addLayer(marker);
@@ -104,6 +105,8 @@ $(function() {
         var title = this.title;
         var code = this.html;
         var info = this.info;
+        var source = this.source;
+        var remark = this.remark;
         
         var titleDiv = document.getElementById('title');
         titleDiv.innerHTML = "<h3><u>"+title+"</u></h3>";
