@@ -72,7 +72,7 @@ $(function() {
                 var date                = data[i].date;
                 var info                = data[i].info;
                 var source              = data[i].source;
-                var remarks             = data[i].remarks;
+                var remark             = data[i].remark;
                 var cusIcon             = iconType[dif];
 
                 var title = place+" - "+date;
@@ -89,7 +89,7 @@ $(function() {
                     marker.html = customCode;
                     marker.info = info;
                     marker.source = source;
-                    marker.remarks = remarks;
+                    marker.remark = remark;
                     marker.on('click', displayInfo);
                 markers.push(marker);
                 cluster.addLayer(marker);
@@ -120,7 +120,7 @@ $(function() {
             document.getElementById('speakButton').innerHTML = "";
         }
 
-        markerInfo.innerHTML = code + "<p>" + info + "<br><small><i>"+source+" "+remarks+"</i></small></p>";
+        markerInfo.innerHTML = code + "<p>" + info + "<br><small><i>"+source+" "+remark+"</i></small></p>";
     }
 
     $("input:checkbox").bind( "change", function(){
