@@ -29,12 +29,15 @@ Create missing directories
 mkdir .core/bootstrap/cache 
 mkdir .core/storage/logs
 mkdir .core/storage/framework/sessions
+mkdir .core/storage/framework/views
+mkdir .core/storage/framework/cache
 ```
 
 Change permissions
 ```
 chmod 777 .core/storage/logs 
-chmod 777 .core/storage/framework/sessions/
+chmod 777 .core/storage/framework/sessions
+chmod 777 .core/storage/framework/views
 ```
 
 How to update a newly downloaded git
