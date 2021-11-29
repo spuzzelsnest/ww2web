@@ -11,6 +11,9 @@ class CreateFootagesTable extends Migration
      *
      * @return void
      */
+    public function up()
+    {
+        
     Schema::create('footages', function(Blueprint $table)
     	{
     		$table->increments('id');
@@ -24,7 +27,7 @@ class CreateFootagesTable extends Migration
 			$table->char('country',120);
 			$table->date('date');
 			$table->char('source',150);
-    		$table->char('remarks',120);
+    		$table->char('remark',120);
 			$table->boolean('published');
 			$table->timestamps();
         });
