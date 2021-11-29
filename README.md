@@ -27,13 +27,14 @@ git clone https://github.com/spuzzelsnest/ww2web.git ww2maps.loc
 Create missing directories
 ```
 mkdir .core/bootstrap/cache 
-mkdir -p .core/storage/framework/sessions/ 
+mkdir .core/storage/logs
+mkdir .core/storage/framework/sessions/ 
 ```
 
 Change permissions
 ```
-chmod -R 777 .core/storage 
-chmod -R 777 .core/storage/framework/sessions/
+chmod 777 .core/storage/logs 
+chmod 777 .core/storage/framework/sessions/
 ```
 
 ### New update
