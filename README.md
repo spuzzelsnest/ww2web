@@ -13,7 +13,7 @@ Root dir change
 sudo apt install curl php-cli php-mbstring git unzip composer
 ```
 
-> pacman
+> Pacman
 ```
 sudo pacman -Syu php7 php7-fpm composer
 ```
@@ -30,16 +30,15 @@ mkdir .core/bootstrap/cache
 mkdir -p .core/storage/framework/sessions/ 
 ```
 
-
 Change permissions
 ```
 chmod -R 777 .core/storage 
+chmod -R 777 .core/storage/framework/sessions/
 ```
 
 ### New update
 
 How to update a newly downloaded git
-
 ```
 composer update
 php artisan key:generate
