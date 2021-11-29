@@ -37,10 +37,19 @@ chmod 777 .core/storage/logs
 chmod 777 .core/storage/framework/sessions/
 ```
 
-### New update
-
 How to update a newly downloaded git
 ```
 composer update
 php artisan key:generate
+```
+
+Setup database
+```
+php artisan make:migration create_types_table
+php artisan make:migration create_footages_table
+```
+
+Edit the created database files and migrate to the database
+```
+php artisan migrate
 ```
