@@ -53,3 +53,8 @@ Edit the created database files and migrate to the database
 ```
 php artisan migrate
 ```
+
+A typesSeeder is available in .core/database/seeds, seed as follows.
+```
+php artisan db:seed
+```
