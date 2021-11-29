@@ -8,11 +8,15 @@ Root dir change
 - mysql
 - composer
 
-> Debian 
+> Aptitude
 
 ``` 
 sudo apt install curl php-cli php-mbstring git unzip composer
 ```
+
+> pacman
+
+sudo pacman -Syu php7 php7-fpm composer
 
 ### Download and Config
 
