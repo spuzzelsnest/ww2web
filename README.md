@@ -28,7 +28,7 @@ Create missing directories
 ```
 mkdir .core/bootstrap/cache 
 mkdir .core/storage/logs
-mkdir .core/storage/framework/sessions/ 
+mkdir .core/storage/framework/sessions
 ```
 
 Change permissions
