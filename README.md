@@ -21,10 +21,17 @@ sudo pacman -Syu php7 php7-fpm composer
 ### Download and Config
 
 Download into folder
-
 ```
 git clone https://github.com/spuzzelsnest/ww2web.git ww2maps.loc 
+
 ```
+
+Create missing directories
+```
+mkdir -p .core/storage/framework/sessions/ 
+
+```
+
 
 Change permissions
 ```
