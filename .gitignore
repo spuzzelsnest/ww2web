@@ -12,7 +12,7 @@ yarn-error.log
 .core/.env
 
 /.vagrant
-.phpunit.result.cache
+.core/.phpunit.result.cache
 
 /images/*
 /media/*
