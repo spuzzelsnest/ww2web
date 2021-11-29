@@ -14,22 +14,22 @@ class typesSeeder extends Seeder
         DB::table('types')->insert(
 				
             array(
-                    array(	'type'			=> 'Afoto',
+                    array(	'type'		=> 'Afoto',
                             'description' 	=> 'Allied Photo'
                     ),
-                    array(	'type'			=> 'Xfoto',
+                    array(	'type'		=> 'Xfoto',
                             'description'	=> 'Axis Photo'		
                     ),
-                    array(	'type'			=> 'Avideo',
+                    array(	'type'		=> 'Avideo',
                             'description'	=> 'Allied Video'
                     ),
-                    array(	'type'			=> 'Xvideo',
+                    array(	'type'		=> 'Xvideo',
                             'description'	=> 'Axis Video'
                     ),
-                    array(	'type'			=> 'Aaudio',
+                    array(	'type'		=> 'Aaudio',
                             'description'	=> 'Allied Audio'
                     ),
-                    array(	'type'			=> 'Xaudio',
+                    array(	'type'		=> 'Xaudio',
                             'description'	=> 'Axis Audio'
                     ),
                     
