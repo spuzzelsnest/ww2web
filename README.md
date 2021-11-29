@@ -8,7 +8,7 @@ Root dir change
 - mysql
 - composer
 
->>> Debian 
+> Debian 
 
 ``` 
 sudo apt install curl php-cli php-mbstring git unzip composer
@@ -31,7 +31,6 @@ chmod -R 777 .core/storage
 
 How to update a newly downloaded git
 
-
+```
 composer update
-
-## Setting the permissions to the folder
+```
