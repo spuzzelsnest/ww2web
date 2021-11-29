@@ -42,4 +42,5 @@ How to update a newly downloaded git
 
 ```
 composer update
+php artisan key:generate
 ```
