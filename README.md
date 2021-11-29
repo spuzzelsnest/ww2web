@@ -2,19 +2,32 @@
 
 ## Prerequisites
 
+- php7
+- mysql
+- composer
+
+>> Debian 
+
+``` 
+
 sudo apt install curl php-cli php-mbstring git unzip composer
 
+```
+
+```
+
+git clone https://github.com/spuzzelsnest/ww2web.git ww2maps.loc 
+
+
+```
 
 ## new update
 
 how to update a newly downloaded git
 
-## Setting the permissions to the folder
-
-sudo find /path/to/lara/proj -type f -exec chmod 644 {} \;
-sudo find /path/to/lara/proj -type d -exec chmod 755 {} \;
 
 ## New install
 
   composer update
 
+## Setting the permissions to the folder
