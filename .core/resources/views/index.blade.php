@@ -65,7 +65,7 @@ $(function() {
 
                 var lat                 = data[i].lat;
                 var lng                 = data[i].lng;
-                var dif                 = data[i].typeid;
+                var dif                 = data[i].typeId;
                 var shortdesc           = data[i].shortdesc;
                 var name                = data[i].name;
                 var place               = data[i].place;
