@@ -77,7 +77,7 @@ $(function() {
                 var title = place+" - "+date;
 
                 if (dif < 3) {
-                        customCode = "<a class='picbox' href='#popup'><center><img src='/images/"+name+".jpg' alt='"+shortdesc+"' class='img' width='350px'/></center><div class='picbox-target' id='popup'><img src='/images/"+name+".jpg' class='img'/><a class='popup-close' href='#'></a></div><br>";
+                        customCode = "<a class='picbox' href='#popup'><div class='picbox-target' id='popup'><center><img src='/images/"+name+".jpg' class='img'/></center><a class='popup-close' href='#'></a></div><br>";
                 } else {
                         customCode = "<video id=\"VideoPlayer\" poster=\"media/"+name+"/"+name+".jpg\" width=\"350\" height=\"263\" controls=\"autoplay\"><source src=\"media/"+name+"/"+name+".mp4\" type=\"video/mp4\"><source src=\"media/"+name+"/"+name+".ogg\" type=\"video/ogg\"></center><br>";
                 }
