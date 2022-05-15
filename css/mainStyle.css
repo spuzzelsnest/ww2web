@@ -88,7 +88,6 @@ html, body{
 }
 
 #popup img {
-  background: #584e4e4f;
   border: 3px solid white;
   box-sizing: border-box;
   -webkit-transition: .5s ease-in-out;
@@ -151,7 +150,6 @@ html, body{
   top: 0;
   bottom: 0;
   overflow:hidden;
-  background: #584e4e4f;
 }
   
 #popup:target img {

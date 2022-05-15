@@ -23,12 +23,12 @@ $(function() {
     var markers = [];
    
     var iconType = {};
-        iconType['1'] = '/img/Afoto.png';
-        iconType['2'] = '/img/Xfoto.png';
-        iconType['3'] = '/img/Avideo.png';
-        iconType['4'] = '/img/Xvideo.png';
-        iconType['5'] = '/img/Aaudio.png';
-		iconType['6'] = '/img/Xadio.png';
+        iconType['1'] = '/css/images/Afoto.png';
+        iconType['2'] = '/css/images/Xfoto.png';
+        iconType['3'] = '/css/images/Avideo.png';
+        iconType['4'] = '/css/images/Xvideo.png';
+        iconType['5'] = '/css/images/Aaudio.png';
+		iconType['6'] = '/css/images/Xadio.png';
 
     var map = L.map('map').setView([50.1, 4], 7);
     mapLink = '<a href="https://www.esri.com/">Esri</a>';
