@@ -128,7 +128,7 @@ $(function() {
 	    $.each(data, function(index, i){
 
 	        if(
-		        $("input:checkbox[name='type'][value='"+i.typeId+"']").is(':checked')
+		        $("input:checkbox[name='type'][value='"+i.typeid+"']").is(':checked')
 			){
                 cluster.addLayer(markers[index]);
 	        }else{
