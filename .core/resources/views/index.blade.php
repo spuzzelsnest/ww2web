@@ -65,16 +65,15 @@ $(function() {
 
                 var lat                 = data[i].lat;
                 var lng                 = data[i].lng;
-                var dif                 = data[i].typeId;
+                var dif                 = data[i].typeid;
                 var shortdesc           = data[i].shortdesc;
                 var name                = data[i].name;
                 var place               = data[i].place;
                 var date                = data[i].date;
                 var info                = data[i].info;
                 var source              = data[i].source;
-                var remark             = data[i].remark;
+                var remark              = data[i].remark;
                 var cusIcon             = iconType[dif];
-
                 var title = place+" - "+date;
 
                 if (dif < 3) {
