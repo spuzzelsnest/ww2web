@@ -74,22 +74,21 @@ html, body{
   overflow: auto;
   position: absolute;
 }
-a.picbox {
+
+#picbox {
   display: block;
   position: relative;
 }
 
-a.picbox img{
+#img{
   position: relative;
   width: 350px;
   height: auto;
   border: 3px solid white;
 }
 
-.picbox-target img {
-  position: fixed;
-  height: 75%;
-  width: auto;
+#popup img {
+  background: #584e4e4f;
   border: 3px solid white;
   box-sizing: border-box;
   -webkit-transition: .5s ease-in-out;
@@ -98,7 +97,7 @@ a.picbox img{
   transition: .5s ease-in-out;
 }
 
-a.popup-close {
+#popup-close {
   opacity: 0;
   display: block;
   width:50px;
@@ -117,7 +116,7 @@ a.popup-close {
   z-index: 3;
 }
 
-a.popup-close:before {
+#popup-close:before {
   content: "";
   display: block;
   height: 30px;
@@ -132,7 +131,7 @@ a.popup-close:before {
   transform:rotate(45deg);
 }
 
-a.popup-close:after {
+#popup-close:after {
   content: "";
   display: block;
   height: 30px;
@@ -147,21 +146,22 @@ a.popup-close:after {
   transform:rotate(-45deg);
 }
  
-.picbox-target:target {
+#popup:target {
   opacity: 1;
   top: 0;
   bottom: 0;
   overflow:hidden;
+  background: #584e4e4f;
 }
   
-.picbox-target:target img {
+#popup:target img {
   position: fixed;
   top: 10%;
   left: 25%;
   width: 50%;
 }
   
-.picbox-target:target a.popup-close {
+#popup:target #popup-close {
   opacity:1;
   top: 0;
 }
