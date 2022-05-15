@@ -78,7 +78,7 @@ $(function() {
                 var title = place+" - "+date;
 
                 if (dif < 3) {
-                        customCode = "<center><img src='/images/"+name+".jpg' alt='"+shortdesc+"' class='img' width='350px'/></center><br>";
+                        customCode = "<center><a class='lightbox' href='#images'><img src='/images/"+name+".jpg' alt='"+shortdesc+"' class='img' width='350px'/><div class='lightbox-target' id='images'><img src='/images/"+name+".jpg' id='responsive-image'/><a class='lightbox-close' href='#'></a></div></center><br>";
                 } else {
                         customCode = "<center><video id=\"VideoPlayer\" poster=\"media/"+name+"/"+name+".jpg\" width=\"350\" height=\"263\" controls=\"autoplay\"><source src=\"media/"+name+"/"+name+".mp4\" type=\"video/mp4\"><source src=\"media/"+name+"/"+name+".ogg\" type=\"video/ogg\"></center><br>";
                 }
@@ -107,6 +107,7 @@ $(function() {
         var info = this.info;
         var source = this.source;
         var remark = this.remark;
+        var voice = "UK English Female";
         
         var titleDiv = document.getElementById('title');
         titleDiv.innerHTML = "<h3><u>"+title+"</u></h3>";
@@ -115,7 +116,7 @@ $(function() {
         titleDiv.onclick = function(e){map.setView(latLng, '20', {animation: true});};
 
         if (info !== ''){
-            document.getElementById('speakButton').innerHTML = "<p><button onclick='responsiveVoice.speak(`"+info+"`);'>Read Me</button>";
+            document.getElementById('speakButton').innerHTML = "<p><button onclick='responsiveVoice.speak(`"+info+"`, `"+voice+"`);'>Read Me</button>";
         }else{
             document.getElementById('speakButton').innerHTML = "";
         }
@@ -128,7 +129,7 @@ $(function() {
 	    $.each(data, function(index, i){
 
 	        if(
-		        $("input:checkbox[name='type'][value='"+i.typeid+"']").is(':checked')
+		        $("input:checkbox[name='type'][value='"+i.typeId+"']").is(':checked')
 			){
                 cluster.addLayer(markers[index]);
 	        }else{
@@ -139,10 +140,12 @@ $(function() {
 });
 
 function closeDiv(){
-   document.getElementById('infoDiv').style.display = 'none';
-   var video = document.getElementById('VideoPlayer');
-   video.pause();
-   video.currentTime = 0;
+    console.log("clicked close")
+    document.getElementById('infoDiv').style.display = 'none';
+    var voice = document.getElementById('responsiveVoice');
+    console.log('voice: ' + voice);
+    voice.onpause();
+    voice.currentTime = 0;
 }
 
 function search(){
