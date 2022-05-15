@@ -99,8 +99,7 @@ html, body{
 a.lightbox img {
   width: 350px;
 }
-  
-  /* Styles the lightbox, removes it from sight and adds the fade-in transition */
+
 .lightbox-target {
     position: fixed;
     left: 0px;
