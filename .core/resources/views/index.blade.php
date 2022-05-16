@@ -109,7 +109,7 @@ $(function() {
         var voice = "UK English Female";
         
         var titleDiv = document.getElementById('title');
-        titleDiv.innerHTML = "<h3><u>"+title+"</u></h3>";
+        titleDiv.innerHTML = "<h4><u>"+title+"</u></h4>";
         titleDiv.onmouseover = function(){titleDiv.style.color = '#428608';};
         titleDiv.onmouseout = function(){titleDiv.style.color = 'Black';};
         titleDiv.onclick = function(e){map.setView(latLng, '20', {animation: true});};
