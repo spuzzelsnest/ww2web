@@ -26,11 +26,11 @@ git clone https://github.com/spuzzelsnest/ww2web.git ww2maps.loc
 
 Create missing directories
 ```
-mkdir .core/bootstrap/cache 
-mkdir .core/storage/logs
-mkdir .core/storage/framework/sessions
-mkdir .core/storage/framework/views
-mkdir .core/storage/framework/cache
+mkdir -p .core/bootstrap/cache 
+mkdir -p .core/storage/logs
+mkdir -p .core/storage/framework/sessions
+mkdir -p .core/storage/framework/views
+mkdir -p .core/storage/framework/cache/data
 ```
 
 Change permissions
