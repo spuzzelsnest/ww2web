@@ -160,14 +160,14 @@ html, body{
   opacity: 1;
   top: 0;
   bottom: 0;
-  overflow:hidden;
 }
   
 #popup:target img {
   position: fixed;
-  top: 10%;
+  top: 2%;
   left: 25%;
   width: 50%;
+  overflow:hidden;
 }
   
 #popup:target #popup-close {
