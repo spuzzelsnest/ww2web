@@ -24,13 +24,15 @@ Download into folder
 git clone https://github.com/spuzzelsnest/ww2web.git ww2maps.loc 
 ```
 
-Create missing directories
+Create missing directories and files
 ```
 mkdir -p .core/bootstrap/cache 
 mkdir -p .core/storage/logs
 mkdir -p .core/storage/framework/sessions
 mkdir -p .core/storage/framework/views
 mkdir -p .core/storage/framework/cache/data
+
+touch .core/storage/logs/laravel.log
 ```
 
 Change permissions
