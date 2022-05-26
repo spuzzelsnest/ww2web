@@ -49,10 +49,10 @@ chmod 777 .core/storage/framework/views
 ```
 
 
-Edit .env.example and edit it to your neeeds.
+Edit .core/.env.example and edit it to your neeeds.
 ```
-cp .env.example .env
-nano .env
+cp .core/.env.example .core/.env
+nano .core/.env
 ```
 
 
