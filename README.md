@@ -1,7 +1,5 @@
 # Laravel and Leaflet Maps
 
-Root dir change 
-
 ### Prerequisites
 
 - php 7.4 
@@ -17,14 +15,22 @@ sudo apt install curl php-cli php-mbstring git unzip composer
 ```
 sudo pacman -Syu php7 php7-fpm composer
 ```
+
+> if composer is not available directly
+```
+php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+php composer-setup.php
+```
+
+
 ### Download and Config
 
-Download into folder
+Download into folder by adding the folder at the end.
 ```
 git clone https://github.com/spuzzelsnest/ww2web.git ww2maps.loc 
 ```
 
-Create missing directories and files
+Create missing directories and files.
 ```
 mkdir -p .core/bootstrap/cache 
 mkdir -p .core/storage/logs
@@ -35,7 +41,7 @@ mkdir -p .core/storage/framework/cache/data
 touch .core/storage/logs/laravel.log
 ```
 
-Change permissions
+Change permissions.
 ```
 chmod 777 .core/storage/logs 
 chmod 777 .core/storage/framework/sessions
@@ -43,15 +49,15 @@ chmod 777 .core/storage/framework/views
 ```
 
 
-Edit .env.example
+Edit .env.example and edit it to your neeeds.
 ```
 cp .env.example .env
 nano .env
 ```
-edit the .env file to your needs.
 
 
-How to update a newly downloaded git
+### Update a new install
+
 ```
 composer update
 php artisan key:generate
