@@ -4,7 +4,7 @@ Root dir change
 
 ### Prerequisites
 
-- php7
+- php 7.4 
 - mysql
 - composer
 
@@ -41,6 +41,15 @@ chmod 777 .core/storage/logs
 chmod 777 .core/storage/framework/sessions
 chmod 777 .core/storage/framework/views
 ```
+
+
+Edit .env.example
+```
+cp .env.example .env
+nano .env
+```
+edit the .env file to your needs.
+
 
 How to update a newly downloaded git
 ```
