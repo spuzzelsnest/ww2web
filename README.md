@@ -16,7 +16,7 @@ sudo apt install curl php-cli php-mbstring git unzip composer
 sudo pacman -Syu php7 php7-fpm composer
 ```
 
-> if composer is not available directly
+> if composer is not directly available
 ```
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 php composer-setup.php
