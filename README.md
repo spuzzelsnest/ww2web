@@ -16,10 +16,12 @@ sudo apt install curl php-cli php-mbstring git unzip composer
 sudo pacman -Syu php7 php7-fpm composer
 ```
 
-> if composer is not directly available
+> if composer is not directly available on the system, make sure you have a copy of composer.phar in the .core directory.
 ```
+cd ~
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 php composer-setup.php
+mv composer.phar [rootdir]/.core
 ```
 
 
