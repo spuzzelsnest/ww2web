@@ -82,8 +82,6 @@ html, body{
 
 #img{
   position: relative;
-  width: 350px;
-  height: auto;
   border: 3px solid white;
 }
 
@@ -96,7 +94,6 @@ html, body{
 }
 
 #popup img {
-  max-height: calc(100%-60px);
   border: 3px solid white;
   box-sizing: border-box;
   -webkit-transition: .5s ease-in-out;
@@ -166,10 +163,13 @@ html, body{
   background-color: #00000075;
   top: 0px;
   left: 0px;
+  height: 100%;
   width: 100%;
-  padding: 25%;
-  padding-top: 25px;
-  overflow:hidden;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 2% 20%;
+  padding-bottom: auto;
+  overflow: hidden;
 }
   
 #popup:target #popup-close {
@@ -193,7 +193,7 @@ html, body{
 }
   
 footer{
-    z-index: 2;
+    z-index: 0;
     border-radius: 1rem;
     border: 4px solid #34504a;
     background-color: rgba(255,255,255,0.66);
