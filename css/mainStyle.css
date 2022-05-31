@@ -164,12 +164,11 @@ html, body{
   top: 0px;
   left: 0px;
   height: 100%;
-  width: 100%;
+  width: calc(100vh - 16px);
   margin-left: auto;
   margin-right: auto;
   padding: 2% 20%;
-  padding-bottom: auto;
-  overflow: hidden;
+  overflow: scroll;
 }
   
 #popup:target #popup-close {
