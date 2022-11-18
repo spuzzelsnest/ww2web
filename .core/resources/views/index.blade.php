@@ -19,47 +19,48 @@
 <script>
 $(function() {
 
-    var data = {!! $footages !!};
-    var markers = [];
+    	var data = {!! $footages !!};
+    	var markers = [];
 
-    var iconType = {};
-        iconType['1'] = '/css/images/Afoto.png';
-        iconType['2'] = '/css/images/Xfoto.png';
-        iconType['3'] = '/css/images/Avideo.png';
-        iconType['4'] = '/css/images/Xvideo.png';
-        iconType['5'] = '/css/images/Aaudio.png';
-	iconType['6'] = '/css/images/Xadio.png';
+    	var iconType = {};
+        	iconType['1'] = '/css/images/Afoto.png';
+        	iconType['2'] = '/css/images/Xfoto.png';
+        	iconType['3'] = '/css/images/Avideo.png';
+        	iconType['4'] = '/css/images/Xvideo.png';
+        	iconType['5'] = '/css/images/Aaudio.png';
+		iconType['6'] = '/css/images/Xadio.png';
 
-    var map = L.map('map').setView([50.1, 4], 7);
-    mapLink = '<a href="https://www.esri.com/">Esri</a>';
-    lableLink = '<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://cartodb.com/attributions">CartoDB</a>';
-    wholink = 'This Project is meant as Historic reference only';
+ 	var map   = L.map('map').setView([50.1, 4], 7);
+ 	mapLink   = '<a href="https://www.esri.com/">Esri</a>';
+ 	lableLink = '<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://cartodb.com/attributions">CartoDB</a>';
+ 	wholink   = 'This Project is meant as Historic reference only';
 
-    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{
+    	L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{
             attribution: '&copy; '+mapLink,
             maxZoom: 18,
-            }).addTo(map);
-            L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}.png',{
+    	}).addTo(map);
+
+    	L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}.png',{
 	    id: 'cartodb_labels',
 	    attribution: '&copy; '+lableLink+', '+wholink
-            }).addTo(map);
+    	}).addTo(map);
 
-    var LeafIcon = L.Icon.extend({
+    	var LeafIcon = L.Icon.extend({
             options: {iconSize:[18, 22]}
-     });
+     	});
 
-     var cluster = L.markerClusterGroup({
+     	var cluster = L.markerClusterGroup({
                 spiderfyOnMaxZoom: true,
                 showCoverageOnHover: false,
                 zoomToBoundsOnClick: true,
                 removeOutsideVisibleBounds:true,
                 maxClusterRadius: 20,
                 spiderLegPolylineOptions: {
-                                weight: 1.5,
-                                color: '#222',
-                                opacity: 0.5
-                }
-        });
+			weight: 1.5,
+			color: '#222',
+                      	opacity: 0.5
+                	}
+	});
 
         for(var i in data){
 
@@ -90,13 +91,14 @@ $(function() {
                     marker.source = source;
                     marker.remark = remark;
                     marker.on('click', displayInfo);
+
                     markers.push(marker);
                     cluster.addLayer(marker);
         }
 
         map.addLayer(cluster);
 
-    function displayInfo(e){
+  function displayInfo(e){
 
         document.getElementById('infoDiv').style.display = 'block';
 
