@@ -21,14 +21,14 @@ $(function() {
 
     var data = {!! $footages !!};
     var markers = [];
-   
+
     var iconType = {};
         iconType['1'] = '/css/images/Afoto.png';
         iconType['2'] = '/css/images/Xfoto.png';
         iconType['3'] = '/css/images/Avideo.png';
         iconType['4'] = '/css/images/Xvideo.png';
         iconType['5'] = '/css/images/Aaudio.png';
-		iconType['6'] = '/css/images/Xadio.png';
+	iconType['6'] = '/css/images/Xadio.png';
 
     var map = L.map('map').setView([50.1, 4], 7);
     mapLink = '<a href="https://www.esri.com/">Esri</a>';
@@ -43,7 +43,7 @@ $(function() {
 	    id: 'cartodb_labels',
 	    attribution: '&copy; '+lableLink+', '+wholink
             }).addTo(map);
-    
+
     var LeafIcon = L.Icon.extend({
             options: {iconSize:[18, 22]}
      });
@@ -63,56 +63,55 @@ $(function() {
 
         for(var i in data){
 
-                var lat                 = data[i].lat;
-                var lng                 = data[i].lng;
-                var dif                 = data[i].typeid;
-                var shortdesc           = data[i].shortdesc;
-                var name                = data[i].name;
-                var place               = data[i].place;
-                var date                = data[i].date;
-                var info                = data[i].info;
-                var source              = data[i].source;
-                var remark              = data[i].remark;
-                var cusIcon             = iconType[dif];
-                var title = place+" - "+date;
+                var lat		= data[i].lat;
+                var lng		= data[i].lng;
+                var dif		= data[i].typeid;
+                var shortdesc	= data[i].shortdesc;
+                var name	= data[i].name;
+                var place	= data[i].place;
+                var date	= data[i].date;
+                var info	= data[i].info;
+                var source	= data[i].source;
+                var remark 	= data[i].remark;
+                var cusIcon 	= iconType[dif];
+                var title	= place+" - "+date;
 
                 if (dif < 3) {
-                        customCode = "<a id='picbox' href='#popup'></a><div id='popup'><a id='picbox' href='#popup'><center><img src='/images/"+name+".jpg' id='img' width='350'/></center></a><a id='popup-close' href='#'></a></div><br>";
+		   customCode = "<a id='picbox' href='#popup'></a><div id='popup'><a id='picbox' href='#popup'><center><img src='/images/"+name+".jpg' id='img' width='350'/></center></a><a id='popup-close' href='#'></a></div><br>";
                 } else {
-                        customCode = "<center><video id=\"VideoPlayer\" poster=\"media/"+name+"/"+name+".jpg\" width=\"350\" height=\"263\" controls=\"autoplay\"><source src=\"media/"+name+"/"+name+".mp4\" type=\"video/mp4\"><source src=\"media/"+name+"/"+name+".ogg\" type=\"video/ogg\"></center><br>";
+		   customCode = "<center><video id=\"VideoPlayer\" poster=\"media/"+name+"/"+name+".jpg\" width=\"350\" height=\"263\" controls=\"autoplay\"><source src=\"media/"+name+"/"+name+".mp4\" type=\"video/mp4\"><source src=\"media/"+name+"/"+name+".ogg\" type=\"video/ogg\"></center><br>";
                 }
-                
-                var marker = L.marker([lat, lng], {icon: new LeafIcon({iconUrl:[iconType[dif]]})});
-                    marker.title = title;
+
+                var marker 	  = L.marker([lat, lng], {icon: new LeafIcon({iconUrl:[iconType[dif]]})});
+                    marker.title  = title;
                     marker.latLng = marker.getLatLng();
-                    marker.html = customCode;
-                    marker.info = info;
+                    marker.html	  = customCode;
+                    marker.info   = info;
                     marker.source = source;
                     marker.remark = remark;
                     marker.on('click', displayInfo);
-                markers.push(marker);
-                cluster.addLayer(marker);
+                    markers.push(marker);
+                    cluster.addLayer(marker);
         }
-        
+
         map.addLayer(cluster);
 
     function displayInfo(e){
 
         document.getElementById('infoDiv').style.display = 'block';
 
-        var latLng = this.latLng;
-        var title = this.title;
-        var code = this.html;
-        var info = this.info;
-        var source = this.source;
-        var remark = this.remark;
-        var voice = "UK English Female";
-        
-        var titleDiv = document.getElementById('title');
-        titleDiv.innerHTML = "<h5><u>"+title+"</u></h5>";
+        var latLng	     = this.latLng;
+        var title 	     = this.title;
+        var code 	     = this.html;
+        var info 	     = this.info;
+        var source 	     = this.source;
+        var remark 	     = this.remark;
+        var voice 	     = "UK English Female";
+        var titleDiv 	     = document.getElementById('title');
+        titleDiv.innerHTML   = "<h5><u>"+title+"</u></h5>";
         titleDiv.onmouseover = function(){titleDiv.style.color = '#428608';};
-        titleDiv.onmouseout = function(){titleDiv.style.color = 'Black';};
-        titleDiv.onclick = function(e){map.setView(latLng, '20', {animation: true});};
+        titleDiv.onmouseout  = function(){titleDiv.style.color = 'Black';};
+        titleDiv.onclick     = function(e){map.setView(latLng, '20', {animation: true});};
 
         if (info !== ''){
             document.getElementById('speakButton').innerHTML = "<p><button onclick='responsiveVoice.speak(`"+info+"`, `"+voice+"`);'>Read Me</button>";
@@ -128,13 +127,12 @@ $(function() {
 	    $.each(data, function(index, i){
 
 	        if(
-		        $("input:checkbox[name='type'][value='"+i.typeid+"']").is(':checked')
-			){
-                cluster.addLayer(markers[index]);
+		    $("input:checkbox[name='type'][value='"+i.typeid+"']").is(':checked')
+		){
+               	    cluster.addLayer(markers[index]);
 	        }else{
-                cluster.removeLayer(markers[index]);
-	        }
-		})
+                    cluster.removeLayer(markers[index]);
+	        }})
 	});
 });
 
@@ -149,12 +147,12 @@ function closeDiv(){
 
 function search(){
 
-    var markers = {!! $footages !!};
+    var markers  = {!! $footages !!};
     var titleDiv = document.getElementById('title');
-    var infoDiv = document.getElementById('markerInfo');
-    var results =[];
-    var term = document.getElementsByClassName('searchField')[0].value;
-    var regex = new RegExp( term, 'ig');
+    var infoDiv  = document.getElementById('markerInfo');
+    var results  =[];
+    var term     = document.getElementsByClassName('searchField')[0].value;
+    var regex    = new RegExp( term, 'ig');
 
     if (term == ''){
         titleDiv.innerHTML = "<h3><u>Search</u></h3>";
