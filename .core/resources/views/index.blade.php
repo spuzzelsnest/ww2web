@@ -23,17 +23,17 @@ $(function() {
     	var markers = [];
 
     	var iconType = {};
-        	iconType['1'] = '/css/images/Afoto.png';
-        	iconType['2'] = '/css/images/Xfoto.png';
-        	iconType['3'] = '/css/images/Avideo.png';
-        	iconType['4'] = '/css/images/Xvideo.png';
-        	iconType['5'] = '/css/images/Aaudio.png';
-		iconType['6'] = '/css/images/Xadio.png';
+            iconType['1'] = '/css/images/Afoto.png';
+            iconType['2'] = '/css/images/Xfoto.png';
+            iconType['3'] = '/css/images/Avideo.png';
+            iconType['4'] = '/css/images/Xvideo.png';
+            iconType['5'] = '/css/images/Aaudio.png';
+	    iconType['6'] = '/css/images/Xadio.png';
 
  	var map   = L.map('map').setView([50.1, 4], 7);
- 	mapLink   = '<a href="https://www.esri.com/">Esri</a>';
- 	lableLink = '<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://cartodb.com/attributions">CartoDB</a>';
- 	wholink   = 'This Project is meant as Historic reference only';
+ 	    mapLink   = '<a href="https://www.esri.com/">Esri</a>';
+ 	    lableLink = '<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://cartodb.com/attributions">CartoDB</a>';
+	    wholink   = 'This Project is meant as Historic reference only';
 
     	L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{
             attribution: '&copy; '+mapLink,
@@ -102,18 +102,18 @@ $(function() {
 
         document.getElementById('infoDiv').style.display = 'block';
 
-        var latLng	     = this.latLng;
-        var title 	     = this.title;
-        var code 	     = this.html;
-        var info 	     = this.info;
-        var source 	     = this.source;
-        var remark 	     = this.remark;
-        var voice 	     = "UK English Female";
-        var titleDiv 	     = document.getElementById('title');
-        titleDiv.innerHTML   = "<h5><u>"+title+"</u></h5>";
-        titleDiv.onmouseover = function(){titleDiv.style.color = '#428608';};
-        titleDiv.onmouseout  = function(){titleDiv.style.color = 'Black';};
-        titleDiv.onclick     = function(e){map.setView(latLng, '20', {animation: true});};
+        var latLng		 = this.latLng;
+        var title		 = this.title;
+        var code		 = this.html;
+        var info		 = this.info;
+        var source 		 = this.source;
+        var remark		 = this.remark;
+        var voice		 = "UK English Female";
+        var titleDiv		 = document.getElementById('title');
+            titleDiv.innerHTML   = "<h5><u>"+title+"</u></h5>";
+            titleDiv.onmouseover = function(){titleDiv.style.color = '#428608';};
+            titleDiv.onmouseout  = function(){titleDiv.style.color = 'Black';};
+            titleDiv.onclick     = function(e){map.setView(latLng, '20', {animation: true});};
 
         if (info !== ''){
             document.getElementById('speakButton').innerHTML = "<p><button onclick='responsiveVoice.speak(`"+info+"`, `"+voice+"`);'>Read Me</button>";
