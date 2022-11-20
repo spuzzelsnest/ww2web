@@ -25,7 +25,7 @@ class sourcesSeeder extends Seeder
                 array(
                     'source' => 'US Signal Corps'
                 ),
-            ));
-		));
+            )
+        );
     }
 }

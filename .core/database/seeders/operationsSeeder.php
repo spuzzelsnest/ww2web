@@ -38,6 +38,7 @@ class operationsSeeder extends Seeder
                 array(
                     'operation' => 'Battle of the Bulge'
                 ),
-            ));
+            )
+        );
     }
 }

@@ -35,7 +35,7 @@ class countriesSeeder extends Seeder
                 array(
                     'country' => 'Spain'
                 ),
-            ));
-		));
+            )
+        );
     }
 }
