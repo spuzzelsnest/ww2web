@@ -37,17 +37,16 @@
 <div class='split right'>
         <div id='infoDiv'>
                 {!! Form::open(array('route' => 'admin.store', 'files' => true)) !!}
-
+                <div class="form-group">
                         {{--SELECT MEDIA--}}
-                                <div class="form-group">
-                                        @foreach ($types as $type)
-                                                {!! Form::checkbox('typeid', $type->id) !!}
-                                                {{$type->description}}
-                                        @endforeach
-                                </div>
+                                @foreach ($types as $type)
+                                        {!! Form::checkbox('typeid', $type->id) !!}
+                                        {{$type->description}}
+                                @endforeach
                         {{--NAME--}}
                                 {!! Form::label('name','Name: ', array('class' => 'col-lg-3 control-label')) !!}
                                 {!! Form::text('name') !!}
+                        <br>
                         {{--SELECT DATE--}}
                                 {!! Form::label('date','Date: ') !!}
                                 {!! Form::macro('date', function($name, $default = '1944/06/06', $attrs = array()){
@@ -63,9 +62,10 @@
                         {{--PLACE--}}
                                 {!! Form::label('place','Place: ', array('class' => 'col-lg-3 control-label')) !!}
                                 {!! Form::text('place') !!}
-                                {{--COUNTRY--}}
+                        <br>
+                        {{--COUNTRY--}}
                                 {!! Form::label('country','Country: ') !!}
-                                {!! Form::text('country') !!}
+                                {!! Form::select('countryId') !!}
                         <br>
                         {{--SCHORTDESC--}}
                                 {!! Form::label('shortdesc','Title: ', array('class' => 'col-lg-3 control-label')) !!}
@@ -102,7 +102,9 @@
 
                                 {!! Form::submit('Aanmaken', array('class' => 'btn btn-success')) !!}
                                 {!! link_to_route('admin.index', 'Cancel', null, array('class' => 'btn btn-warning')) !!}
+                        </div>
                         </center>
+
                 {!! Form::close() !!}
                 </p>
 </div>

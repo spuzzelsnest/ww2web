@@ -26,26 +26,26 @@ class AdminController extends Controller
      */
     public function index()
     {
-                $mediaCount = DB::table('footages')
-                                
-                                ->join('types','footages.typeId','=','types.id')
-                                ->join('operations','footages.operationId','=','operations.id')
-                                ->join('countries','footages.countryId','=','countries.id')
-                                ->join('sources','footages.sourceId','=','sources.id')
-                                
-                                ->select(Db::Raw('count(0) as cnt, type, description'))
-                                ->groupBy('footages.typeId','types.id')
-                                ->get();
+        $mediaCount = DB::table('footages')
+
+        ->join('types','footages.typeId','=','types.id')
+        ->join('operations','footages.operationId','=','operations.id')
+        ->join('countries','footages.countryId','=','countries.id')
+        ->join('sources','footages.sourceId','=','sources.id')
+
+        ->select(Db::Raw('count(0) as cnt, type, description'))
+        ->groupBy('footages.typeId','types.id')
+        ->get();
 
 //              $types = Type::lists('id', 'type', 'description')->all();
 
-                $types = DB::table('types')->get();
+        $types = DB::table('types')->get();
 
-                return View::make('admin')
-                        ->with('title', 'Edit the Database')
-                        ->with('footages', Footage::all())
-                        ->with('count', $mediaCount)
-                        ->with('types', $types);
+        return View::make('admin')
+            ->with('title', 'Edit the Database')
+            ->with('footages', Footage::all())
+            ->with('count', $mediaCount)
+            ->with('types', $types);
     }
 
     /**
@@ -64,8 +64,7 @@ class AdminController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request){
         $input = Input::all();
         $input['date'] = date('Y-m-d', strtotime($input['date']));
 
@@ -73,33 +72,30 @@ class AdminController extends Controller
 
         if ($v->passes()) {
 
-                $f = new Footage;
-                $f->name        = Input::get('name');
-                $f->info        = Input::get('info');
-                $f->operationId = Input::get('operationId');
-                $f->date        = Input::get('date');
-                $f->place       = Input::get('place');
-                $f->country     = Input::get('countryId');
-                $f->source      = Input::get('sourceId');
-                $f->remarks     = Input::get('remarks');
-                $f->typeId      = Input::get('typeId');
-                $f->lat         = Input::get('lat');
-                $f->lng         = Input::get('lng');
-                $f->published   = Input::get('published');
-                $f->save();
+            $f = new Footage;
+            $f->name        = Input::get('name');
+            $f->info        = Input::get('info');
+            $f->operationId = Input::get('operationId');
+            $f->date        = Input::get('date');
+            $f->place       = Input::get('place');
+            $f->country     = Input::get('countryId');
+            $f->source      = Input::get('sourceId');
+            $f->remarks     = Input::get('remarks');
+            $f->typeId      = Input::get('typeId');
+            $f->lat         = Input::get('lat');
+            $f->lng         = Input::get('lng');
+            $f->published   = Input::get('published');
+            $f->save();
 
-
-                Image::make(Input::file('file') ->getRealPath())
-                                ->resize(540, null, function ($constraint) {
-                                $constraint->aspectRatio();
-                                        })
-                                ->save('images/' . $f->name . '.jpg');
+            Image::make(Input::file('file') ->getRealPath())
+                ->resize(540, null, function ($constraint) {
+                        $constraint->aspectRatio();
+            })
+            ->save('images/' . $f->name . '.jpg');
 
         return Redirect::route('admin.index');
         }
-
         return Redirect::back()->withErrors($v);
-
 }
 
 /**
