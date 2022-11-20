@@ -14,6 +14,31 @@ class operationsSeeder extends Seeder
      */
     public function run()
     {
-        //
+        //operation
+        \DB::table('operations')->insert(
+            array(
+                array(      
+                    'operation' => ''
+                ),
+                array(
+                    'operation' => 'Fall Gelb'
+                ),
+                array(
+                    'operation' => 'Occupation'
+                ),
+                array(
+                    'operation' => 'Overlord'
+                ),
+                array(
+                    'operation' => 'Battle for Normandy'
+                ),
+                array(
+                    'operation' => 'Market Garden'
+                ),
+                array(
+                    'operation' => 'Battle of the Bulge'
+                ),
+            ));
+		));
     }
 }

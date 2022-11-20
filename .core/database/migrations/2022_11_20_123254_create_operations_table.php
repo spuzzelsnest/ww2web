@@ -15,8 +15,7 @@ return new class extends Migration
     {
         Schema::create('operations', function (Blueprint $table) {
             $table->id();
- 	    $table->operationx();
-            $table->timestamps();
+ 	        $table->operation();
         });
     }
 

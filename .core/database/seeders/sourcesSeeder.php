@@ -14,15 +14,18 @@ class sourcesSeeder extends Seeder
      */
     public function run()
     {
-        /DB::table('sources')->insert(
-		array(
-		array( 'source' 
-
-
-
-
-
-			),
-		     ));
+        \DB::table('sources')->insert(
+            array(
+                array(
+                    'source' => ''
+                ),
+                array(
+                    'source' => 'Bundesarchiv'
+                ),
+                array(
+                    'source' => 'US Signal Corps'
+                ),
+            ));
+		));
     }
 }

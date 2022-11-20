@@ -15,24 +15,30 @@ class typesSeeder extends Seeder
     public function run()
     {
         \DB::table('types')->insert(
+            array(
+                array(      
+                    'type'          => 'Afoto',
+                    'description'   => 'Allied Photo'
+                ),
                 array(
-                array(      'type'          => 'Afoto',
-                            'description'       => 'Allied Photo'
+                    'type'          => 'Xfoto',
+                    'description'   => 'Axis Photo'
                 ),
-                array(      'type'          => 'Xfoto',
-                            'description'       => 'Axis Photo'
+                array(
+                    'type'          => 'Avideo',
+                    'description'   => 'Allied Video'
                 ),
-                array(      'type'          => 'Avideo',
-                            'description'       => 'Allied Video'
-                 ),
-                array(      'type'          => 'Xvideo',
-                            'description'       => 'Axis Video'
+                array(      
+                    'type'          => 'Xvideo',
+                    'description'   => 'Axis Video'
                 ),
-                array(      'type'          => 'Aaudio',
-                            'description'       => 'Allied Audio'
+                array(
+                    'type'          => 'Aaudio',
+                    'description'   => 'Allied Audio'
                 ),
-                array(      'type'          => 'Xaudio',
-                            'description'       => 'Axis Audio'
+                array(
+                    'type'          => 'Xaudio',
+                    'description'   => 'Axis Audio'
                 ),
             ));
     }
