@@ -74,18 +74,18 @@ class AdminController extends Controller
         if ($v->passes()) {
 
                 $f = new Footage;
-                $f->name = Input::get('name');
-                $f->info = Input::get('info');
-                $f->shortdesc = Input::get('shortdesc');
-                $f->date = Input::get('date');
-                $f->place = Input::get('place');
-                $f->country = Input::get('country');
-                $f->source = Input::get('source');
-                $f->remarks = Input::get('remarks');
-                $f->typeid = Input::get('typeid');
-                $f->lat = Input::get('lat');
-                $f->lng = Input::get('lng');
-                $f->published = Input::get('published');
+                $f->name        = Input::get('name');
+                $f->info        = Input::get('info');
+                $f->operationId = Input::get('operationId');
+                $f->date        = Input::get('date');
+                $f->place       = Input::get('place');
+                $f->country     = Input::get('countryId');
+                $f->source      = Input::get('sourceId');
+                $f->remarks     = Input::get('remarks');
+                $f->typeId      = Input::get('typeId');
+                $f->lat         = Input::get('lat');
+                $f->lng         = Input::get('lng');
+                $f->published   = Input::get('published');
                 $f->save();
 
 
