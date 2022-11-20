@@ -68,18 +68,7 @@
                         <br>
                         {{--COUNTRY--}}
                                 {!! Form::label('country','Country: ', array('class' => 'col-lg-3 control-label')) !!}
-                                {{--!! Form::select('countryId', array($countries, $country)) !!--}}
-
-                                @foreach ($countries as $country)
-                                        {!! Form::select('countryId', $country->id) !!}
-                                        {{$country->country}}
-                                @endforeach
-
-
-
-
-
-
+                                {!! Form::select('countryId', $countries, $selectedID, ['class' => 'form-control']) !!}
                         <br>
                         {{--OPERATION--}}
                                 {!! Form::label('operation','Title: ', array('class' => 'col-lg-3 control-label')) !!}
