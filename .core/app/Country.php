@@ -10,7 +10,7 @@ class Country extends Model
     protected $table = 'countries';
 	protected $primaryKey = 'id' ;
     //use HasFactory;
-	public function countrie(){
+	public function country(){
 
 		return $this->belongsTo('footages','local_key');
 	}

@@ -17,9 +17,6 @@ class operationsSeeder extends Seeder
         //operation
         \DB::table('operations')->insert(
             array(
-                array(      
-                    'operation' => ''
-                ),
                 array(
                     'operation' => 'Fall Gelb'
                 ),
