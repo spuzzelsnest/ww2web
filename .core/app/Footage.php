@@ -18,7 +18,7 @@ class Footage extends Model {
 	}
 
 	public function getCountry(){
-		return $this->hasOne('countrie');	
+		return $this->hasOne('countrie');
 	}
 
 	public function getSource(){
