@@ -50,32 +50,32 @@ $(function() {
      	});
 
      	var cluster = L.markerClusterGroup({
-                spiderfyOnMaxZoom: true,
-                showCoverageOnHover: false,
-                zoomToBoundsOnClick: true,
-                removeOutsideVisibleBounds:true,
-                maxClusterRadius: 20,
-                spiderLegPolylineOptions: {
-			weight: 1.5,
-			color: '#222',
-                      	opacity: 0.5
-                	}
-	});
+            spiderfyOnMaxZoom: true,
+            showCoverageOnHover: false,
+            zoomToBoundsOnClick: true,
+            removeOutsideVisibleBounds:true,
+            maxClusterRadius: 20,
+            spiderLegPolylineOptions: {
+			    weight: 1.5,
+			    color: '#222',
+                opacity: 0.5
+            }
+	    });
 
         for(var i in data){
 
-                var lat		= data[i].lat;
-                var lng		= data[i].lng;
-                var dif		= data[i].typeid;
-                var shortdesc	= data[i].shortdesc;
-                var name	= data[i].name;
-                var place	= data[i].place;
-                var date	= data[i].date;
-                var info	= data[i].info;
-                var source	= data[i].source;
-                var remark 	= data[i].remark;
+                var lat		    = data[i].lat;
+                var lng		    = data[i].lng;
+                var dif		    = data[i].typeId;
+                var shortdesc	= data[i].operationId;
+                var name	    = data[i].name;
+                var place	    = data[i].place;
+                var date	    = data[i].date;
+                var info	    = data[i].info;
+                var source	    = data[i].source;
+                var remark 	    = data[i].remark;
                 var cusIcon 	= iconType[dif];
-                var title	= place+" - "+date;
+                var title	    = place+" - "+date;
 
                 if (dif < 3) {
 		   customCode = "<a id='picbox' href='#popup'></a><div id='popup'><a id='picbox' href='#popup'><center><img src='/images/"+name+".jpg' id='img' width='350'/></center></a><a id='popup-close' href='#'></a></div><br>";
