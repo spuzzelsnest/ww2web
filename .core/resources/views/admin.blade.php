@@ -38,13 +38,13 @@
         <div id='infoDiv'>
                 {!! Form::open(array('route' => 'admin.store', 'files' => true)) !!}
                 <div class="form-group">
-                        <center>
+                       <div class="form-group-type">
                         {{--SELECT MEDIA--}}
                                 @foreach ($types as $type)
                                         {!! Form::checkbox('typeId', $type->id) !!}
                                         {{$type->description}}
                                 @endforeach
-                        </center>
+                        </div>
                         <br>
                         {{--NAME--}}
                                 {!! Form::label('name','Name:', array('class' => 'col-lg-3 control-label')) !!}
@@ -93,19 +93,20 @@
                         {{--LNG--}}
                                 {!! Form::label('lng','Lng:', array('class' => 'col-lg-3 control-label')) !!}
                                 {!! Form::text('lng', '', ['id' => 'lng']) !!}
-                        <center>
-                        {{--Published--}}
-                                {!! Form::label('published', 'Published:') !!}
-                                {!! Form::checkbox('published') !!}
+                        <div class="form-group-media">
                         {{--ADD MEDIA--}}
                                 {!! Form::label('Foto', 'Upload Picture:') !!}
                                 {!! Form::file('file') !!}
                         <br>
                                 <div id='message'>Upload your File...</div>
                         <br>
+                        {{--Published--}}
+                                {!! Form::label('published', 'Published:') !!}
+                                {!! Form::checkbox('published') !!}
+                        <br>
                                 {!! Form::submit('Aanmaken', array('class' => 'btn btn-success')) !!}
                                 {!! link_to_route('admin.index', 'Cancel', null, array('class' => 'btn btn-warning')) !!}
-                        </center>
+                        </div>
                 </div>
                 {!! Form::close() !!}
         </p>
