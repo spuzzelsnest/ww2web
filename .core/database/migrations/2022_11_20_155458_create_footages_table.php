@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('footages', function (Blueprint $table) {
             $table->increments('id');
 			$table->integer('typeId');
-            $table->integer('operationId')
+            $table->integer('operationId');
 			$table->char('name',60);
 			$table->text('info');
 			$table->float('lat');
