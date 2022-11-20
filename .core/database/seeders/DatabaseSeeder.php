@@ -20,5 +20,6 @@ class DatabaseSeeder extends Seeder
             countriesSeeder::class,
             sourcesSeeder::class,
             footagesSeeder::class,
+        ]);
     }
 }
