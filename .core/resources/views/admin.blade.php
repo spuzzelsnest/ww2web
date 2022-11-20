@@ -51,7 +51,7 @@
                                 {!! Form::text('name') !!}
                         <br>
                         {{--SELECT DATE--}}
-                                {!! Form::label('date','Date: ',, array('class' => 'col-lg-3 control-label')) !!}
+                                {!! Form::label('date','Date: ', array('class' => 'col-lg-3 control-label')) !!}
                                 {!! Form::macro('date', function($name, $default = '1944/06/06', $attrs = array()){
                                         $item = '<input type="date" name="'. $name .'" ';
                                         if ($default) { $item .= 'value="'. $default .'" ';}
