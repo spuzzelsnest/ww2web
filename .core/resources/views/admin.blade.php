@@ -33,16 +33,19 @@
         });
 </script>
 
-        <div id="legenda">EDIT THE DB: <i>Drag the marker and fill out the info</i></div>
+<div id="legenda">EDIT THE DB: <i>Drag the marker and fill out the info</i></div>
 <div class='split right'>
         <div id='infoDiv'>
                 {!! Form::open(array('route' => 'admin.store', 'files' => true)) !!}
                 <div class="form-group">
+                        <center>
                         {{--SELECT MEDIA--}}
                                 @foreach ($types as $type)
                                         {!! Form::checkbox('typeid', $type->id) !!}
                                         {{$type->description}}
                                 @endforeach
+                        </center>
+                        <br>
                         {{--NAME--}}
                                 {!! Form::label('name','Name: ', array('class' => 'col-lg-3 control-label')) !!}
                                 {!! Form::text('name') !!}
@@ -64,7 +67,7 @@
                                 {!! Form::text('place') !!}
                         <br>
                         {{--COUNTRY--}}
-                                {!! Form::label('country','Country: ') !!}
+                                {!! Form::label('country','Country: ', array('class' => 'col-lg-3 control-label')) !!}
                                 {!! Form::select('countryId') !!}
                         <br>
                         {{--SCHORTDESC--}}
@@ -77,9 +80,10 @@
                         <br>
                         {{--SOURCE--}}
                                 {!! Form::label('source','Source: ', array('class' => 'col-lg-3 control-label')) !!}
-                                {!! Form::text('source') !!}
+                                {!! Form::select('sourceId') !!}
+                        <br>
                         {{--REMARKS--}}
-                                {!! Form::label('remarks','Remarks: ') !!}
+                                {!! Form::label('remarks','Remarks: ', array('class' => 'col-lg-3 control-label')) !!}
                                 {!! Form::text('remarks') !!}
                         <br>
                         {{--LAT--}}
@@ -87,7 +91,7 @@
                                 {!! Form::text('lat', '', ['id' => 'lat']) !!}
 
                         {{--LNG--}}
-                                {!! Form::label('lng','Lng: ') !!}
+                                {!! Form::label('lng','Lng: ', array('class' => 'col-lg-3 control-label')) !!}
                                 {!! Form::text('lng', '', ['id' => 'lng']) !!}
                         <center>
                         {{--Published--}}
@@ -102,10 +106,9 @@
 
                                 {!! Form::submit('Aanmaken', array('class' => 'btn btn-success')) !!}
                                 {!! link_to_route('admin.index', 'Cancel', null, array('class' => 'btn btn-warning')) !!}
-                        </div>
                         </center>
-
+                </div>
                 {!! Form::close() !!}
-                </p>
+        </p>
 </div>
 @endsection
