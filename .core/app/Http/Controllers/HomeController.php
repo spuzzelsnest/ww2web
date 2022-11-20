@@ -8,15 +8,13 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Support\Facades\DB , View, App\Footage, App\Type, Illuminate\Support\Facades\Input;
-class HomeController extends Controller
-{
+class HomeController extends Controller{
     /**
      * Display a listing of the resource.
      *
      * @return Response
      */
-    public function index()
-    {
+    public function index(){
 
 		$mediaCount = DB::table('footages')
 			

@@ -16,15 +16,13 @@ use Illuminate\Support\Facades\Redirect;
 use Intervention\Image\ImageManager;
 use Image;
 
-class AdminController extends Controller
-{
+class AdminController extends Controller{
     /**
      * Display a listing of the resource.
      *
      * @return Response
      */
-    public function index()
-    {
+    public function index(){
         $mediaCount = DB::table('footages')
 
         ->join('types','footages.typeId','=','types.id')
@@ -45,9 +43,11 @@ class AdminController extends Controller
             ->with('title', 'Edit the Database')
             ->with('footages', Footage::all())
             ->with('count', $mediaCount)
-            ->with('types', $types);
+            ->with('types', $types)
+            ->with('operations', $operations)
+            ->with('countries', $countries)
+            ->with('sources', $sources);
     }
-
     /**
      * Show the form for creating a new resource.
      *
