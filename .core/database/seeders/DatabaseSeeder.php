@@ -13,6 +13,9 @@ class DatabaseSeeder extends Seeder
     {
         // $this->call(UsersTableSeeder::class);
         $this->call(typesSeeder::class);
+        $this->call(operationsSeeder::class);
+        $this->call(countriesSeeder::class);
+        $this->call(sourcesSeeder::class);
         $this->call(footagesSeeder::class);
     }
 }
