@@ -7,5 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Country extends Model
 {
-    use HasFactory;
+    protected $table = 'countries';
+	protected $primaryKey = 'id' ;
+    //use HasFactory;
+	public function countrie(){
+
+		return $this->belongsTo('footages','local_key');
+	}
 }

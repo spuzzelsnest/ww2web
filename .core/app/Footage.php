@@ -1,21 +1,31 @@
-<?php namespace App;
+<?php
+
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
-//use Carbon\Carbon;
-//use Jenssegers\Date\Date;
 
 class Footage extends Model {
 
 	protected $table = 'footages';
 	protected $primaryKey = 'id' ;
 
-	public function mediaType()
-	{
+	public function mediaType(){
 		return $this->hasOne('type');
 	}
-	public function getDates()
-	{
+
+	public function getOperation(){
+		return $this->hasOne('Operation');
+	}
+
+	public function getCountry(){
+		return $this->hasOne('countrie');	
+	}
+
+	public function getSource(){
+		return $this->hasOne('source');
+	}
+
+	public function getDates(){
 		return array('created_at', 'updated_at');
 	}
 
@@ -25,10 +35,9 @@ class Footage extends Model {
 //	$this->attributes['date'] =	Carbon::createFromFormat('Y/m/d', $value)->toDateTimeString();
 //	}
 	public static $rules = array(
-			'typeid'=> 'required',
+			'typeId'=> 'required',
 			'name' => 'required',
 			'place' => 'required',
-			'country' => 'required',
 			'lat' => 'required',
 			'lng' => 'required',
 	);

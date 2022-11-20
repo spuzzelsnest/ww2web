@@ -7,5 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Source extends Model
 {
-    use HasFactory;
+    protected $table = 'sources';
+	protected $primaryKey = 'id' ;
+    //use HasFactory;
+
+    public function source(){
+
+        return $this->belongsTo('footages','local_key');
+    }
 }
