@@ -47,11 +47,11 @@
                         </center>
                         <br>
                         {{--NAME--}}
-                                {!! Form::label('name','Name: ', array('class' => 'col-lg-3 control-label')) !!}
+                                {!! Form::label('name','Name:', array('class' => 'col-lg-3 control-label')) !!}
                                 {!! Form::text('name') !!}
                         <br>
                         {{--SELECT DATE--}}
-                                {!! Form::label('date','Date: ', array('class' => 'col-lg-3 control-label')) !!}
+                                {!! Form::label('date','Date:', array('class' => 'col-lg-3 control-label')) !!}
                                 {!! Form::macro('date', function($name, $default = '1944/06/06', $attrs = array()){
                                         $item = '<input type="date" name="'. $name .'" ';
                                         if ($default) { $item .= 'value="'. $default .'" ';}
@@ -63,42 +63,42 @@
                                 {!!Form::date('date')!!}
                         <br>
                         {{--PLACE--}}
-                                {!! Form::label('place','Place: ', array('class' => 'col-lg-3 control-label')) !!}
+                                {!! Form::label('place','Place:', array('class' => 'col-lg-3 control-label')) !!}
                                 {!! Form::text('place') !!}
                         <br>
                         {{--COUNTRY--}}
-                                {!! Form::label('country','Country: ', array('class' => 'col-lg-3 control-label')) !!}
-                                {!! Form::select('countryId', $countries, $selectedID, ['class' => 'form-control']) !!}
+                                {!! Form::label('country','Country:', array('class' => 'col-lg-3 control-label')) !!}
+                                {!! Form::select('countryId', $countries) !!}
                         <br>
                         {{--OPERATION--}}
-                                {!! Form::label('operation','Title: ', array('class' => 'col-lg-3 control-label')) !!}
+                                {!! Form::label('operation','Title:', array('class' => 'col-lg-3 control-label')) !!}
                                 {!! Form::select('operationId', array($operations)) !!}
                         <br>
                         {{--INFO--}}
-                                {!! Form::label('info','Info: ', array('class' => 'col-lg-3 control-label')) !!}
+                                {!! Form::label('info','Info:', array('class' => 'col-lg-3 control-label')) !!}
                                 {!! Form::textarea('info') !!}
                         <br>
                         {{--SOURCE--}}
-                                {!! Form::label('source','Source: ', array('class' => 'col-lg-3 control-label')) !!}
+                                {!! Form::label('source','Source:', array('class' => 'col-lg-3 control-label')) !!}
                                 {!! Form::select('sourceId', array($sources)) !!}
                         <br>
                         {{--REMARKS--}}
-                                {!! Form::label('remarks','Remarks: ', array('class' => 'col-lg-3 control-label')) !!}
+                                {!! Form::label('remarks','Remarks:', array('class' => 'col-lg-3 control-label')) !!}
                                 {!! Form::text('remarks') !!}
                         <br>
                         {{--LAT--}}
-                                {!! Form::label('lat','Lat: ',  array('class' => 'col-lg-3 control-label')) !!}
+                                {!! Form::label('lat','Lat:',  array('class' => 'col-lg-3 control-label')) !!}
                                 {!! Form::text('lat', '', ['id' => 'lat']) !!}
                         <br>
                         {{--LNG--}}
-                                {!! Form::label('lng','Lng: ', array('class' => 'col-lg-3 control-label')) !!}
+                                {!! Form::label('lng','Lng:', array('class' => 'col-lg-3 control-label')) !!}
                                 {!! Form::text('lng', '', ['id' => 'lng']) !!}
                         <center>
                         {{--Published--}}
-                                {!! Form::label('published', 'Published: ') !!}
+                                {!! Form::label('published', 'Published:') !!}
                                 {!! Form::checkbox('published') !!}
                         {{--ADD MEDIA--}}
-                                {!! Form::label('Foto', 'Upload Picture: ') !!}
+                                {!! Form::label('Foto', 'Upload Picture:') !!}
                                 {!! Form::file('file') !!}
                         <br>
                                 <div id='message'>Upload your File...</div>
