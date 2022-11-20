@@ -37,9 +37,10 @@ class AdminController extends Controller
         ->groupBy('footages.typeId','types.id')
         ->get();
 
-//              $types = Type::lists('id', 'type', 'description')->all();
-
-        $types = DB::table('types')->get();
+        $types      = DB::table('types')->get();
+        $operations = DB::table('operations')->get();
+        $countries  = DB::table('countries')->get();
+        $sources    = DB::table('sources')->get();
 
         return View::make('admin')
             ->with('title', 'Edit the Database')

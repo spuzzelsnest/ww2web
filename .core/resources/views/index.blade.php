@@ -64,36 +64,36 @@ $(function() {
 
         for(var i in data){
 
-                var lat		    = data[i].lat;
-                var lng		    = data[i].lng;
-                var dif		    = data[i].typeId;
-                var shortdesc	= data[i].operationId;
-                var name	    = data[i].name;
-                var place	    = data[i].place;
-                var date	    = data[i].date;
-                var info	    = data[i].info;
-                var source	    = data[i].source;
-                var remark 	    = data[i].remark;
-                var cusIcon 	= iconType[dif];
-                var title	    = place+" - "+date;
+            var lat		    = data[i].lat;
+            var lng		    = data[i].lng;
+            var dif		    = data[i].typeId;
+            var shortdesc	= data[i].operationId;
+            var name	    = data[i].name;
+            var place	    = data[i].place;
+            var date	    = data[i].date;
+            var info	    = data[i].info;
+            var source	    = data[i].source;
+            var remark 	    = data[i].remark;
+            var cusIcon 	= iconType[dif];
+            var title	    = place+" - "+date;
 
-                if (dif < 3) {
-		   customCode = "<a id='picbox' href='#popup'></a><div id='popup'><a id='picbox' href='#popup'><center><img src='/images/"+name+".jpg' id='img' width='350'/></center></a><a id='popup-close' href='#'></a></div><br>";
-                } else {
-		   customCode = "<center><video id=\"VideoPlayer\" poster=\"media/"+name+"/"+name+".jpg\" width=\"350\" height=\"263\" controls=\"autoplay\"><source src=\"media/"+name+"/"+name+".mp4\" type=\"video/mp4\"><source src=\"media/"+name+"/"+name+".ogg\" type=\"video/ogg\"></center><br>";
-                }
+            if (dif < 3) {
+		        customCode = "<a id='picbox' href='#popup'></a><div id='popup'><a id='picbox' href='#popup'><center><img src='/images/"+name+".jpg' id='img' width='350'/></center></a><a id='popup-close' href='#'></a></div><br>";
+            } else {
+                customCode = "<center><video id=\"VideoPlayer\" poster=\"media/"+name+"/"+name+".jpg\" width=\"350\" height=\"263\" controls=\"autoplay\"><source src=\"media/"+name+"/"+name+".mp4\" type=\"video/mp4\"><source src=\"media/"+name+"/"+name+".ogg\" type=\"video/ogg\"></center><br>";
+            }
 
-                var marker 	  = L.marker([lat, lng], {icon: new LeafIcon({iconUrl:[iconType[dif]]})});
-                    marker.title  = title;
-                    marker.latLng = marker.getLatLng();
-                    marker.html	  = customCode;
-                    marker.info   = info;
-                    marker.source = source;
-                    marker.remark = remark;
-                    marker.on('click', displayInfo);
+            var marker 	  = L.marker([lat, lng], {icon: new LeafIcon({iconUrl:[iconType[dif]]})});
+                marker.title  = title;
+                marker.latLng = marker.getLatLng();
+                marker.html	  = customCode;
+                marker.info   = info;
+                marker.source = source;
+                marker.remark = remark;
+                marker.on('click', displayInfo);
 
-                    markers.push(marker);
-                    cluster.addLayer(marker);
+                markers.push(marker);
+                cluster.addLayer(marker);
         }
 
         map.addLayer(cluster);

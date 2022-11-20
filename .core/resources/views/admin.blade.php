@@ -41,7 +41,7 @@
                         <center>
                         {{--SELECT MEDIA--}}
                                 @foreach ($types as $type)
-                                        {!! Form::checkbox('typeid', $type->id) !!}
+                                        {!! Form::checkbox('typeId', $type->id) !!}
                                         {{$type->description}}
                                 @endforeach
                         </center>
@@ -68,7 +68,7 @@
                         <br>
                         {{--COUNTRY--}}
                                 {!! Form::label('country','Country: ', array('class' => 'col-lg-3 control-label')) !!}
-                                {!! Form::select('countryId') !!}
+                                {!! Form::select('countryId', array()) !!}
                         <br>
                         {{--SCHORTDESC--}}
                                 {!! Form::label('shortdesc','Title: ', array('class' => 'col-lg-3 control-label')) !!}
