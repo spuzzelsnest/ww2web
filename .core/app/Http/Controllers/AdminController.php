@@ -27,11 +27,13 @@ class AdminController extends Controller
     public function index()
     {
                 $mediaCount = DB::table('footages')
-                                ->select(Db::Raw('count(0) as cnt, type, description'))
+                                
                                 ->join('types','footages.typeId','=','types.id')
                                 ->join('operations','footages.operationId','=','operations.id')
                                 ->join('countries','footages.countryId','=','countries.id')
-                                ->join('sources','foorages.sourceId','=','sources.id')
+                                ->join('sources','footages.sourceId','=','sources.id')
+                                
+                                ->select(Db::Raw('count(0) as cnt, type, description'))
                                 ->groupBy('footages.typeId','types.id')
                                 ->get();
 
