@@ -51,7 +51,7 @@
                                 {!! Form::text('name') !!}
                         <br>
                         {{--SELECT DATE--}}
-                                {!! Form::label('date','Date: ') !!}
+                                {!! Form::label('date','Date: ',, array('class' => 'col-lg-3 control-label')) !!}
                                 {!! Form::macro('date', function($name, $default = '1944/06/06', $attrs = array()){
                                         $item = '<input type="date" name="'. $name .'" ';
                                         if ($default) { $item .= 'value="'. $default .'" ';}
@@ -89,7 +89,7 @@
                         {{--LAT--}}
                                 {!! Form::label('lat','Lat: ',  array('class' => 'col-lg-3 control-label')) !!}
                                 {!! Form::text('lat', '', ['id' => 'lat']) !!}
-
+                        <br>
                         {{--LNG--}}
                                 {!! Form::label('lng','Lng: ', array('class' => 'col-lg-3 control-label')) !!}
                                 {!! Form::text('lng', '', ['id' => 'lng']) !!}
@@ -97,13 +97,12 @@
                         {{--Published--}}
                                 {!! Form::label('published', 'Published: ') !!}
                                 {!! Form::checkbox('published') !!}
-                        <br>
                         {{--ADD MEDIA--}}
                                 {!! Form::label('Foto', 'Upload Picture: ') !!}
                                 {!! Form::file('file') !!}
-                                <br>
+                        <br>
                                 <div id='message'>Upload your File...</div>
-
+                        <br>
                                 {!! Form::submit('Aanmaken', array('class' => 'btn btn-success')) !!}
                                 {!! link_to_route('admin.index', 'Cancel', null, array('class' => 'btn btn-warning')) !!}
                         </center>
