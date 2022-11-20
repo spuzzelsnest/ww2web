@@ -97,3 +97,8 @@ A typesSeeder is available from the directory .core/database/seeders, seed as fo
 ```
 php artisan db:seed
 ```
+
+To refresh the data after changes have been made, you can do so using:
+```
+ php artisan migrate:refresh --seed
+```
