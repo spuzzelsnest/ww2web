@@ -28,8 +28,11 @@ class AdminController extends Controller
     {
                 $mediaCount = DB::table('footages')
                                 ->select(Db::Raw('count(0) as cnt, type, description'))
-                                ->join('types','footages.typeid','=','types.id')
-                                ->groupBy('footages.typeid','types.id')
+                                ->join('types','footages.typeId','=','types.id')
+                                ->join('operations','footages.operationId','=','operations.id')
+                                ->join('countries','footages.countryId','=','countries.id')
+                                ->join('sources','foorages.sourceId','=','sources.id')
+                                ->groupBy('footages.typeId','types.id')
                                 ->get();
 
 //              $types = Type::lists('id', 'type', 'description')->all();
