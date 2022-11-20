@@ -68,11 +68,11 @@
                         <br>
                         {{--COUNTRY--}}
                                 {!! Form::label('country','Country: ', array('class' => 'col-lg-3 control-label')) !!}
-                                {!! Form::select('countryId', array()) !!}
+                                {!! Form::select('countryId', array($countries)) !!}
                         <br>
-                        {{--SCHORTDESC--}}
-                                {!! Form::label('shortdesc','Title: ', array('class' => 'col-lg-3 control-label')) !!}
-                                {!! Form::text('shortdesc') !!}
+                        {{--OPERATION--}}
+                                {!! Form::label('operation','Title: ', array('class' => 'col-lg-3 control-label')) !!}
+                                {!! Form::select('operation', array($operations)) !!}
                         <br>
                         {{--INFO--}}
                                 {!! Form::label('info','Info: ', array('class' => 'col-lg-3 control-label')) !!}
@@ -80,7 +80,7 @@
                         <br>
                         {{--SOURCE--}}
                                 {!! Form::label('source','Source: ', array('class' => 'col-lg-3 control-label')) !!}
-                                {!! Form::select('sourceId') !!}
+                                {!! Form::select('sourceId', array($sources)) !!}
                         <br>
                         {{--REMARKS--}}
                                 {!! Form::label('remarks','Remarks: ', array('class' => 'col-lg-3 control-label')) !!}

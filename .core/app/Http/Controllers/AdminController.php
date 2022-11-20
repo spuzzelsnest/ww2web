@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\Redirect;
 use Intervention\Image\ImageManager;
 use Image;
 
-
 class AdminController extends Controller
 {
     /**
