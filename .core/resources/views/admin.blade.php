@@ -68,11 +68,22 @@
                         <br>
                         {{--COUNTRY--}}
                                 {!! Form::label('country','Country: ', array('class' => 'col-lg-3 control-label')) !!}
-                                {!! Form::select('countryId', array($countries)) !!}
+                                {!! Form::select('countryId', array($countries, $countr)) !!}
+
+                                @foreach ($countries as $country)
+                                        {!! Form::select('countryId', $country->id) !!}
+                                        {{$country->country}}
+                                @endforeach
+
+
+
+
+
+
                         <br>
                         {{--OPERATION--}}
                                 {!! Form::label('operation','Title: ', array('class' => 'col-lg-3 control-label')) !!}
-                                {!! Form::select('operation', array($operations)) !!}
+                                {!! Form::select('operationId', array($operations)) !!}
                         <br>
                         {{--INFO--}}
                                 {!! Form::label('info','Info: ', array('class' => 'col-lg-3 control-label')) !!}
