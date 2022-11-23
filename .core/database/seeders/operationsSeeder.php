@@ -58,6 +58,12 @@ class operationsSeeder extends Seeder
                 ),
                 array(
                     'operation' => 'Post War'
+                ),             
+                array(
+                    'operation' => 'Armistice'
+                ),              
+                array(
+                    'operation' => 'Falaise Gab'
                 ),
             )
         );
