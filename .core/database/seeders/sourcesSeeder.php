@@ -25,6 +25,18 @@ class sourcesSeeder extends Seeder
                 array(
                     'source' => 'US Signal Corps'
                 ),
+                array(
+                    'source' => 'British Pathé'
+                ),
+                array(
+                    'source' => 'Mit Hitler im Westen'
+                ),
+                array(
+                    'source' => 'Life Magazine'
+                ),
+                array(
+                    'source' => 'Associated Press'
+                ),
             )
         );
     }
