@@ -57,13 +57,13 @@ class operationsSeeder extends Seeder
                     'operation' => 'Battle of Berlin'
                 ),
                 array(
-                    'operation' => 'Post War'
-                ),             
-                array(
                     'operation' => 'Armistice'
                 ),              
                 array(
                     'operation' => 'Falaise Gab'
+                ),
+                array(
+                    'operation' => 'Post-War'
                 ),
             )
         );
