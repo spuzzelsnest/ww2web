@@ -24,10 +24,19 @@ class operationsSeeder extends Seeder
                     'operation' => 'Occupation'
                 ),
                 array(
+                    'operation' => 'Jubilee'
+                ),
+                array(
                     'operation' => 'Overlord'
                 ),
                 array(
                     'operation' => 'Battle for Normandy'
+                ),
+                array(
+                    'operation' => 'Liberation of France'
+                ),
+                array(
+                    'operation' => 'Liberation of Belgium'
                 ),
                 array(
                     'operation' => 'Market Garden'
