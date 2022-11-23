@@ -44,6 +44,21 @@ class operationsSeeder extends Seeder
                 array(
                     'operation' => 'Battle of the Bulge'
                 ),
+                array(
+                    'operation' => 'Phoney War'
+                ),
+                array(
+                    'operation' => 'Cobra'
+                ),
+                array(
+                    'operation' => 'Battle for Germany'
+                ),
+                array(
+                    'operation' => 'Battle of Berlin'
+                ),
+                array(
+                    'operation' => 'Post War'
+                ),
             )
         );
     }
