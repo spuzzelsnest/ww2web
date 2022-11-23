@@ -63,8 +63,12 @@ class operationsSeeder extends Seeder
                     'operation' => 'Falaise Gab'
                 ),
                 array(
-                    'operation' => 'Post-War'
+                    'operation' => 'Liberation of The Netherlands'
                 ),
+                array(
+                    'operation' => 'Post-War'
+                ),             
+
             )
         );
     }
