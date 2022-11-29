@@ -34,10 +34,11 @@ class AdminController extends Controller{
         ->groupBy('footages.typeId','types.id')
         ->get();
 
-        $types      = DB::table('types')->get();
-        $operations = DB::table('operations')->get();
-        $countries  = DB::table('countries')->get();
-        $sources    = DB::table('sources')->get();
+        $types          = DB::table('types')->get();
+        $operations     = DB::table('operations')->get();
+        $countries      = DB::table('countries')->get();
+        $countryOptions = $countries->pluck('country', 'id')->toArray();
+        $sources        = DB::table('sources')->get();
 
         return View::make('admin')
             ->with('title', 'Edit the Database')
@@ -78,8 +79,8 @@ class AdminController extends Controller{
             $f->operationId = Input::get('operationId');
             $f->date        = Input::get('date');
             $f->place       = Input::get('place');
-            $f->country     = Input::get('countryId');
-            $f->source      = Input::get('sourceId');
+            $f->countryId   = Input::get('countryId');
+            $f->sourceId    = Input::get('sourceId');
             $f->remarks     = Input::get('remarks');
             $f->typeId      = Input::get('typeId');
             $f->lat         = Input::get('lat');

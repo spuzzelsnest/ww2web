@@ -33,22 +33,25 @@
         });
 </script>
 
-<div id="legenda">EDIT THE DB: <i>Drag the marker and fill out the info</i></div>
+<div id="legenda">Add a New Footage: <i>Drag the marker and fill out the info</i></div>
 <div class='split right'>
         <div id='infoDiv'>
                 {!! Form::open(array('route' => 'admin.store', 'files' => true)) !!}
                 <div class="form-group">
                        <div class="form-group-type">
+                        <center>
                         {{--SELECT MEDIA--}}
                                 @foreach ($types as $type)
                                         {!! Form::checkbox('typeId', $type->id) !!}
-                                        {{$type->description}}
+                                        {!! $type->description !!}
+
                                 @endforeach
+                        </center>
                         </div>
                         <br>
                         {{--NAME--}}
                                 {!! Form::label('name','Name:', array('class' => 'col-lg-3 control-label')) !!}
-                                {!! Form::text('name') !!}
+                                {!! Form::text('name', '', array('class' => 'form-control')) !!}
                         <br>
                         {{--SELECT DATE--}}
                                 {!! Form::label('date','Date:', array('class' => 'col-lg-3 control-label')) !!}
@@ -60,19 +63,32 @@
                                                 $item .= $a .'="'. $k .'" ';
                                         } $item .= ">";
                                         return $item;}); !!}
-                                {!!Form::date('date')!!}
+                                {!!Form::date('date', '06/06/1944' ,['class'=>'form-control']) !!}
                         <br>
                         {{--PLACE--}}
                                 {!! Form::label('place','Place:', array('class' => 'col-lg-3 control-label')) !!}
-                                {!! Form::text('place') !!}
+                                {!! Form::text('place', '', ['class'=>'form-control']) !!}
                         <br>
                         {{--COUNTRY--}}
-                                {!! Form::label('country','Country:', array('class' => 'col-lg-3 control-label')) !!}
-                                {!! Form::select('countryId', $countries, ['class' => 'form-control']) !!}
+                                {!! Form::label('countryId','Country:', array('class' => 'col-lg-3 control-label')) !!}
+                                        @foreach ($countries as $country)
+                                           {!! $country->country !!}
+                                        @endforeach
+                                {!! Form::select('countryId', 
+                                        array( 
+                                           '0' => '...'
+                                        ),
+                                        null,
+                                         ['class'=>'form-control']) !!}
                         <br>
                         {{--OPERATION--}}
-                                {!! Form::label('operation','Title:', array('class' => 'col-lg-3 control-label')) !!}
-                                {!! Form::select('operationId', array($operations)) !!}
+                                {!! Form::label('operation','Operation:', array('class' => 'col-lg-3 control-label')) !!}
+                                {!! Form::select('operationId', 
+                                        array(
+                                           '0' => '...'
+                                        ),
+                                        null,
+                                         ['class'=>'form-control']) !!}
                         <br>
                         {{--INFO--}}
                                 {!! Form::label('info','Info:', array('class' => 'col-lg-3 control-label')) !!}
@@ -80,11 +96,16 @@
                         <br>
                         {{--SOURCE--}}
                                 {!! Form::label('source','Source:', array('class' => 'col-lg-3 control-label')) !!}
-                                {!! Form::select('sourceId', array($sources)) !!}
+                                {!! Form::select('sourceId', 
+                                        array( 
+                                           '0' => '...'
+                                        ),
+                                        null,
+                                         ['class'=>'form-control']) !!}
                         <br>
                         {{--REMARKS--}}
                                 {!! Form::label('remarks','Remarks:', array('class' => 'col-lg-3 control-label')) !!}
-                                {!! Form::text('remarks') !!}
+                                {!! Form::text('remarks', '', ['class'=>'form-control']) !!}
                         <br>
                         {{--LAT--}}
                                 {!! Form::label('lat','Lat:',  array('class' => 'col-lg-3 control-label')) !!}
@@ -96,6 +117,8 @@
                         <div class="form-group-media">
                         {{--ADD MEDIA--}}
                                 {!! Form::label('Foto', 'Upload Picture:') !!}
+                        <br>
+                        <center>
                                 {!! Form::file('file') !!}
                         <br>
                                 <div id='message'>Upload your File...</div>
@@ -106,6 +129,7 @@
                         <br>
                                 {!! Form::submit('Aanmaken', array('class' => 'btn btn-success')) !!}
                                 {!! link_to_route('admin.index', 'Cancel', null, array('class' => 'btn btn-warning')) !!}
+                        </center>
                         </div>
                 </div>
                 {!! Form::close() !!}
