@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Console\Carbon;
+use Carbon\Carbon;
 
 class DatabaseBackUp extends Command
 {
