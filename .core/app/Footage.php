@@ -29,11 +29,11 @@ class Footage extends Model {
 		return array('created_at', 'updated_at');
 	}
 
-//	public function setDatetAttribute($value)
-//	{
+	public function setDatetAttribute($value)
+	{
 //	$this->attributes['date'] =	Date::createFromFormat('Y/m/d', $value);
-//	$this->attributes['date'] =	Carbon::createFromFormat('Y/m/d', $value)->toDateTimeString();
-//	}
+	$this->attributes['date'] =	Carbon::createFromFormat('Y/m/d', $value)->toDateTimeString();
+	}
 	public static $rules = array(
 			'typeId'=> 'required',
 			'name' => 'required',

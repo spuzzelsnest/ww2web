@@ -17,7 +17,7 @@ class HomeController extends Controller{
     public function index(){
 
 		$mediaCount = DB::table('footages')
-			
+
 			->join('types','footages.typeId','=','types.id')
 			->join('operations','footages.operationId','=','operations.id')
 			->join('countries','footages.countryId','=','countries.id')
@@ -29,7 +29,11 @@ class HomeController extends Controller{
 
 		return View::make('index')
 			->with('title' , 'WW2: The Presswar')
-			->with('footages', Footage::where('published', '=', '1')->join('types','footages.typeId', '=', 'types.id')->get(array('footages.*','types.*')))
+			->with('footages', Footage::where('published', '=', '1')
+						->join('coutries', 'countries.coutryId', '=', 'countries.id')
+						->join('types','footages.typeId', '=', 'types.id')
+						->join('sources','footages.sourceId', '=', 'sources.id')
+						->get(array('footages.*','types.*')))
 			->with('count', $mediaCount);
     }
 }
