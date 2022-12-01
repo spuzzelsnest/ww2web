@@ -103,9 +103,9 @@
                                         null,
                                          ['class'=>'form-control']) !!}
                         <br>
-                        {{--REMARKS--}}
-                                {!! Form::label('remarks','Remarks:', array('class' => 'col-lg-3 control-label')) !!}
-                                {!! Form::text('remarks', '', ['class'=>'form-control']) !!}
+                        {{--REMARK--}}
+                                {!! Form::label('remark','Remark:', array('class' => 'col-lg-3 control-label')) !!}
+                                {!! Form::text('remark', '', ['class'=>'form-control']) !!}
                         <br>
                         {{--LAT--}}
                                 {!! Form::label('lat','Lat:',  array('class' => 'col-lg-3 control-label')) !!}
