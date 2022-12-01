@@ -79,9 +79,7 @@
                         {{--OPERATION--}}
                                 {!! Form::label('operation','Operation:', array('class' => 'col-lg-3 control-label')) !!}
                                 {!! Form::select('operationId', 
-                                        array(
-                                           '0' => '...'
-                                        ),
+                                        $operationOptions,
                                         null,
                                          ['class'=>'form-control']) !!}
                         <br>
@@ -92,9 +90,7 @@
                         {{--SOURCE--}}
                                 {!! Form::label('source','Source:', array('class' => 'col-lg-3 control-label')) !!}
                                 {!! Form::select('sourceId', 
-                                        array( 
-                                           '0' => '...'
-                                        ),
+                                        $sourceOptions,
                                         null,
                                          ['class'=>'form-control']) !!}
                         <br>

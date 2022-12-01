@@ -34,21 +34,22 @@ class AdminController extends Controller{
         ->groupBy('footages.typeId','types.id')
         ->get();
 
-        $types          = DB::table('types')->get();
-        $operations     = DB::table('operations')->get();
-        $countries      = DB::table('countries')->get();
-        $countryOptions = $countries->pluck('country', 'id');
-        $sources        = DB::table('sources')->get();
+        $types            = DB::table('types')->get();
+        $operations       = DB::table('operations')->get();
+        $operationOptions = $operations->pluck('operation', 'id');
+        $countries        = DB::table('countries')->get();
+        $countryOptions   = $countries->pluck('country', 'id');
+        $sources          = DB::table('sources')->get();
+        $sourceOptions    = $sources->pluck('source', 'id');
 
         return View::make('admin')
             ->with('title', 'Edit the Database')
             ->with('footages', Footage::all())
             ->with('count', $mediaCount)
             ->with('types', $types)
-            ->with('operations', $operations)
-            ->with('countries', $countries)
+            ->with('operationOptions', $operationyOptions)
             ->with('countryOptions', $countryOptions)
-            ->with('sources', $sources);
+            ->with('sourceOptions', $sourceOptions);     
     }
     /**
      * Show the form for creating a new resource.
