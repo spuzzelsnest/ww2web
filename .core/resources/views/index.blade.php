@@ -28,9 +28,9 @@ $(function() {
             iconType['3'] = '/css/images/Avideo.png';
             iconType['4'] = '/css/images/Xvideo.png';
             iconType['5'] = '/css/images/Aaudio.png';
-	    iconType['6'] = '/css/images/Xadio.png';
+	        iconType['6'] = '/css/images/Xadio.png';
 
- 	var map   = L.map('map').setView([50.1, 4], 7);
+ 	var map       = L.map('map').setView([50.1, 4], 7);
  	    mapLink   = '<a href="https://www.esri.com/">Esri</a>';
  	    lableLink = '<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://cartodb.com/attributions">CartoDB</a>';
 	    wholink   = 'This Project is meant as Historic reference only';
@@ -72,7 +72,7 @@ $(function() {
             var place	    = data[i].place;
             var date	    = data[i].date;
             var info	    = data[i].info;
-            var source	    = data[i].source;
+            var source	    = data[i].sourceId;
             var remark 	    = data[i].remark;
             var cusIcon 	= iconType[dif];
             var title	    = place+" - "+date;
