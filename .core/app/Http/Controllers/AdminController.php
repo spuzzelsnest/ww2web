@@ -69,7 +69,7 @@ class AdminController extends Controller{
     public function store(Request $request){
         //$input = Input::all();
         $input = $request->all();
-        
+
         $input['date'] = date('Y-m-d', strtotime($input['date']));
 
         $v = Validator::make($input, Footage::$rules);
@@ -77,18 +77,18 @@ class AdminController extends Controller{
         if ($v->passes()) {
 
             $f = new Footage;
-            $f->name        = Input::get('name');
-            $f->info        = Input::get('info');
-            $f->operationId = Input::get('operationId');
-            $f->date        = Input::get('date');
-            $f->place       = Input::get('place');
-            $f->countryId   = Input::get('countryId');
-            $f->sourceId    = Input::get('sourceId');
-            $f->remarks     = Input::get('remarks');
-            $f->typeId      = Input::get('typeId');
-            $f->lat         = Input::get('lat');
-            $f->lng         = Input::get('lng');
-            $f->published   = Input::get('published');
+            $f->name        = $request->name;
+            $f->info        = $request->info;
+            $f->operationId = $request->operationId;
+            $f->date        = $request->date;
+            $f->place       = $request->place;
+            $f->countryId   = $request->countryId;
+            $f->sourceId    = $request->sourceId;
+            $f->remarks     = $request->remarks;
+            $f->typeId      = $request->typeId;
+            $f->lat         = $request->lat;
+            $f->lng         = $request->lng;
+            $f->published   = $request->published;
             $f->save();
 
             Image::make(Input::file('file') ->getRealPath())
