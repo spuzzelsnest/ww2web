@@ -36,9 +36,9 @@ class Footage extends Model {
 	}
 	public static $rules = array(
 			'typeId'=> 'required',
-			'name' => 'required',
+			'name'  => 'required',
 			'place' => 'required',
-			'lat' => 'required',
-			'lng' => 'required',
+			'lat'   => 'required',
+			'lng'   => 'required',
 	);
 }
