@@ -37,6 +37,7 @@ class AdminController extends Controller{
         $types          = DB::table('types')->get();
         $operations     = DB::table('operations')->get();
         $countries      = DB::table('countries')->get();
+        $countries      = Countries::lists(['id', 'name']);
         $countryOptions = $countries->pluck('id')->toArray();
         $sources        = DB::table('sources')->get();
 
