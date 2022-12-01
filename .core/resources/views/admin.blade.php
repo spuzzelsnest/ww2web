@@ -72,7 +72,7 @@
                         {{--COUNTRY--}}
                                 {!! Form::label('countryId','Country:', array('class' => 'col-lg-3 control-label')) !!}
                                 {!! Form::select('countryId', 
-                                        $countryOptions,
+                                        $countr->id->first(),
                                         null,
                                          ['class'=>'form-control']) !!}
                         <br>
