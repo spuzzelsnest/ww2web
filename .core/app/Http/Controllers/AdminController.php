@@ -37,8 +37,7 @@ class AdminController extends Controller{
         $types          = DB::table('types')->get();
         $operations     = DB::table('operations')->get();
         $countries      = DB::table('countries')->get();
-        $countries      = Countries::lists(['id', 'name']);
-        $countryOptions = $countries->pluck('id')->toArray();
+//        $countryOptions = $countries->pluck('country', 'id')->toArray();
         $sources        = DB::table('sources')->get();
 
         return View::make('admin')
@@ -94,7 +93,7 @@ class AdminController extends Controller{
             //    ->resize(540, null, function ($constraint) {
             //            $constraint->aspectRatio();
             //})
-            //->save('images/' . $f->name . '.jpg');
+            ->save('images/' . $f->name . '.jpg');
 
         return Redirect::route('admin.index');
         }
