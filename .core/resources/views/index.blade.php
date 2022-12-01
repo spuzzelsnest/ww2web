@@ -62,7 +62,9 @@ $(function() {
             }
 	    });
 
+        console.log(data)
         for(var i in data){
+        
 
             var lat		    = data[i].lat;
             var lng		    = data[i].lng;
