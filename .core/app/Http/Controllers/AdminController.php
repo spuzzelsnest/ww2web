@@ -47,7 +47,7 @@ class AdminController extends Controller{
             ->with('footages', Footage::all())
             ->with('count', $mediaCount)
             ->with('types', $types)
-            ->with('operationOptions', $operationyOptions)
+            ->with('operationOptions', $operationOptions)
             ->with('countryOptions', $countryOptions)
             ->with('sourceOptions', $sourceOptions);     
     }
