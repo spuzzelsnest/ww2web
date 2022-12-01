@@ -11,6 +11,7 @@ use View, App\Footage, App\Type;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Auth;
 use Illuminate\Support\Facades\Input;
+
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
 use Intervention\Image\ImageManager;
