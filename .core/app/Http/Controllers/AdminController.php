@@ -84,7 +84,7 @@ class AdminController extends Controller{
             $f->place       = $request->place;
             $f->countryId   = $request->countryId;
             $f->sourceId    = $request->sourceId;
-            $f->remarks     = $request->remarks;
+            $f->remark      = $request->remark;
             $f->typeId      = $request->typeId;
             $f->lat         = $request->lat;
             $f->lng         = $request->lng;
