@@ -30,7 +30,7 @@ class HomeController extends Controller{
 		return View::make('index')
 			->with('title' , 'WW2: The Presswar')
 			->with('footages', Footage::where('published', '=', '1')
-						->join('coutries', 'countries.coutryId', '=', 'countries.id')
+						->join('countries', 'countries.coutryId', '=', 'countries.id')
 						->join('types','footages.typeId', '=', 'types.id')
 						->join('sources','footages.sourceId', '=', 'sources.id')
 						->get(array('footages.*','types.*')))
