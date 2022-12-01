@@ -26,14 +26,14 @@ class AdminController extends Controller{
     public function index(){
         $mediaCount = DB::table('footages')
 
-        ->join('types','footages.typeId','=','types.id')
-        ->join('operations','footages.operationId','=','operations.id')
-        ->join('countries','footages.countryId','=','countries.id')
-        ->join('sources','footages.sourceId','=','sources.id')
+            ->join('types','footages.typeId','=','types.id')
+            ->join('operations','footages.operationId','=','operations.id')
+            ->join('countries','footages.countryId','=','countries.id')
+            ->join('sources','footages.sourceId','=','sources.id')
 
-        ->select(Db::Raw('count(0) as cnt, type, description'))
-        ->groupBy('footages.typeId','types.id')
-        ->get();
+            ->select(Db::Raw('count(0) as cnt, type, description'))
+            ->groupBy('footages.typeId','types.id')
+            ->get();
 
         $types          = DB::table('types')->get();
         $operations     = DB::table('operations')->get();
@@ -67,7 +67,9 @@ class AdminController extends Controller{
      * @return Response
      */
     public function store(Request $request){
-        $input = Input::all();
+        
+        //$input = Input::all();
+        $input = $request->all()
         $input['date'] = date('Y-m-d', strtotime($input['date']));
 
         $v = Validator::make($input, Footage::$rules);
