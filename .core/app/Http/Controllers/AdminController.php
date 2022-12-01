@@ -10,12 +10,11 @@ use App\Http\Controllers\Controller;
 use View, App\Footage, App\Type;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Auth;
-use Illuminate\Support\Facades\Input;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
 use Intervention\Image\ImageManager;
-use Image;
+
 
 class AdminController extends Controller{
     /**
@@ -67,7 +66,6 @@ class AdminController extends Controller{
      * @return Response
      */
     public function store(Request $request){
-        //$input = Input::all();
         $input = $request->all();
 
         $input['date'] = date('Y-m-d', strtotime($input['date']));
@@ -91,11 +89,11 @@ class AdminController extends Controller{
             $f->published   = $request->published;
             $f->save();
 
-            Image::make(Input::file('file') ->getRealPath())
-                ->resize(540, null, function ($constraint) {
-                        $constraint->aspectRatio();
-            })
-            ->save('images/' . $f->name . '.jpg');
+            //Image::make(Input::file('file') ->getRealPath())
+            //    ->resize(540, null, function ($constraint) {
+            //            $constraint->aspectRatio();
+            //})
+            //->save('images/' . $f->name . '.jpg');
 
         return Redirect::route('admin.index');
         }
