@@ -93,7 +93,7 @@ class AdminController extends Controller{
             //    ->resize(540, null, function ($constraint) {
             //            $constraint->aspectRatio();
             //})
-            ->save('images/' . $f->name . '.jpg');
+            //->save('images/' . $f->name . '.jpg');
 
         return Redirect::route('admin.index');
         }
