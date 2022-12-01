@@ -67,8 +67,9 @@ class AdminController extends Controller{
      * @return Response
      */
     public function store(Request $request){
-        $input = Input::all();
-        //$request->all()
+        //$input = Input::all();
+        $input = $request->all();
+        
         $input['date'] = date('Y-m-d', strtotime($input['date']));
 
         $v = Validator::make($input, Footage::$rules);
