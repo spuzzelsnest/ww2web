@@ -74,7 +74,7 @@ $(function() {
             var place	    = data[i].place;
             var date	    = data[i].date;
             var info	    = data[i].info;
-            var source	    = data[i].sourceId;
+            var source	    = data[i].source;
             var remark 	    = data[i].remark;
             var cusIcon 	= iconType[dif];
             var title	    = place+" - "+date;
