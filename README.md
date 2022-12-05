@@ -1,4 +1,4 @@
-# Laravel and Leaflet Maps
+# Laravel 9.42 and Leaflet Maps POI settings with pictures
 
 ### Prerequisites
 
