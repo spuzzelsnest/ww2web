@@ -69,7 +69,6 @@ class AdminController extends Controller{
      */
     public function store(Request $request){
         $input = $request->all();
-        return $input['date'];
         $input['date'] = date('Y-m-d', strtotime($input['date']));
 
         $v = Validator::make($input, Footage::$footagesRules );
