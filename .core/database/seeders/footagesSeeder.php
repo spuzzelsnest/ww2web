@@ -16,6 +16,6 @@ class footagesSeeder extends Seeder
     {
         $path = base_path() . '/database/seeders/footages.sql';
         $sql = file_get_contents($path);
-        DB::unprepared($sql);
+        \DB::unprepared($sql);
     }
 }
