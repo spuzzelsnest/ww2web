@@ -77,18 +77,18 @@ class AdminController extends Controller{
         if ($v->passes()) {
 
             $f = new Footage;
-            $f->name        = $request->name;
-            $f->info        = $request->info;
-            $f->operationId = $request->operationId;
-            $f->date        = $request->date;
-            $f->place       = $request->place;
-            $f->countryId   = $request->countryId;
-            $f->sourceId    = $request->sourceId;
-            $f->remark      = $request->remark;
-            $f->typeId      = $request->typeId;
-            $f->lat         = $request->lat;
-            $f->lng         = $request->lng;
-            $f->published   = $request->published;
+            $f->name        = $request->input('name');
+            $f->info        = $request->input('info','');
+            $f->operationId = $request->input('operationId');
+            $f->date        = $request->input('date');
+            $f->place       = $request->input('place');
+            $f->countryId   = $request->input('countryId');
+            $f->sourceId    = $request->input('sourceId');
+            $f->remark      = $request->input('remark','');
+            $f->typeId      = $request->input('typeId');
+            $f->lat         = $request->input('lat');
+            $f->lng         = $request->input('lng');
+            $f->published   = $request->input('published');
             $f->save();
 
             //Image::make(Input::file('file') ->getRealPath())
