@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
             operationsSeeder::class,
             countriesSeeder::class,
             sourcesSeeder::class,
-            SqlSeeder::class,
+            footagesSeeder::class,
         ]);
     }
 }
