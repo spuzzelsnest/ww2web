@@ -63,7 +63,7 @@
                         <br>
                         {{--SELECT DATE--}}
                                 {!! Form::label('date','Date:', array('class' => 'col-lg-3 control-label')) !!}
-                                {!! Form::macro('date', function($name, $default = '06-06-1944', $attrs = array()){
+                                {!! Form::macro('date', function($name, $default = '06/06/1944', $attrs = array()){
                                         $item = '<input type="date" name="'. $name .'" ';
                                         if ($default) { $item .= 'value="'. $default .'" ';}
                                         if (is_array($attrs)){
