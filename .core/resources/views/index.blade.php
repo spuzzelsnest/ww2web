@@ -62,10 +62,8 @@ $(function() {
             }
 	    });
 
-        console.log(data)
         for(var i in data){
         
-
             var lat		    = data[i].lat;
             var lng		    = data[i].lng;
             var dif		    = data[i].typeId;
@@ -92,8 +90,8 @@ $(function() {
                 marker.info   = info;
                 marker.source = source;
                 marker.remark = remark;
-                marker.on('click', displayInfo);
 
+                marker.on('click', displayInfo);
                 markers.push(marker);
                 cluster.addLayer(marker);
         }
@@ -131,7 +129,7 @@ $(function() {
 	    $.each(data, function(index, i){
 
 	        if(
-		    $("input:checkbox[name='type'][value='"+i.typeid+"']").is(':checked')
+		    $("input:checkbox[name='type'][value='"+i.typeId+"']").is(':checked')
 		){
                	    cluster.addLayer(markers[index]);
 	        }else{
