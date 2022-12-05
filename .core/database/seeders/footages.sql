@@ -1,55 +1,5 @@
--- phpMyAdmin SQL Dump
--- version 5.2.0
--- https://www.phpmyadmin.net/
---
--- Host: ww2maps.net.mysql.service.one.com:3306
--- Generation Time: Nov 26, 2022 at 12:18 PM
--- Server version: 10.3.36-MariaDB-1:10.3.36+maria~ubu2004
--- PHP Version: 7.2.24-0ubuntu0.18.04.15
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Database: `ww2maps`
---
-
--- --------------------------------------------------------
-
---
--- Table structure for table `footages`
---
-
-CREATE TABLE `footages` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `typeId` int(2) NOT NULL,
-  `name` char(60) COLLATE utf8_unicode_ci NOT NULL,
-  `operationId` int(3) NOT NULL,
-  `info` text COLLATE utf8_unicode_ci NOT NULL,
-  `lat` decimal(8) NOT NULL,
-  `lng` decimal(8) NOT NULL,
-  `place` char(150) COLLATE utf8_unicode_ci NOT NULL,
-  `countryId` int(11) NOT NULL,
-  `date` date NOT NULL,
-  `sourceId` int(2) NOT NULL,
-  `remark` char(120) COLLATE utf8_unicode_ci NOT NULL,
-  `published` tinyint(1) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Dumping data for table `footages`
---
-
-INSERT INTO `footages` (`id`, `typeId`, `name`, `operationId`, `info`, `lat`, `lng`, `place`, `countryId`, `date`, `sourceId`, `remark`, `published`, `created_at`, `updated_at`) VALUES
+INSERT INTO `footages` (`typeId`, `name`, `operationId`, `info`, `lat`, `lng`, `place`, `countryId`, `date`, `sourceId`, `remark`, `published`, `created_at`, `updated_at`) VALUES
 ( 2, 'duinkerke06', 1, 'After the retreat of the British, the village was heavenly damaged and littered with all what could not be taken over the channel.', '51.04112625', '2.40394855', 'Duinkerke', 2, '1940-06-05', 1, '', 1, '2020-12-05 20:27:13', '2020-08-14 13:50:42'),
 ( 2, 'duinkerke05', 1, 'After the battle, in the backdrop it is still burning.', '51.04869843', '2.36896706', 'Duinkerke', 2, '1940-06-05', 1, '', 1, '2020-12-05 20:24:01', '2020-08-14 14:01:50'),
 ( 2, 'duinkerke07', 1, 'I have marked this as a German picture, but it is not. It is from a photo studio, located in Ostend back in 1940. Created during the occupation, the story behind the photo goes as followed:\nThe day was May 27. Because Rosendaël pays a heavy price to the common cause, as much in destruction as in human lives. Its young Town Hall, whose spacious basements house fifteen hundred people and where a first-aid post operates with Doctors Bil and Deswarte, will not have lived long. Four dive bombs got the better of this beautiful building which collapses like a house of cards. The blanket falling over the debris like a veil casually thrown over a miserable victim. alone, the belfry still stands, fearless, above the Vallée des Roses, roses now red with blood... end quote', '51.04123306', '2.40401411', 'Duinkerke', 2, '1940-05-27', 1, 'Laarmans et Dasseville', 1, '2020-12-05 20:27:21', '2020-08-14 22:34:36'),
@@ -860,18 +810,3 @@ INSERT INTO `footages` (`id`, `typeId`, `name`, `operationId`, `info`, `lat`, `l
 ( 1, 'bra01', 17, 'Post-war picture of the destroyed town of Bra. An german sdkz 251 can be seen with Allied markings.', '50.32345007', '5.73335588', 'Bra', 1, '1945-02-00', 1, '', 1, '2022-11-09 22:27:08', '2022-11-09 22:27:08'),
 ( 1, 'harze01', 7, 'Liberation of Harzé  in September 1944.', '50.44100203', '5.66615582', 'Harzé', 1, '1944-09-10', 1, '', 1, '2022-11-09 22:27:08', '2022-11-09 22:27:08'),
 ( 1, 'sgravenbrakel02', 7, 'A M7 Priest of the 14th Armored Field Artillery Battalion.', '50.60443527', '4.13180888', 's Gravenbrakel', 1, '1944-09-05', 1, '', 1, '2022-11-09 22:27:08', '2022-11-09 22:27:08');
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `footages_rework`
---
-ALTER TABLE `footages`
-  ADD PRIMARY KEY (`id`);
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
