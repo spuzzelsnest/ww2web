@@ -35,7 +35,7 @@ class Footage extends Model {
 	}
 	
 	public static $footagesRules = array(
-			'name'  => 'required|unique',
+			'name'  => 'required|unique:footages',
 			'typeId'=> 'required',
 			'place' => 'required',
 			'lat'   => 'required',
