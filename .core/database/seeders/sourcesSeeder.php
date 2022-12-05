@@ -17,7 +17,7 @@ class sourcesSeeder extends Seeder
         \DB::table('sources')->insert(
             array(
                 array(
-                    'source' => ''
+                    'source' => 'replica'
                 ),
                 array(
                     'source' => 'Bundesarchiv'
