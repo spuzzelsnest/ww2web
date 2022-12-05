@@ -69,7 +69,7 @@ class AdminController extends Controller{
      */
     public function store(Request $request){
         $input = $request->all();
-        $input['date'] = date('Y-m-d', strtotime($input['date']));
+        $inputdate = date('Y-m-d', strtotime($input['date']));
 
         $v = Validator::make($input, Footage::$footagesRules );
 
@@ -79,7 +79,7 @@ class AdminController extends Controller{
             $f->name        = $request->input('name');
             $f->info        = $request->input('info','');
             $f->operationId = $request->input('operationId');
-            $f->date        = $request->input('date');
+            $f->date        = $inputdate;
             $f->place       = $request->input('place');
             $f->countryId   = $request->input('countryId');
             $f->sourceId    = $request->input('sourceId');
