@@ -29,16 +29,15 @@ class Footage extends Model {
 		return array('created_at', 'updated_at');
 	}
 
-	public function setDatetAttribute($value){
+	public function setDateAttribute($value){
 		$this->attributes['date'] =	Carbon::createFromFormat('Y/m/d', $value)->toDateTimeString();
 	}
 	
-	public static $footagesRules = array{
-
-			'typeId'=> 'required',
+	public static $footagesRules = array(
 			'name'  => 'required|unique',
+			'typeId'=> 'required',
 			'place' => 'required',
 			'lat'   => 'required',
 			'lng'   => 'required'
-	};
+	);
 }
