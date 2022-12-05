@@ -71,7 +71,7 @@
                                                 $item .= $a .'="'. $k .'" ';
                                         } $item .= ">";
                                         return $item;}); !!}
-                                {!!Form::date('date', '06/06/1944' ,['class'=>'form-control']) !!}
+                                {!!Form::date('date', '06-06-1944' ,['class'=>'form-control']) !!}
                         <br>
                         {{--PLACE--}}
                                 {!! Form::label('place','Place:', array('class' => 'col-lg-3 control-label')) !!}
