@@ -14,7 +14,7 @@ class Footage extends Model {
 	}
 
 	public function getOperation(){
-		return $this->hasOne('Operation');
+		return $this->hasOne('operation');
 	}
 
 	public function getCountry(){
@@ -29,16 +29,16 @@ class Footage extends Model {
 		return array('created_at', 'updated_at');
 	}
 
-	public function setDatetAttribute($value)
-	{
-//	$this->attributes['date'] =	Date::createFromFormat('Y/m/d', $value);
-	$this->attributes['date'] =	Carbon::createFromFormat('Y/m/d', $value)->toDateTimeString();
+	public function setDatetAttribute($value){
+		$this->attributes['date'] =	Carbon::createFromFormat('Y/m/d', $value)->toDateTimeString();
 	}
-	public static $rules = array(
+	
+	public static $footagesRules = array{
+
 			'typeId'=> 'required',
-			'name'  => 'required',
+			'name'  => 'required|unique',
 			'place' => 'required',
 			'lat'   => 'required',
-			'lng'   => 'required',
-	);
+			'lng'   => 'required'
+	};
 }

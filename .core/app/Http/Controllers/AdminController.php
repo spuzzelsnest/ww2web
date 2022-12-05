@@ -72,7 +72,7 @@ class AdminController extends Controller{
 
         $input['date'] = date('Y-m-d', strtotime($input['date']));
 
-        $v = Validator::make($input, Footage::$rules);
+        $v = Validator::make($input, Footage::$footagesRules );
 
         if ($v->passes()) {
 
@@ -84,18 +84,18 @@ class AdminController extends Controller{
             $f->place       = $request->input('place');
             $f->countryId   = $request->input('countryId');
             $f->sourceId    = $request->input('sourceId');
-            $f->remark      = $request->input('remark','');
+            $f->remark      = $request->input('remark', '');
             $f->typeId      = $request->input('typeId');
             $f->lat         = $request->input('lat');
             $f->lng         = $request->input('lng');
             $f->published   = $request->input('published');
             $f->save();
 
-            //Image::make(Input::file('file') ->getRealPath())
+            Image::make(Input::file('file') ->getRealPath())
             //    ->resize(540, null, function ($constraint) {
             //            $constraint->aspectRatio();
             //})
-            //->save('images/' . $f->name . '.jpg');
+            ->save('images/' . $f->name . '.jpg');
 
         return Redirect::route('admin.index');
         }

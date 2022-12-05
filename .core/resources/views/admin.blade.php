@@ -32,7 +32,15 @@
                 });
         });
 </script>
-
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 <div id="legenda">Add a New Footage: <i>Drag the marker and fill out the info</i></div>
 <div class='split right'>
         <div id='infoDiv'>
@@ -55,7 +63,7 @@
                         <br>
                         {{--SELECT DATE--}}
                                 {!! Form::label('date','Date:', array('class' => 'col-lg-3 control-label')) !!}
-                                {!! Form::macro('date', function($name, $default = '1944/06/06', $attrs = array()){
+                                {!! Form::macro('date', function($name, $default = '06-06-1944', $attrs = array()){
                                         $item = '<input type="date" name="'. $name .'" ';
                                         if ($default) { $item .= 'value="'. $default .'" ';}
                                         if (is_array($attrs)){
