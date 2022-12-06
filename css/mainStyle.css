@@ -86,7 +86,7 @@ html, body{
   overflow: auto;
   position: absolute;
 }
-#homeDiv.h1{
+#homeDiv h1{
   text-align: center;
 }
 
