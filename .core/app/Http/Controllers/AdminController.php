@@ -78,8 +78,6 @@ class AdminController extends Controller{
 
         $v = Validator::make($input, Footage::$footagesRules );
 
-        $fileName = $request->input('name')+'.jpg';
-
         if ($v->passes()) {
 
             $f = new Footage;
@@ -98,7 +96,7 @@ class AdminController extends Controller{
             $f->save();
 
 
-            $request->image->move(public_path('images'), $fileName);
+            $request->image->move(public_path('images'), $f->name . '.jpg');
 
         return Redirect::route('admin.index');
         }
