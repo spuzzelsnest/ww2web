@@ -36,6 +36,19 @@ html, body{
   right: 0;
 }
 
+.alert-danger{
+  z-index: 0;
+  border-radius: 1rem;
+  border: 4px solid #34504a;
+  background-color: rgba(255,255,255,0.66);
+  font-size: 0.5rem;
+  text-align: center;
+  position: fixed;
+  left: 0.5rem;
+  right:  0.5rem;
+  bottom: 1.8rem;
+}
+
 #search{
   z-index: 2;
   position: fixed;
@@ -59,6 +72,21 @@ html, body{
   height: 100%;
   width: 100%;
 }
+#homeDiv{
+  border-radius: 1rem;
+  border: 4px solid #34504a;
+  font-size: 0.7rem;
+  background-color: rgba(255,255,255,0.66);
+  padding-top: 1rem;
+  padding-left: 0.5rem;
+  top: 2rem;
+  min-width: 24.8rem;
+  max-height: 35rem;
+  left: 3rem;
+  overflow: auto;
+  position: absolute;
+}
+
 
 #infoDiv{
   border-radius: 1rem;
