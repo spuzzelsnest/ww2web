@@ -32,6 +32,8 @@
                 });
         });
 </script>
+<div id="legenda">Add a New Footage: <i>Drag the marker and fill out the info</i></div>
+
 @if ($errors->any())
     <div class="alert alert-danger">
         <ul>
@@ -41,7 +43,7 @@
         </ul>
     </div>
 @endif
-<div id="legenda">Add a New Footage: <i>Drag the marker and fill out the info</i></div>
+
 <div class='split right'>
         <div id='infoDiv'>
                 {!! Form::open(array('route' => 'admin.store', 'files' => true)) !!}

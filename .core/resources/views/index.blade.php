@@ -177,5 +177,6 @@ function search(){
 }
 
 </script>
+@include('layouts.footer')
 
 @endsection
