@@ -48,6 +48,10 @@ html, body{
   right:  0.5rem;
   bottom: 1.8rem;
 }
+.form-control{
+  width: 75%;
+  line-height: 1.5;
+}
 
 #search{
   z-index: 2;
@@ -114,7 +118,7 @@ html, body{
   padding-top: 1rem;
   padding-left: 0.5rem;
   top: 2rem;
-  min-width: 30rem;
+  min-width: 45rem;
   max-height: 40rem;
   right: 5.2rem;
   overflow: auto;
