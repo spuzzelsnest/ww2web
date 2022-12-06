@@ -148,10 +148,8 @@ $(function() {
 });
 
 function closeDiv(){
-    console.log("clicked close")
-    document.getElementById('infoDiv').style.display = 'none';
+    document.getElementById('markerInfo').style.display = 'none';
     var voice = document.getElementById('responsiveVoice');
-    console.log('voice: ' + voice);
     voice.onpause();
     voice.currentTime = 0;
 }
