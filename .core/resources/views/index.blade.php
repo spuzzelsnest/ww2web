@@ -10,7 +10,7 @@
         <p>Scroll to zoom into the map and click the markers to find more information!</p>
    </div>
 </div>
-<div class="split right" hidden>
+<div class="split right">
     <div id="infoDiv">
         <div id="close" onclick="closeIDiv()"><u>Close <big><b>X</b></big></u></div>
         <div id="title"></div>
@@ -145,8 +145,13 @@ function closeHDiv(){
 }
 
 function closeIDiv(){
-    document.getElementById('infoDiv').style.display = 'none';
-    var voice = document.getElementById('responsiveVoice');
+    var x =  document.getElementById('infoDiv');
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+     var voice = document.getElementById('responsiveVoice');
     voice.onpause();
     voice.currentTime = 0;
 }
