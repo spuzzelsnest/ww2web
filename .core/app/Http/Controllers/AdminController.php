@@ -95,7 +95,7 @@ class AdminController extends Controller{
             $f->published   = $request->input('published');
             $f->save();
 
-            $filename = $f->name.'.jpg';
+            return ($f->name).'.jpg';
 
             $request->image->move(public_path('images'), $filename);
 
