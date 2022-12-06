@@ -63,14 +63,6 @@
                         <br>
                         {{--SELECT DATE--}}
                                 {!! Form::label('date','Date:', array('class' => 'col-lg-3 control-label')) !!}
-                                {!! Form::macro('date', function($name, $default = '06/06/1944', $attrs = array()){
-                                        $item = '<input type="date" name="'. $name .'" ';
-                                        if ($default) { $item .= 'value="'. $default .'" ';}
-                                        if (is_array($attrs)){
-                                                foreach ($attrs as $a => $k)
-                                                $item .= $a .'="'. $k .'" ';
-                                        } $item .= ">";
-                                        return $item;}); !!}
                                 {!!Form::date('date', '06-06-1944' ,['class'=>'form-control']) !!}
                         <br>
                         {{--PLACE--}}
