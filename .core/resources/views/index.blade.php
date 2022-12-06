@@ -2,7 +2,7 @@
 @include('layouts.legenda')
 @section('mainbody')
 <div class="split left">
-   <div id='homeDiv'>
+   <div id="homeDiv">
 	<div id="close" onclick="closeDiv()"><u>Close <big><b>X</b></big></u></div>
     <div id="title"></div>
 	<div id="speakButton"></div>
@@ -17,7 +17,7 @@
         </div>
    </div>
 </div>
-<div class="Split right">
+<div class="split right">
     <div id="infoDiv">
         <div id="close" onclick="closeDiv()"><u>Close <big><b>X</b></big></u></div>
         <div id="title"></div>
