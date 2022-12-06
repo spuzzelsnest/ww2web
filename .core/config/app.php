@@ -161,12 +161,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        Intervention\Image\ImageServiceProvider::class
-
-	
-	//Collective\Html\HtmlServiceProvider::class,
-    //Jenssegers\Date\DateServiceProvider::class,
-    //Davmixcool\MetaManager\MetaServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -232,11 +227,8 @@ return [
         'Validator'     => Illuminate\Support\Facades\Validator::class,
         'View'          => Illuminate\Support\Facades\View::class,
         'Carbon'        => Illuminate\Support\Carbon::class,
-        'Image'         => Intervention\Image\Facades\Image::class
+        'Image'         => Intervention\Image\Facades\Image::class,
 
-    //'Form' => Collective\Html\FormFacade::class,
-	//'Html' => Collective\Html\HtmlFacade::class,
-	//'Date' => Jenssegers\Date\Date::class,
     ],
 
 ];
