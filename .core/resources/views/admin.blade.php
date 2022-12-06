@@ -110,7 +110,7 @@
                                 {!! Form::text('lng', '', ['id' => 'lng']) !!}
                         <div class="form-group-media">
                         {{--ADD MEDIA--}}
-                                {!! Form::label('Foto', 'Upload Picture:') !!}
+                                {!! Form::label('Foto', 'Upload Picture:', array('class' => 'col-lg-3 control-label')) !!}
                         <br>
                         <center>
                                 {!! Form::file('file') !!}
@@ -118,7 +118,7 @@
                                 <div id='message'>Upload your File...</div>
                         <br>
                         {{--Published--}}
-                                {!! Form::label('published', 'Published:') !!}
+                                {!! Form::label('published', 'Published:', array('class' => 'col-lg-3 control-label')) !!}
                                 {!! Form::checkbox('published') !!}
                         <br>
                                 {!! Form::submit('Aanmaken', array('class' => 'btn btn-success')) !!}
