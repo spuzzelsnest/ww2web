@@ -4,11 +4,10 @@
 <div class="split left">
    <div id="homeDiv">
 	<div id="close" onclick="closeHDiv()"><u>Close <big><b>X</b></big></u></div>
-                <p><h1>WW 2 Maps</h1>
-                This page is dedicated to footage from the Second World War, pinned to its original location. It's a work in progress and will be updated regularly.</p>
-                I started <a href="https://ww2maps.net">this project</a> in 2007 out of respect to all combat journalists and people in conflict zones.<br>
-                Many thanks to the community, the journalist, the historians and locals who helped me along the way.
-                <p>Scroll to zoom into the map and click the markers to find more information!</p>
+        <p><h1>WW 2 Maps</h1>
+        This page is dedicated to footage from the Second World War, pinned to its original location. It's a work in progress and will be updated regularly.</p>
+        I started <a href="https://ww2maps.net">this project</a> in 2007 out of respect to all combat journalists and people in conflict zones. Many thanks to the community, the journalist, the historians and locals who helped me along the way.
+        <p>Scroll to zoom into the map and click the markers to find more information!</p>
    </div>
 </div>
 <div class="split right">
