@@ -10,8 +10,8 @@
         <p>Scroll to zoom into the map and click the markers to find more information!</p>
    </div>
 </div>
-<div class="split right">
-    <div id="infoDiv" hidden>
+<div class="split right" hidden>
+    <div id="infoDiv">
         <div id="close" onclick="closeIDiv()"><u>Close <big><b>X</b></big></u></div>
         <div id="title"></div>
 	    <div id="speakButton"></div>
