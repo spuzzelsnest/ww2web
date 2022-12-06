@@ -74,7 +74,7 @@ class AdminController extends Controller{
         
         $request->validate([
             'image' => 'required|image|mimes:jpg|max:1500'
-        ])
+        ]);
 
         $v = Validator::make($input, Footage::$footagesRules );
 
