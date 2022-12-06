@@ -89,6 +89,7 @@ html, body{
 
 
 #infoDiv{
+  display: block;
   border-radius: 1rem;
   border: 4px solid #34504a;
   font-size: 0.7rem;

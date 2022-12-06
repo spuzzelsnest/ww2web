@@ -12,7 +12,7 @@
    </div>
 </div>
 <div class="split right">
-    <div id="infoDiv">
+    <div id="infoDiv" hidden>
         <div id="close" onclick="closeIDiv()"><u>Close <big><b>X</b></big></u></div>
         <div id="title"></div>
 	    <div id="speakButton"></div>
