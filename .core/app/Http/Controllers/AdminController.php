@@ -13,8 +13,8 @@ use App\Http\Controllers\Auth;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
-//use Intervention\Image\ImageManager;
-use Intervention\Image\Facades\Image;
+use Intervention\Image\ImageManager;
+//use Intervention\Image\Facades\Image;
 
 class AdminController extends Controller{
     /**
