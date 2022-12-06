@@ -31,7 +31,7 @@ class Footage extends Model {
 	}
 
 	public function setDateAttribute($value){
-		$this->attributes['date'] =	Carbon::createFromFormat('Y/m/d', $value)->toDateTimeString();
+		//$this->attributes['date'] =	Carbon::createFromFormat('Y/m/d', $value)->toDateTimeString();
 	}
 	
 	public static $footagesRules = array(
