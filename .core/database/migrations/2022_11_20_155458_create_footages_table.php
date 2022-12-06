@@ -21,11 +21,11 @@ return new class extends Migration
 			$table->text('info');
 			$table->float('lat');
 			$table->float('lng');
-			$table->char('place',150);
-			$table->char('countryId',120);
+			$table->char('place',100);
+			$table->integer('countryId',1);
 			$table->date('date');
-			$table->char('sourceId',150);
-	    	$table->char('remark',120);
+			$table->integer('sourceId',1);
+	    	$table->char('remark',120)->nullable(true);
 			$table->boolean('published');
 			$table->timestamps();
         });
