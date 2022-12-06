@@ -96,7 +96,7 @@ class AdminController extends Controller{
             $f->save();
 
 
-            $request->image->move(public_path('images'), $f->name . '.jpg');
+            $request->image->move(public_path('images'), $f->name.'.jpg');
 
         return Redirect::route('admin.index');
         }
