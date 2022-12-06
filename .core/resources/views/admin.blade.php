@@ -44,8 +44,8 @@
     </div>
 @endif
 
-<div class='split right'>
-        <div id='infoDiv'>
+<div class="split right">
+        <div id="editDiv">
                 {!! Form::open(array('route' => 'admin.store', 'files' => true)) !!}
                 <div class="form-group">
                        <div class="form-group-type">
