@@ -4,9 +4,6 @@
 <div class="split left">
    <div id="homeDiv">
 	<div id="close" onclick="closeDiv()"><u>Close <big><b>X</b></big></u></div>
-    <div id="title"></div>
-	<div id="speakButton"></div>
-	    <div id="markerInfo">
             <center>
                 <p><h1>WW 2 Maps</h1>
                 This page is dedicated to footage from the Second World War, pinned to its original location. It's a work in progress and will be updated regularly.</p>
@@ -14,12 +11,11 @@
                 Many thanks to the community, the journalist, the historians and locals who helped me along the way.
                 <p>Scroll to zoom into the map and click the markers to find more information!</p>
             </center>
-        </div>
    </div>
 </div>
 <div class="split right">
     <div id="infoDiv">
-        <div id="close" onclick="closeDiv()"><u>Close <big><b>X</b></big></u></div>
+        <div id="close" onclick="closeIDiv()"><u>Close <big><b>X</b></big></u></div>
         <div id="title"></div>
 	    <div id="speakButton"></div>
         <div id="markerInfo"></div>
@@ -147,8 +143,12 @@ $(function() {
 	});
 });
 
-function closeDiv(){
-    document.getElementById('markerInfo').style.display = 'none';
+function closeHDiv(){
+    document.getElementById('homeDiv').style.display = 'none';
+}
+
+function closeIDiv(){
+    document.getElementById('infoDiv').style.display = 'none';
     var voice = document.getElementById('responsiveVoice');
     voice.onpause();
     voice.currentTime = 0;
