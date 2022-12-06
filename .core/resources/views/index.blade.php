@@ -5,9 +5,10 @@
    <div id="homeDiv">
 	<div id="close" onclick="closeHDiv()"><u>Close <big><b>X</b></big></u></div>
         <p><h1>WW 2 Maps</h1>
-        This page is dedicated to footage from the Second World War, pinned to its original location. It's a work in progress and will be updated regularly.</p>
-        I started <a href="https://ww2maps.net">this project</a> in 2007 out of respect to all combat journalists and people in conflict zones. Many thanks to the community, the journalist, the historians and locals who helped me along the way.
-        <p>Scroll to zoom into the map and click the markers to find more information!</p>
+        This page is dedicated to footage from the Second World War, pinned to its original location. It's a work in progress and will be updated regularly.
+        I started his project in 2007 out of respect to all combat journalists and people in conflict zones. Many thanks to the community, the journalist, the historians and locals who helped me along the way.</p>
+
+        <p><center><b>Scroll to zoom into the map and click the markers to find more information!</b></center></p>
         Last updated: {!! $lastUpdate !!}
    </div>
 </div>
