@@ -36,7 +36,8 @@
 
 @if ($errors->any())
     <div class="alert alert-danger">
-        <ul>
+    <h1>Errors where encountered </h1>    
+    <ul>
             @foreach ($errors->all() as $error)
                 <li>{{ $error }}</li>
             @endforeach
