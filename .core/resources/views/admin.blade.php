@@ -87,7 +87,7 @@
                         <br>
                         {{--INFO--}}
                                 {!! Form::label('info','Info:', array('class' => 'col-lg-3 control-label')) !!}
-                                {!! Form::textarea('info') !!}
+                                {!! Form::textarea('info', '',  ['class'=>'form-control']) !!}
                         <br>
                         {{--SOURCE--}}
                                 {!! Form::label('source','Source:', array('class' => 'col-lg-3 control-label')) !!}
