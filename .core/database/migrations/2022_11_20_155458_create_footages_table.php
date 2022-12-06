@@ -19,8 +19,8 @@ return new class extends Migration
             $table->integer('operationId');
 			$table->char('name',60);
 			$table->text('info');
-			$table->double('lat');
-			$table->double('lng');
+			$table->double('lat', 10, 8);
+			$table->double('lng', 10, 8);
 			$table->char('place',100);
 			$table->integer('countryId');
 			$table->date('date');
