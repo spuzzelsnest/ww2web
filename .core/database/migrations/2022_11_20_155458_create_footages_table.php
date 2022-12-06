@@ -22,9 +22,9 @@ return new class extends Migration
 			$table->float('lat');
 			$table->float('lng');
 			$table->char('place',100);
-			$table->integer('countryId',1);
+			$table->integer('countryId');
 			$table->date('date');
-			$table->integer('sourceId',1);
+			$table->integer('sourceId');
 	    	$table->char('remark',120)->nullable(true);
 			$table->boolean('published');
 			$table->timestamps();
