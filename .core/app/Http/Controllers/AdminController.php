@@ -68,8 +68,14 @@ class AdminController extends Controller{
      * @return Response
      */
     public function store(Request $request){
+
         $input = $request->all();
         $inputdate = date('Y-m-d', strtotime($input['date']));
+        
+        $request->validate([
+            'image' => 'required|image|mimes:jpg|max:1500'
+        ])
+
         $v = Validator::make($input, Footage::$footagesRules );
 
         if ($v->passes()) {
@@ -89,11 +95,7 @@ class AdminController extends Controller{
             $f->published   = $request->input('published');
             $f->save();
 
-            Image::make(Input::file('file') ->getRealPath())
-            //    ->resize(540, null, function ($constraint) {
-            //            $constraint->aspectRatio();
-            //})
-            ->save('images/' . $f->name . '.jpg');
+            $request->image->move(public_path('images'), $f->name);
 
         return Redirect::route('admin.index');
         }
