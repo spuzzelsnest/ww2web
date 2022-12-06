@@ -1,6 +1,7 @@
 @extends ('layouts.default')
 
 @section('mainbody')
+<link href="{{ asset('css/mainStyle.css') }}" rel="stylesheet" >
 <script type="text/javascript">
         $(function() {
                 mapLink = '<a href="http://www.esri.com/">Esri</a>';
