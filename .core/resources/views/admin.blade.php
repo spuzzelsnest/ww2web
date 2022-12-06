@@ -110,10 +110,10 @@
                                 {!! Form::text('lng', '', ['id' => 'lng']) !!}
                         <div class="form-group-media">
                         {{--ADD MEDIA--}}
-                                {!! Form::label('Foto', 'Upload Picture:', array('class' => 'col-lg-3 control-label')) !!}
+                                {!! Form::label('image', 'Upload Picture:', array('class' => 'col-lg-3 control-label')) !!}
                         <br>
                         <center>
-                                {!! Form::file('file') !!}
+                                {!! Form::file('image', array('class' => 'col-lg-3 control-label')) !!}
                         <br>
                                 <div id='message'>Upload your File...</div>
                         <br>
