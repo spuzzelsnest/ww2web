@@ -33,7 +33,7 @@
         });
 </script>
 <div id="legenda">Add a New Footage: <i>Drag the marker and fill out the info</i></div>
-
+<div class="split left">
 @if ($errors->any())
     <div class="alert alert-danger">
     <h1>Errors where encountered </h1>    
@@ -44,7 +44,7 @@
         </ul>
     </div>
 @endif
-
+</div>
 <div class="split right">
         <div id="editDiv">
                 {!! Form::open(array('route' => 'admin.store', 'files' => true)) !!}
