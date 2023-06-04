@@ -220,7 +220,7 @@ html, body{
   position: fixed;
   display: block;
   background-color: #00000075;
-  top: 2%;
+  top: 0px;
   left: 0px;
   width: calc(100% - 0%);
   margin-left: auto;
