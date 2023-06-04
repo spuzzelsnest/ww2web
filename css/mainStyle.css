@@ -225,7 +225,7 @@ html, body{
   width: calc(100% - 0%);
   margin-left: auto;
   margin-right: auto;
-  padding: calc( 100% - 99%) calc(100% - 67%);
+  padding: calc( 85vh - 95%) calc(77vw - 60%);
   padding-bottom: 75%;
   overflow: auto;
 }
