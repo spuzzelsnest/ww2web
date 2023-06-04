@@ -92,8 +92,8 @@ html, body{
   padding-top: 1rem;
   padding: 0.3rem;
   top: 4rem;
-  min-width: calc(20vh * 2);
-  left: 0.7rem;
+  min-width: calc(22vh * 2);
+  left: 0.3rem;
   overflow: auto;
   position: absolute;
 }
