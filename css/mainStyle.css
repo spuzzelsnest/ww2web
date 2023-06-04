@@ -220,12 +220,12 @@ html, body{
   position: fixed;
   display: block;
   background-color: #00000075;
-  top: 0px;
+  top: 2%;
   left: 0px;
   width: calc(100% - 0%);
   margin-left: auto;
   margin-right: auto;
-  padding: calc( 85vh - 95%) calc(77vw - 60%);
+  padding: calc( 85vh - 95%) calc(77vw - 45%);
   padding-bottom: 75%;
   overflow: auto;
 }
