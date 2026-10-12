@@ -1,8 +1,8 @@
-# Laravel 9.42 and Leaflet Maps POI settings with pictures
+# Laravel 12.69.3 and Leaflet Maps POI settings with pictures
 
 ### Prerequisites
 
-- php 8.1
+- php 8.2
 - mysql
 - composer
 
