@@ -38,8 +38,8 @@ $(function () {
 
     function updateFields() {
         var pos = marker.getLatLng();
-        latInput.value = pos.lat.toFixed(6);
-        lngInput.value = pos.lng.toFixed(6);
+        latInput.value = pos.lat.toFixed(8);
+        lngInput.value = pos.lng.toFixed(8);
     }
 
     marker.on('dragend', updateFields);
