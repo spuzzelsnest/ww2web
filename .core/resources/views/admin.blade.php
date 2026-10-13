@@ -17,6 +17,15 @@ $(function () {
         }
     );
 
+    var esri = L.tileLayer(
+        'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="https://www.esri.com/">Esri</a>, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+        }
+    );
+
+    var imagery = esri; 
+
     var map = new L.Map('map', {
         center: [51.1, 6],
         zoom: 6,
