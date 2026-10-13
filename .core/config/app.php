@@ -25,6 +25,7 @@ return [
     |
     */
 
+
     'env' => env('APP_ENV', 'local'),
 
     /*
@@ -228,5 +229,12 @@ return [
         'Carbon'        => Illuminate\Support\Carbon::class,
 
     ],
+
+    /*
+    |
+    | Own Extra Values
+    |
+    */
+    'last_update' => env('LAST_UPDATE', ''),
 
 ];

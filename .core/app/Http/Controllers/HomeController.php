@@ -35,6 +35,6 @@ class HomeController extends Controller{
 						->join('sources','footages.sourceId', '=', 'sources.id')
 						->get(array('footages.*','types.*', 'countries.*', 'sources.*')))
 			->with('count', $mediaCount)
-			->with('lastUpdate', '12/10/2026');
+			->with('lastUpdate', config('app.last_update'));
     }
 }
