@@ -12,7 +12,7 @@ $(function () {
     );
 
     var labels = L.tileLayer(
-        'https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}.png', {
+        'https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}.png?key=cb1_4jlm_1_8428815a50c18307b14d9a13', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
         }
     );
