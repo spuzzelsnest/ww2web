@@ -35,4 +35,8 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
+    'carto' => [
+        'key' => env('CARTO_API_KEY'),
+    ],
+
 ];
