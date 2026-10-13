@@ -8,6 +8,15 @@ $(function() {
     lableLink = '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>';
     wholink = 'i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community';
 
+    var imagery = L.tileLayer('https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2020_3857/default/g/{z}/{y}/{x}.jpg', {
+        maxZoom: 13,
+        attribution: '&copy; <a href="https://s2maps.eu">Sentinel-2 cloudless</a> by EOX, modified Copernicus data'
+    });
+
+    var labels = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
+    });
+
     var tileLayer = new L.TileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{
         attribution: '&copy; '+mapLink+', '+wholink
     });
@@ -20,7 +29,7 @@ $(function() {
     var map = new L.Map('map', {
         'center': [51.1, 6],
         'zoom': 6,
-        'layers': [tileLayer, lablesLayer]
+        'layers': [imagery, labels]
     });
 
     var marker = L.marker([51.441767, 5.470247],{
