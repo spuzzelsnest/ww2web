@@ -14,6 +14,8 @@
 	<link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" >
 	<script src="{{ asset('js/bootstrap.min.js') }}"></script>
 
+	
+
 	<link href="{{ asset('css/leaflet.css') }}" rel="stylesheet" >
 	<script src="{{ asset('js/leaflet.js') }}"></script>
 
@@ -25,7 +27,8 @@
 	<Title>{{ $title }}</Title>
 </head>
 <body>
- <div id="map"></div>
+<script>window.CARTO_API_KEY = @json(config('services.carto.key'));</script>
+<div id="map"></div>
 	@yield('mainbody')
 	@include('layouts.footer')
 </body>

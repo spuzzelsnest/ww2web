@@ -3,43 +3,36 @@
 @section('mainbody')
 
 <script type="text/javascript">
-$(function() {
-    mapLink = '<a href="http://www.esri.com/">Esri</a>';
-    lableLink = '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>';
-    wholink = 'i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community';
+$(function () {
+    var imagery = L.tileLayer(
+        'https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2020_3857/default/g/{z}/{y}/{x}.jpg', {
+            maxZoom: 13,
+            attribution: '&copy; <a href="https://s2maps.eu">Sentinel-2 cloudless</a> by EOX, modified Copernicus data'
+        }
+    );
 
-    var imagery = L.tileLayer('https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2020_3857/default/g/{z}/{y}/{x}.jpg', {
-        maxZoom: 13,
-        attribution: '&copy; <a href="https://s2maps.eu">Sentinel-2 cloudless</a> by EOX, modified Copernicus data'
-    });
-
-    var labels = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}.png', {
-        attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
-    });
-
-    var tileLayer = new L.TileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{
-        attribution: '&copy; '+mapLink+', '+wholink
-    });
-
-    var lablesLayer = new L.TileLayer('http://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}.png',{
-        id: 'cartodb_labels',
-        attribution: '&copy; '+lableLink
-    });
+    var labels = L.tileLayer(
+        'https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+        }
+    );
 
     var map = new L.Map('map', {
-        'center': [51.1, 6],
-        'zoom': 6,
-        'layers': [imagery, labels]
+        center: [51.1, 6],
+        zoom: 6,
+        maxZoom: 13,
+        layers: [imagery, labels]
     });
 
-    var marker = L.marker([51.441767, 5.470247],{
-        draggable: true
-    }).addTo(map);
+    var marker = L.marker([51.441767, 5.470247], { draggable: true }).addTo(map);
 
-    marker.on('dragend', function (e) {
-        document.getElementById('lat').value = marker.getLatLng().lat;
-        document.getElementById('lng').value = marker.getLatLng().lng;
-    });
+    function updateFields() {
+        var pos = marker.getLatLng();
+        document.getElementById('lat').value = pos.lat;
+        document.getElementById('lng').value = pos.lng;
+    }
+
+    marker.on('dragend', updateFields);
 });
 </script>
 
