@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="description" content="World War 2 then and now footage from 1939 to 1945 pinned on the more or less original location.">
     <meta name="keywords" content="then and now, second world war, world war 2, tracesofwar, pictures, footages">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ $title }}</title>
 
     {{-- Library CSS first, our own CSS last so it wins --}}

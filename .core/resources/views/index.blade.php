@@ -205,7 +205,7 @@ $(function () {
         $title.html('<h3><u>Search</u></h3>');
  
         if (raw === '') {
-            $info.html('<br>What are you looking for?');
+            $info.html('<br>What are you looking for? Search for Places, Units, Operations or dates e.g.:1944-06-07');
             return;
         }
         if (raw.length < 2) {
