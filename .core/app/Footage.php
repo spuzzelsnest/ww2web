@@ -4,40 +4,37 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Footage extends Model {
+class Footage extends Model
+{
+    protected $table = 'footages';
 
-	protected $table = 'footages';
-	protected $primaryKey = 'id' ;
+    protected $fillable = [
+        'name',
+        'info',
+        'operationId',
+        'date',
+        'place',
+        'countryId',
+        'sourceId',
+        'remark',
+        'typeId',
+        'lat',
+        'lng',
+        'published',
+    ];
 
-	public function mediaType(){
-		return $this->hasOne('type');
-	}
+    protected $casts = [
+        'lat'       => 'float',
+        'lng'       => 'float',
+        'published' => 'boolean',
+    ];
 
-	public function getOperation(){
-		return $this->hasOne('operation');
-	}
-
-	public function getCountry(){
-		return $this->hasOne('country');
-	}
-
-	public function getSource(){
-		return $this->hasOne('source');
-	}
-
-	public function getDates(){
-		return array('created_at', 'updated_at');
-	}
-
-	public function setDateAttribute($value){
-		//$this->attributes['date'] =	Carbon::createFromFormat('Y/m/d', $value)->toDateTimeString();
-	}
-	
-	public static $footagesRules = array(
-			'name'  => 'required|unique:footages',
-			'typeId'=> 'required',
-			'place' => 'required',
-			'lat'   => 'required',
-			'lng'   => 'required'
-	);
+    // Removed from the old model:
+    // - setDateAttribute(): its body was commented out, so it swallowed the
+    //   date and the row was saved without one.
+    // - mediaType(), getOperation(), getCountry(), getSource(): hasOne() with
+    //   plain strings is invalid, and hasOne is the wrong relation anyway
+    //   (the foreign keys live in this table, so it would be belongsTo).
+    // - getDates(): timestamps are handled by Eloquent already.
+    // - $footagesRules: replaced by App\Http\Requests\StoreFootageRequest.
 }
