@@ -12,10 +12,11 @@ class Kernel extends ConsoleKernel
      *
      * @var array
      */
-    protected $commands = [
-        'App\Console\Commands\DatabaseBackUp'
-    ];
-
+     protected $commands = [
+    	'App\Console\Commands\DatabaseBackUp',
+    	'App\Console\Commands\CreateAdmin',
+     ];
+    
     /**
      * Define the application's command schedule.
      *

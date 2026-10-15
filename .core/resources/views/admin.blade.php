@@ -55,6 +55,10 @@ $(function () {
 
 <div id="legenda">Add a New Footage: <i>Drag the marker (or click the map) and fill out the info</i></div>
 
+@if (session('status'))
+    <div id="legenda" style="top:3.2rem; font-size:0.8rem;">{{ session('status') }}</div>
+@endif
+
 <div class="split left">
     @if ($errors->any())
         <div class="alert alert-danger">
@@ -165,7 +169,11 @@ $(function () {
 
                         <button type="submit" class="btn btn-success">Aanmaken</button>
                         <a href="{{ route('admin.index') }}" class="btn btn-warning">Cancel</a>
-                    </div>
+                        <form method="POST" action="{{ route('logout') }}" style="display:inline">
+    			@csrf
+    			<button type="submit" class="btn btn-default">Log out</button>
+			</form>
+		     </div>
                 </div>
 
             </div>
