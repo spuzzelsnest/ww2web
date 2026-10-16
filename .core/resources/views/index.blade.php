@@ -1,4 +1,3 @@
-
 @extends ('layouts.default')
  
 @section('mainbody')
@@ -34,23 +33,42 @@
  
 <script>
 $(function () {
- 
-    var data = @json($footages);
     var cartoKey = @json(config('services.carto.key'));
+    var data = @json($footages);
     var voice = 'UK English Female';
- 
-    // ---- Map -------------------------------------------------------------
- 
-    var map = L.map('map').setView([50.1, 4], 7);
- 
-    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-        maxZoom: 18,
-        attribution: '&copy; <a href="https://www.esri.com/">Esri</a>'
-    }).addTo(map);
- 
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}.png?key=' + cartoKey, {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>, This Project is meant as Historic reference only'
-    }).addTo(map);
+
+    // ---- Map (same set-up as the admin page) -----------------------------
+
+    var imagery = L.tileLayer(
+        'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            maxZoom: 18,
+            attribution: '&copy; <a href="https://www.esri.com/">Esri</a>, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+        }
+    );
+
+    var map = new L.Map('map', {
+        center: [50.1, 4],
+        zoom: 7,
+        layers: [imagery]
+    });
+
+    // City labels in their own pane, above the imagery and below the markers' popups.
+    // pointer-events none: clicks and drags go straight through to the map and markers.
+    // The pane must be created BEFORE a layer uses it, otherwise Leaflet throws.
+    map.createPane('labels');
+    map.getPane('labels').style.zIndex = 650;
+    map.getPane('labels').style.pointerEvents = 'none';
+
+    var labels = L.tileLayer(
+        'https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}.png?key=' + cartoKey , {
+            pane: 'labels',
+            maxZoom: 18
+        }
+    ).addTo(map);
+
+    labels.on('tileerror', function (e) {
+        console.warn('City-label tile failed to load:', e.tile.src);
+    });
  
     // ---- Icons -----------------------------------------------------------
  
@@ -60,7 +78,7 @@ $(function () {
         3: 'Avideo',
         4: 'Xvideo',
         5: 'Aaudio',
-        6: 'Xadio'      // check the file name: is this meant to be Xaudio.png?
+        6: 'Xaudio'
     };
  
     var icons = {};
