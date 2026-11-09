@@ -5,20 +5,48 @@
 {{--
     Desktop: #sheet and #sheetBody are "display: contents"; #topBar is the bar
     at the top (mode switch, search, filters) and the two panels float below it.
-    Phone (max 768px): #sheet is a bottom sheet you can drag between three
-    heights (peek / half / full); see the "Bottom sheet" part of the script.
+    Phone (max 768px): #mHeader with the menu, the search under it, #tabs at the
+    bottom; a tapped marker shows #peek, which opens #detail full screen. The
+    info panel (search results, tours, about) sits above the tabs.
 --}}
-<div id="sheet" data-state="peek">
-    <div id="sheetHandle" aria-hidden="true"><span></span></div>
-
-    <div id="sheetTitle">
-        <div>
-            <strong>WW2 Maps</strong> &middot; {{ number_format($footages->count()) }} items
-            <small>Tap a marker or search @if ($lastUpdate) &middot; updated {{ $lastUpdate }} @endif</small>
-        </div>
-        <button type="button" id="infoToggle" aria-label="About this map" aria-expanded="false">i</button>
+{{-- Phone only (max 768px): header with the menu, bottom tabs, marker preview card and the opened photo --}}
+<header id="mHeader">
+    <div>
+        <div class="m-title">WW2 MAPS</div>
+        @if ($lastUpdate)<div class="m-updated">Updated {{ $lastUpdate }}</div>@endif
     </div>
+    <button type="button" id="menuButton" aria-label="Menu: which types to show on the map" aria-expanded="false" aria-controls="legenda">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16"></path><path d="M4 12h16"></path><path d="M4 17h16"></path></svg>
+        <span id="menuBadge" aria-hidden="true"></span>
+    </button>
+</header>
 
+<nav id="tabs" aria-label="Main">
+    <button type="button" data-tab="thennow" aria-current="page">
+        <span class="tab-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M12 5v14"></path></svg></span>
+        Then &amp; Now
+    </button>
+    <button type="button" data-tab="tours">
+        <span class="tab-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="18" r="2"></circle><circle cx="18" cy="6" r="2"></circle><path d="M8 18h6a4 4 0 000-8h-4a4 4 0 010-8h6"></path></svg></span>
+        Tours
+    </button>
+    <button type="button" data-tab="about">
+        <span class="tab-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v6"></path><path d="M12 7.5v.5"></path></svg></span>
+        About
+    </button>
+</nav>
+
+<a href="#" id="peek" hidden></a>
+
+<div id="detail" hidden role="dialog" aria-modal="true" aria-labelledby="detailTitle">
+    <button type="button" id="detailClose" aria-label="Close and go back to the map">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12"></path><path d="M18 6L6 18"></path></svg>
+    </button>
+    <div class="detail-media"></div>
+    <div class="detail-body"></div>
+</div>
+
+<div id="sheet">
     {{-- Desktop: one bar at the top (switch | search | filters). Phone: display: contents, so these sit in the sheet. --}}
     <div id="topBar">
     <div id="modeSwitch" role="group" aria-label="How to explore the map">
@@ -394,139 +422,236 @@ $(function () {
     $(window).on('resize', syncBar);
     syncBar();
 
-    // ---- Bottom sheet (phones only) ---------------------------------------
+    // ---- Phone layout (max 768px): header + menu, bottom tabs, preview card,
+    //      full-screen photo. On bigger screens none of this is shown. ----------
 
     var sheet = document.getElementById('sheet');
-    var sheetBody = document.getElementById('sheetBody');
-    var infoToggle = document.getElementById('infoToggle');
+    var infoDiv = document.getElementById('infoDiv');
+    var peek = document.getElementById('peek');
+    var detail = document.getElementById('detail');
+    var peekMarker = null;
 
-    function sheetHeights() {
-        var vh = window.innerHeight;
-        var peek = sheetBody.offsetTop;              // handle + title + search + chips
-        return {
-            peek: peek,
-            half: Math.max(peek, Math.round(vh * 0.55)),
-            full: Math.max(peek, vh - 48)            // leave a strip of map to grab
-        };
+    // Space the phone layout covers at the top (header + search) and at the
+    // bottom (tabs + an open panel or the preview card), for centring the map.
+    function coverTop() {
+        if (!mobile.matches) { return 0; }
+        return document.body.classList.contains('mode-tours') ? 64 : 130;
+    }
+    function coverBottom() {
+        if (!mobile.matches) { return 0; }
+        var tabs = document.getElementById('tabs').offsetHeight;
+        var panel = infoDiv.style.display === 'block' ? Math.max(infoDiv.offsetHeight, window.innerHeight * 0.5) : 0;
+        var card = peek.hidden ? 0 : peek.offsetHeight + 12;
+        return tabs + Math.max(panel, card);
     }
 
-    function setSheet(state) {
-        if (!mobile.matches) { return; }
-        sheet.dataset.state = state;
-        sheet.style.height = sheetHeights()[state] + 'px';
-        syncControls();
-    }
-
-    // Keep Leaflet's zoom buttons and attribution above the sheet.
+    // Older code calls these; on the phone layout there is no sheet to resize.
+    function setSheet() { syncControls(); }
     function syncControls() {
-        var peek = mobile.matches ? sheetHeights().peek : 0;
-        document.documentElement.style.setProperty('--sheet-peek', peek + 'px');
+        var bottom = mobile.matches ? document.getElementById('tabs').offsetHeight : 0;
+        document.documentElement.style.setProperty('--bottom-cover', bottom + 'px');
     }
-
-    function sheetHeight() {
-        return mobile.matches ? sheet.getBoundingClientRect().height : 0;
-    }
-
-    // Put a point in the middle of the map area that the sheet leaves free.
     function showAboveSheet(latLng) {
-        if (!mobile.matches) { return; }
-        var size = map.getSize();
-        var point = map.latLngToContainerPoint(latLng);
-        var freeHeight = size.y - sheetHeights().half;
-        map.panBy([point.x - size.x / 2, point.y - freeHeight / 2], { animate: true });
+        if (mobile.matches) { focusPoint(latLng, map.getZoom()); }
     }
 
     function applyLayout() {
-        if (mobile.matches) {
-            sheet.classList.remove('show-intro');
-            setSheet('peek');
-        } else {
-            sheet.style.height = '';
-            sheet.classList.remove('show-intro');
-            document.getElementById('homeDiv').style.display = '';
-            syncControls();
-        }
+        closeMenu();
+        hidePeek();
+        if (!mobile.matches) { closeDetail(); }
+        document.getElementById('homeDiv').style.display = '';
+        syncControls();
     }
 
-    (function dragging() {
-        var grab = [document.getElementById('sheetHandle'), document.getElementById('sheetTitle')];
-        var start = null;
+    // -- Menu (type filters) --
+    var menuButton = document.getElementById('menuButton');
+    function closeMenu() {
+        document.body.classList.remove('menu-open');
+        menuButton.setAttribute('aria-expanded', 'false');
+    }
+    menuButton.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var open = !document.body.classList.contains('menu-open');
+        document.body.classList.toggle('menu-open', open);
+        menuButton.setAttribute('aria-expanded', String(open));
+    });
+    document.addEventListener('click', function (e) {
+        if (document.body.classList.contains('menu-open') && !e.target.closest('#legenda, #menuButton')) { closeMenu(); }
+    });
+    function syncBadge() {
+        document.getElementById('menuBadge').textContent = $("input:checkbox[name='type']:checked").length;
+    }
+    $("input:checkbox[name='type']").on('change', syncBadge);
+    syncBadge();
 
-        function down(e) {
-            if (!mobile.matches || e.target.closest('button, input')) { return; }
-            start = { y: e.clientY, h: sheetHeight(), t: e.timeStamp, last: e.clientY, lastT: e.timeStamp };
-            sheet.classList.add('dragging');
-            e.currentTarget.setPointerCapture(e.pointerId);
-        }
-
-        function move(e) {
-            if (!start) { return; }
-            var h = sheetHeights();
-            var height = Math.min(h.full, Math.max(h.peek, start.h + (start.y - e.clientY)));
-            sheet.style.height = height + 'px';
-            start.velocity = (start.last - e.clientY) / Math.max(1, e.timeStamp - start.lastT);  // px/ms, up = +
-            start.last = e.clientY;
-            start.lastT = e.timeStamp;
-        }
-
-        function up(e) {
-            if (!start) { return; }
-            var moved = Math.abs(e.clientY - start.y);
-            var current = sheetHeight();
-            var h = sheetHeights();
-            var order = ['peek', 'half', 'full'];
-            var state;
-
-            sheet.classList.remove('dragging');
-
-            if (moved < 6) {
-                // A tap on the handle: open half way, or close again.
-                state = sheet.dataset.state === 'peek' ? 'half' : 'peek';
-            } else if (Math.abs(start.velocity || 0) > 0.5) {
-                // A flick: go to the next height in the direction of the flick.
-                var above = order.filter(function (n) { return h[n] > current + 1; });
-                var below = order.filter(function (n) { return h[n] < current - 1; });
-                state = start.velocity > 0 ? (above[0] || 'full') : (below[below.length - 1] || 'peek');
-            } else {
-                state = order.reduce(function (best, name) {
-                    return Math.abs(h[name] - current) < Math.abs(h[best] - current) ? name : best;
-                }, 'peek');
-            }
-
-            start = null;
-            setSheet(state);
-        }
-
-        grab.forEach(function (node) {
-            node.addEventListener('pointerdown', down);
-            node.addEventListener('pointermove', move);
-            node.addEventListener('pointerup', up);
-            node.addEventListener('pointercancel', up);
+    // -- Tabs --
+    function syncTabs(active) {
+        $('#tabs button').each(function () {
+            if (this.dataset.tab === active) { this.setAttribute('aria-current', 'page'); } else { this.removeAttribute('aria-current'); }
         });
-    })();
-
-    infoToggle.addEventListener('click', function () {
-        var open = !sheet.classList.contains('show-intro');
-        sheet.classList.toggle('show-intro', open);
-        infoToggle.setAttribute('aria-expanded', String(open));
-        if (open) {
-            document.getElementById('infoDiv').style.display = 'none';
-            sheetBody.scrollTop = 0;
-            setSheet('half');
-        } else {
-            setSheet('peek');
+    }
+    $('#tabs button').on('click', function () {
+        closeMenu();
+        hidePeek();
+        var tab = this.dataset.tab;
+        if (tab === 'about') {
+            showAbout();
+            syncTabs('about');
+            return;
         }
+        syncTabs(tab);
+        if (tab === mode) {
+            // Tapping the active tab again: back to the plain map / the tour list.
+            if (tab === 'tours') { showTourList(); } else { infoDiv.style.display = 'none'; }
+            return;
+        }
+        setMode(tab);
     });
 
-    // Tapping the map while the sheet is open brings it back down.
+    function showAbout() {
+        var src = document.getElementById('homeDiv');
+        infoDiv.style.display = 'block';
+        $('#speakButton').empty();
+        document.getElementById('title').innerHTML = '<h3><u>About</u></h3>';
+        var info = document.getElementById('markerInfo');
+        info.innerHTML = '';
+        $(src).children('p').each(function () { info.appendChild(this.cloneNode(true)); });
+        infoDiv.scrollTop = 0;
+    }
+
+    // -- Preview card for a tapped marker (Then & Now mode) --
+    function hidePeek() {
+        peek.hidden = true;
+        peekMarker = null;
+    }
+
+    function showPeek(marker) {
+        var meta = marker.meta;
+        peekMarker = marker;
+        infoDiv.style.display = 'none';
+        closeMenu();
+
+        peek.innerHTML = '';
+        var thumb = el('span', { 'class': 'peek-thumb' });
+        if (meta.typeId < 3) {
+            var thenImg = pictureImg(meta.name, meta.thumb, '');
+            thenImg.setAttribute('sizes', '120px');
+            thumb.appendChild(thenImg);
+            if (meta.nowName) {
+                var nowImg = pictureImg(meta.nowName, meta.nowThumb, '');
+                nowImg.setAttribute('sizes', '120px');
+                nowImg.className = 'peek-now';
+                thumb.appendChild(nowImg);
+                thumb.appendChild(el('span', { 'class': 'peek-line' }));
+                var t1 = el('span', { 'class': 'peek-tag peek-tag-then' }); t1.textContent = meta.year || 'Then';
+                var t2 = el('span', { 'class': 'peek-tag peek-tag-now' }); t2.textContent = 'Today';
+                thumb.appendChild(t1);
+                thumb.appendChild(t2);
+            }
+        } else {
+            thumb.classList.add('peek-video');
+            thumb.innerHTML = '<svg width="34" height="34" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>';
+        }
+        peek.appendChild(thumb);
+
+        var body = el('span', { 'class': 'peek-body' });
+        var title = el('span', { 'class': 'peek-title' }); title.textContent = meta.title;
+        var sub = el('span', { 'class': 'peek-sub' }); sub.textContent = [meta.operation, meta.typeName].filter(Boolean).join(' · ');
+        var open = el('span', { 'class': 'peek-open' }); open.textContent = (meta.nowName ? 'Open and compare' : 'Open') + ' →';
+        body.appendChild(title);
+        body.appendChild(sub);
+        body.appendChild(open);
+        peek.appendChild(body);
+        peek.setAttribute('aria-label', 'Open ' + meta.title);
+
+        peek.hidden = false;
+        focusPoint(meta.latLng, map.getZoom());
+    }
+
+    peek.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (peekMarker) { openDetail(peekMarker); }
+    });
+
+    // -- The opened photo: full screen, close button in the corner --
+    var detailPushed = false;
+
+    function openDetail(marker) {
+        var meta = marker.meta;
+        var media = detail.querySelector('.detail-media');
+        var body = detail.querySelector('.detail-body');
+        media.innerHTML = '';
+        body.innerHTML = '';
+        media.appendChild(mediaNode(meta));
+
+        var h = el('h2', { id: 'detailTitle' }); h.textContent = meta.title;
+        var sub = el('p', { 'class': 'detail-sub' });
+        sub.textContent = [meta.operation, meta.typeName, meta.country].filter(Boolean).join(' · ');
+        body.appendChild(h);
+        body.appendChild(sub);
+
+        if (meta.info) {
+            var text = el('p', { 'class': 'detail-text' }); text.textContent = meta.info;
+            body.appendChild(text);
+        }
+        var src = el('p', { 'class': 'detail-source' });
+        src.textContent = ['Source: ' + (meta.source || '-'), meta.remark].filter(Boolean).join(' · ');
+        body.appendChild(src);
+
+        var actions = el('div', { 'class': 'detail-actions' });
+        if (meta.info) {
+            var read = el('button', { type: 'button', 'class': 'tour-btn' });
+            read.textContent = 'Read aloud';
+            read.addEventListener('click', function () {
+                if (window.responsiveVoice) { responsiveVoice.speak(meta.info, voice); }
+            });
+            actions.appendChild(read);
+        }
+        var show = el('button', { type: 'button', 'class': 'tour-btn primary' });
+        show.textContent = 'Show on map';
+        show.addEventListener('click', function () {
+            closeDetail();
+            focusPoint(meta.latLng, Math.max(map.getZoom(), 15));
+        });
+        actions.appendChild(show);
+        body.appendChild(actions);
+
+        detail.hidden = false;
+        detail.scrollTop = 0;
+        document.body.classList.add('detail-open');
+        document.getElementById('detailClose').focus();
+        history.pushState({ detail: true }, '');
+        detailPushed = true;
+    }
+
+    function closeDetail(fromHistory) {
+        if (detail.hidden) { return; }
+        if (window.responsiveVoice) { responsiveVoice.cancel(); }
+        detail.hidden = true;
+        detail.querySelectorAll('video').forEach(function (v) { v.pause(); });
+        document.body.classList.remove('detail-open');
+        if (detailPushed && !fromHistory) { history.back(); }
+        detailPushed = false;
+    }
+
+    document.getElementById('detailClose').addEventListener('click', function () { closeDetail(false); });
+    window.addEventListener('popstate', function () {
+        // The photo viewer on top of the detail closes first (its own handler).
+        if (document.getElementById('viewer').hidden) { closeDetail(true); }
+    });
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && document.getElementById('viewer').hidden) { closeDetail(false); }
+    });
+
+    // Tapping empty map closes the menu and the preview card.
     map.on('click', function () {
-        if (mobile.matches && sheet.dataset.state === 'full') { setSheet('half'); }
+        if (!mobile.matches) { return; }
+        closeMenu();
+        hidePeek();
     });
 
     (mobile.addEventListener ? mobile.addEventListener.bind(mobile, 'change') : mobile.addListener.bind(mobile))(applyLayout);
-    $(window).on('resize orientationchange', function () {
-        if (mobile.matches) { setSheet(sheet.dataset.state || 'peek'); }
-    });
+    $(window).on('resize orientationchange', syncControls);
     applyLayout();
 
     // ---- Info panel ------------------------------------------------------
@@ -534,13 +659,17 @@ $(function () {
     function displayInfo() {
         var marker = this;
         var meta = marker.meta;
+
+        if (mobile.matches && mode !== 'tours') {
+            showPeek(marker);
+            return;
+        }
+
         var titleDiv = document.getElementById('title');
         var speakDiv = document.getElementById('speakButton');
         var info = document.getElementById('markerInfo');
 
         document.getElementById('infoDiv').style.display = 'block';
-        sheet.classList.remove('show-intro');
-        infoToggle.setAttribute('aria-expanded', 'false');
 
         if (window.responsiveVoice) { responsiveVoice.cancel(); }
 
@@ -568,11 +697,7 @@ $(function () {
             '<br><small><i>' + esc(meta.source) + ' ' + esc(meta.remark) + '</i></small>';
         info.appendChild(text);
 
-        sheetBody.scrollTop = 0;
-        if (mobile.matches) {
-            if (sheet.dataset.state === 'peek') { setSheet('half'); }
-            showAboveSheet(meta.latLng);
-        }
+        infoDiv.scrollTop = 0;
     }
 
     // ---- Legend filter + search filter --------------------------------------
@@ -691,7 +816,7 @@ $(function () {
         var raw    = ($('.searchField').first().val() || '').trim();
 
         document.getElementById('infoDiv').style.display = 'block';
-        sheet.classList.remove('show-intro');
+        hidePeek();
         if (!mobile.matches) { document.getElementById('homeDiv').style.display = 'none'; }  // make room for the results on the map
         $('#speakButton').empty();
         $title.html('<h3><u>Search</u></h3>');
@@ -789,7 +914,7 @@ $(function () {
             link.addEventListener('click', function (e) {
                 e.preventDefault();
                 $('.searchField').blur();          // closes the phone keyboard
-                if (mobile.matches) { setSheet('half'); }
+                if (mobile.matches) { infoDiv.style.display = 'none'; }
                 cluster.zoomToShowLayer(marker, function () {
                     displayInfo.call(marker);
                 });
@@ -807,7 +932,8 @@ $(function () {
 
     $('.searchField')
         .on('focus', function () {
-            if (mobile.matches) { setSheet('full'); }
+            // Phone: show the results again for what is already typed.
+            if (mobile.matches && this.value.trim().length >= 2) { search({ fit: false }); }
         })
         .on('input', function () {
             clearTimeout(searchTimer);
@@ -836,6 +962,8 @@ $(function () {
         if (next === mode) { return; }
         mode = next;
         document.body.classList.toggle('mode-tours', mode === 'tours');
+        hidePeek();
+        syncTabs(mode);
         $('#modeSwitch button').each(function () {
             this.setAttribute('aria-pressed', String(this.dataset.mode === mode));
         });
@@ -863,10 +991,8 @@ $(function () {
 
     function openPanel() {
         document.getElementById('infoDiv').style.display = 'block';
-        sheet.classList.remove('show-intro');
-        infoToggle.setAttribute('aria-expanded', 'false');
         $('#speakButton').empty();
-        sheetBody.scrollTop = 0;
+        infoDiv.scrollTop = 0;
     }
 
     // Stops whose footage is on the map, in order.
@@ -947,7 +1073,8 @@ $(function () {
     function fitWithPanel(bounds) {
         var options = { maxZoom: 15, paddingTopLeft: [40, 70], paddingBottomRight: [40, 40] };
         if (mobile.matches) {
-            options.paddingBottomRight = [40, sheetHeights().half + 30];
+            options.paddingTopLeft = [30, coverTop() + 10];
+            options.paddingBottomRight = [30, coverBottom() + 20];
         } else {
             var panel = document.getElementById('infoDiv');
             var barBottom = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--bar-bottom'), 10) || 130;
@@ -961,7 +1088,7 @@ $(function () {
     function focusPoint(latLng, zoom) {
         var size = map.getSize();
         var shift = mobile.matches
-            ? L.point(0, sheetHeights().half / 2)                    // sheet covers the bottom
+            ? L.point(0, (coverBottom() - coverTop()) / 2)          // header on top, tabs/panel below
             : L.point(Math.min(220, size.x / 4), 0);                  // panel covers the right
         var center = map.unproject(map.project(latLng, zoom).add(shift), zoom);
         map.setView(center, zoom, { animate: true });
@@ -1080,7 +1207,6 @@ $(function () {
         back.addEventListener('click', showTourList);
         info.appendChild(back);
 
-        if (mobile.matches && sheet.dataset.state === 'peek') { setSheet('half'); }
         focusPoint(entry.marker.getLatLng(), Math.max(map.getZoom(), 14));
     }
 
@@ -1275,12 +1401,8 @@ $(function () {
 });
 
 function closeHDiv() {
-    var sheet = document.getElementById('sheet');
     if (window.matchMedia('(max-width: 768px)').matches) {
-        sheet.classList.remove('show-intro');
-        document.getElementById('infoToggle').setAttribute('aria-expanded', 'false');
-        sheet.style.height = document.getElementById('sheetBody').offsetTop + 'px';
-        sheet.dataset.state = 'peek';
+        document.getElementById('infoDiv').style.display = 'none';
     } else {
         document.getElementById('homeDiv').style.display = 'none';
     }
@@ -1290,11 +1412,6 @@ function closeIDiv() {
     if (window.ww2OnInfoClose && window.ww2OnInfoClose()) { return; }
     document.getElementById('infoDiv').style.display = 'none';
     if (window.responsiveVoice) { responsiveVoice.cancel(); }
-    if (window.matchMedia('(max-width: 768px)').matches) {
-        var sheet = document.getElementById('sheet');
-        sheet.style.height = document.getElementById('sheetBody').offsetTop + 'px';
-        sheet.dataset.state = 'peek';
-    }
 }
 
 $(document).on('keydown', '.closeBtn', function (e) {
