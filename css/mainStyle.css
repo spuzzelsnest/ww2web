@@ -691,3 +691,95 @@ body.mode-tours #homeDiv { display: none; }
   #sheet .compare { width: 100%; }
   #sheet .tour-card { font-size: 14px; }
 }
+
+/* ==========================================================================
+   DESKTOP TOP BAR (design A2): mode switch | search, filters below
+   ========================================================================== */
+#topBar { display: contents; }
+.searchIcon { display: none; }
+
+@media (min-width: 769px) {
+  #topBar {
+    position: fixed;
+    z-index: 1000;                 /* above the map panes and Leaflet controls */
+    top: 8px;
+    left: 56px;                    /* clear of the zoom buttons */
+    right: 8px;
+    box-sizing: border-box;
+    padding: 12px 20px;
+    border: 4px solid #34504a;
+    border-radius: 22px;
+    background: rgba(245, 242, 234, 0.94);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    grid-template-areas: "mode search ." "filters filters filters";
+    align-items: center;
+    gap: 10px 16px;
+  }
+
+  #topBar #modeSwitch { position: static; grid-area: mode; justify-self: start; }
+
+  #topBar #search {
+    position: static;
+    grid-area: search;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: min(600px, 44vw);
+    height: 52px;
+    box-sizing: border-box;
+    padding: 0 6px 0 18px;
+    border: 3px solid #34504a;
+    border-radius: 26px;
+    background: #ffffff;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+    color: #34504a;
+    font-size: 1rem;
+  }
+  #topBar #search:focus-within { box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25), 0 0 0 4px rgba(226, 176, 98, 0.45); }
+  #topBar .searchIcon { display: block; flex: none; }
+  #topBar .searchField {
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+    border: 0;
+    outline: none;
+    background: transparent;
+    font: 500 16px system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    color: #1b2420;
+  }
+  #topBar .searchField::placeholder { color: #5d6b67; }
+  #topBar #searchButton {
+    flex: none;
+    height: 38px;
+    padding: 0 20px;
+    border: 0;
+    border-radius: 19px;
+    background: #34504a;
+    color: #f5f2ea;
+    font: 600 15px system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    cursor: pointer;
+  }
+  #topBar #searchButton:hover { background: #26352f; }
+
+  #topBar #legenda {
+    position: static;
+    grid-area: filters;
+    display: block;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+  }
+  #topBar #legenda .chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 22px; }
+  #topBar .chip { margin: 0; font-size: 17px; font-weight: normal; }
+
+  /* Tours: no search or filters, the bar shrinks to the switch */
+  body.mode-tours #topBar { grid-template-areas: "mode . ."; }
+
+  /* Panels start just below the bar (its bottom edge is measured by the page script) */
+  .split { top: calc(var(--bar-bottom, 8rem) + 0.6rem); }
+  #homeDiv { top: 0; }
+  #infoDiv,
+  body.mode-tours #infoDiv { top: 0; max-height: calc(100vh - var(--bar-bottom, 8rem) - 1.6rem); }
+}

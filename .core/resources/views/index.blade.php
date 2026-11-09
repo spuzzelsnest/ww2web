@@ -3,8 +3,8 @@
 @section('mainbody')
  
 {{--
-    Desktop: #sheet and #sheetBody are "display: contents", so the legend,
-    search and the two panels float over the map as before.
+    Desktop: #sheet and #sheetBody are "display: contents"; #topBar is the bar
+    at the top (mode switch, search, filters) and the two panels float below it.
     Phone (max 768px): #sheet is a bottom sheet you can drag between three
     heights (peek / half / full); see the "Bottom sheet" part of the script.
 --}}
@@ -19,6 +19,8 @@
         <button type="button" id="infoToggle" aria-label="About this map" aria-expanded="false">i</button>
     </div>
 
+    {{-- Desktop: one bar at the top (switch | search | filters). Phone: display: contents, so these sit in the sheet. --}}
+    <div id="topBar">
     <div id="modeSwitch" role="group" aria-label="How to explore the map">
         <button type="button" data-mode="thennow" aria-pressed="true">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M12 5v14"></path></svg>
@@ -31,11 +33,13 @@
     </div>
 
     <div id="search">
-        <input type="search" class="searchField" placeholder="Search footage..." aria-label="Search footage" autocomplete="off" enterkeyhint="search">
+        <svg class="searchIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg>
+        <input type="search" class="searchField" placeholder="Search places, units, operations or dates..." aria-label="Search footage" autocomplete="off" enterkeyhint="search">
         <button type="button" id="searchButton">Search</button>
     </div>
 
     @include('layouts.legenda')
+    </div>
 
     <div id="sheetBody">
         <div class="split left">
@@ -352,6 +356,17 @@ $(function () {
 
     cluster.addLayers(markers);
     map.addLayer(cluster);
+
+    // ---- Desktop top bar: panels start just below it -------------------------
+
+    var topBar = document.getElementById('topBar');
+    function syncBar() {
+        var bottom = mobile.matches ? 0 : Math.ceil(topBar.getBoundingClientRect().bottom);
+        document.documentElement.style.setProperty('--bar-bottom', bottom + 'px');
+    }
+    if (window.ResizeObserver) { new ResizeObserver(syncBar).observe(topBar); }
+    $(window).on('resize', syncBar);
+    syncBar();
 
     // ---- Bottom sheet (phones only) ---------------------------------------
 
