@@ -92,11 +92,12 @@ $(function () {
         layers: [imagery]
     });
 
-    // City labels in their own pane, above the imagery and below the markers' popups.
+    // City labels in their own pane: above the imagery (tilePane 200), below the
+    // tour routes (overlayPane 400) and the markers and clusters (markerPane 600).
     // pointer-events none: clicks and drags go straight through to the map and markers.
     // The pane must be created BEFORE a layer uses it, otherwise Leaflet throws.
     map.createPane('labels');
-    map.getPane('labels').style.zIndex = 650;
+    map.getPane('labels').style.zIndex = 350;
     map.getPane('labels').style.pointerEvents = 'none';
 
     var labels = L.tileLayer(
