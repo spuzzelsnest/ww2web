@@ -137,7 +137,7 @@ Then, from the repository root:
 ./deploy.sh              # test, build, upload, migrate, cache
 ```
 
-The script deploys the last **commit** of `master` (not uncommitted changes), installs
+The script deploys the last **commit** of `main` (not uncommitted changes), installs
 production dependencies locally, puts the site in maintenance mode, rsyncs, runs
 `migrate --force` and `optimize`, and brings the site back up.
 It never touches `.core/.env`, `.core/storage/`, `images/` or `media/` on the server.

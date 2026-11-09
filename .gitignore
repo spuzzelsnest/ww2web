@@ -16,8 +16,10 @@ node_modules/
 .core/.phpunit.result.cache
 .core/.phpunit.cache
 
-# Deploy settings (server login and path)
+# Deploy settings (server login and path) - never commit these
 deploy.env
+deploy.env.*
+!deploy.env.example
 
 # Content uploaded on the server
 /images/*
