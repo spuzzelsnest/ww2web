@@ -159,7 +159,8 @@ $(function () {
         if (thumbExt) {
             var base = '/images/thumbs/' + enc;
             img.setAttribute('srcset', base + '-480.' + thumbExt + ' 480w, ' + base + '-960.' + thumbExt + ' 960w');
-            img.setAttribute('sizes', '(max-width: 768px) 100vw, 350px');
+            // Must match the panel width in mainStyle.css: clamp(26rem, 34vw, 46rem)
+            img.setAttribute('sizes', '(max-width: 768px) 100vw, (min-width: 2165px) 736px, (max-width: 1223px) 416px, 34vw');
             img.setAttribute('src', base + '-960.' + thumbExt);
         }
         return img;

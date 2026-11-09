@@ -659,9 +659,25 @@ body.mode-tours #homeDiv { display: none; }
 .tour-back { margin: 0.2rem 0 0.4rem; padding: 0.4rem 0; border: 0; background: none; color: #34504a; text-decoration: underline; font-size: 13px; cursor: pointer; }
 
 /* Desktop: the info panel is wider in tour mode so the card breathes */
+/* Desktop and tablet: the info panel grows with the screen.
+   Width: 34% of the window, at least 26rem (416 px), at most 46rem (736 px)
+   1280 px screen -> 435 px, 1440 -> 490, 1920 -> 653, 2560 and up -> 736.
+   Height: never taller than the window. The photo always fills the panel. */
 @media (min-width: 769px) {
-  body.mode-tours #infoDiv { width: 24.8rem; padding: 0.9rem 1rem 0.8rem; font-size: 0.8rem; background-color: rgba(255, 255, 255, 0.92); max-height: calc(100vh - 6rem); top: 1rem; }
-  body.mode-tours .compare, body.mode-tours .photo { width: 100%; }
+  #infoDiv {
+    box-sizing: border-box;
+    width: clamp(26rem, 34vw, 46rem);
+    min-width: 0;
+    max-height: calc(100vh - 7rem);
+    padding: 1rem 1rem 0.8rem;
+    font-size: clamp(0.75rem, 0.55rem + 0.25vw, 0.9rem);
+    background-color: rgba(255, 255, 255, 0.85);
+  }
+  #infoDiv .photo,
+  #infoDiv .compare,
+  #infoDiv #markerInfo video { width: 100%; }
+
+  body.mode-tours #infoDiv { background-color: rgba(255, 255, 255, 0.92); max-height: calc(100vh - 6rem); top: 1rem; }
 }
 
 @media (max-width: 768px) {
