@@ -14,7 +14,7 @@
     <div id="sheetTitle">
         <div>
             <strong>WW2 Maps</strong> &middot; {{ number_format($footages->count()) }} items
-            <small>Tap a marker or search</small>
+            <small>Tap a marker or search @if ($lastUpdate) &middot; updated {{ $lastUpdate }} @endif</small>
         </div>
         <button type="button" id="infoToggle" aria-label="About this map" aria-expanded="false">i</button>
     </div>
@@ -39,6 +39,10 @@
     </div>
 
     @include('layouts.legenda')
+
+    @if ($lastUpdate)
+        <div id="lastUpdate">Last updated <time>{{ $lastUpdate }}</time></div>
+    @endif
     </div>
 
     <div id="sheetBody">
@@ -51,7 +55,6 @@
                     I started this project in 2007 out of respect to all combat journalists and people in conflict zones. Many thanks to the community, the journalists, the historians and locals who helped me along the way.
                 </p>
                 <p class="text-center"><b>Zoom into the map and tap the markers to find more information!</b></p>
-                <p>Last updated: {{ $lastUpdate }}</p>
             </div>
         </div>
 

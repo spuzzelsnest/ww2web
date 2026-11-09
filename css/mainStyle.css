@@ -858,3 +858,31 @@ body.mode-tours #homeDiv { display: none; }
 .result-meta { font-size: 12px; font-weight: 600; color: #8a5414; }
 .result-text { font-size: 13px; line-height: 1.35; color: #3c4541; }
 .result mark { padding: 0 1px; border-radius: 2px; background: #f3d48a; color: inherit; }
+
+/* "Last updated" in the top bar: right end of the first row on desktops,
+   right end of the filter row on tablets; on phones it is in the sheet title. */
+#lastUpdate { display: none; }
+@media (min-width: 769px) {
+  #topBar #lastUpdate {
+    display: block;
+    grid-area: update;
+    justify-self: end;
+    padding: 0.3rem 0.8rem;
+    border-radius: 1rem;
+    background: rgba(52, 80, 74, 0.1);
+    color: #34504a;
+    font: 600 13px system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    white-space: nowrap;
+  }
+  #topBar #lastUpdate time { font-weight: 700; }
+  #topBar { grid-template-areas: "mode search update" "filters filters filters"; }
+  body.mode-tours #topBar { grid-template-areas: "mode . update"; }
+}
+@media (min-width: 769px) and (max-width: 1099px) {
+  #topBar {
+    grid-template-columns: max-content minmax(0, 1fr) max-content;
+    grid-template-areas: "mode search search" "filters filters update";
+  }
+  #topBar #legenda .chips { justify-content: flex-start; }
+  body.mode-tours #topBar { grid-template-areas: "mode . update"; }
+}

@@ -12,7 +12,7 @@
     <link href="{{ asset('css/leaflet.css') }}" rel="stylesheet">
     <link href="{{ asset('css/MarkerCluster.css') }}" rel="stylesheet">
     <link href="{{ asset('css/MarkerCluster.Default.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/mainStyle.css') }}?v=9" rel="stylesheet">
+    <link href="{{ asset('css/mainStyle.css') }}?v=10" rel="stylesheet">
 
     {{-- Scripts: jQuery before anything that uses it, Leaflet before its plugins --}}
     <script src="{{ asset('js/jquery-3.3.1.slim.min.js') }}"></script>
