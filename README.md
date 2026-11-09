@@ -50,6 +50,55 @@ php artisan serve              # http://127.0.0.1:8000
 
 (`php artisan serve` serves `public_path()`, which is the repository root.)
 
+## Photo thumbnails
+
+The map page shows 480 / 960 px WebP copies of the photos (`images/thumbs/`),
+so phones do not download the multi-megabyte originals. The full picture is only
+loaded when someone opens the full-screen viewer.
+
+```
+php artisan images:thumbs           # make the missing ones
+php artisan images:thumbs --force   # rebuild all
+```
+
+New uploads from the admin page get their thumbnails straight away, and
+`deploy.sh` runs the command on the server after every deploy. Pictures without
+thumbnails simply fall back to the original.
+
+## Then & Now photos
+
+The map opens in **Then & Now** mode. A photo that has a picture of the same
+spot today shows a slider: drag sideways to compare.
+
+1. Name the "now" picture like the original with `_n` added:
+   `images/aachen01.jpg` → `images/aachen01_n.jpg`
+2. Put it in `images/` (on the server: upload it there, e.g. with SFTP).
+3. Run `php artisan footage:link-now` (deploy.sh does this too). It fills
+   `footages.now_name` for every `_n` picture it finds, clears it when a
+   picture was removed, and warns about `_n` files without a matching footage.
+   `--dry-run` shows what would change.
+4. Run `php artisan images:thumbs` for the small copies (deploy.sh does this too).
+
+Optional, straight in the database: `now_taken_on` (date) and `now_credit`
+(photographer) are shown under the slider.
+
+Footage with a "now" photo glows on the map.
+
+## Guided tours
+
+The **Tours** switch shows the published tours. A tour is an ordered list of
+footage ("stops"); each stop can name the military unit seen there, so one tour
+can follow several units (`units` table).
+
+| table        | what                                                               |
+|--------------|--------------------------------------------------------------------|
+| `tours`      | `slug`, `title`, `intro`, `operationId`, `published`, `sort`        |
+| `tour_stops` | `tour_id`, `footage_id`, `position` (1, 2, 3 …), `unit_id`, and optional `title` / `text` that replace the footage's own |
+| `units`      | `name` ("506th PIR"), `full_name`, `side` ("allied" / "axis")      |
+
+Example: `php artisan db:seed --class=ExampleTourSeeder` adds "Holding Bastogne"
+(8 stops, 4 units). Running it again updates it instead of adding a copy.
+
 ## Tests
 
 ```

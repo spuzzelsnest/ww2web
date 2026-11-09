@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Footage extends Model
 {
@@ -11,6 +12,9 @@ class Footage extends Model
 
     protected $fillable = [
         'name',
+        'now_name',
+        'now_taken_on',
+        'now_credit',
         'info',
         'operationId',
         'date',
@@ -30,6 +34,7 @@ class Footage extends Model
             'lat'       => 'float',
             'lng'       => 'float',
             'published' => 'boolean',
+            'now_taken_on' => 'date:Y-m-d',
         ];
     }
 
@@ -46,6 +51,11 @@ class Footage extends Model
     public function country(): BelongsTo
     {
         return $this->belongsTo(Country::class, 'countryId');
+    }
+
+    public function tourStops(): HasMany
+    {
+        return $this->hasMany(TourStop::class);
     }
 
     public function source(): BelongsTo

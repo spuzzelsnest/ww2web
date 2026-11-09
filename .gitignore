@@ -25,3 +25,5 @@ deploy.env
 /img
 
 .DS_Store
+
+deploy.sh

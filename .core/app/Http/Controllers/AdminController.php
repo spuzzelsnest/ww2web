@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Footage;
 use App\Http\Requests\StoreFootageRequest;
+use App\Support\Thumbnails;
 use Illuminate\Support\Facades\DB;
+use Throwable;
 
 class AdminController extends Controller
 {
@@ -28,7 +30,7 @@ class AdminController extends Controller
     /**
      * Store a new footage record and its picture.
      */
-    public function store(StoreFootageRequest $request)
+    public function store(StoreFootageRequest $request, Thumbnails $thumbs)
     {
         $data = $request->validated();
 
@@ -48,6 +50,15 @@ class AdminController extends Controller
 
             $request->file('image')->move(public_path('images'), $filename);
         });
+
+        // Small copies for the map page. If this fails the page simply shows
+        // the original picture, so log it instead of failing the upload.
+        try {
+            ini_set('memory_limit', '512M');
+            $thumbs->make($data['name']);
+        } catch (Throwable $e) {
+            report($e);
+        }
 
         return redirect()
             ->route('admin.index')

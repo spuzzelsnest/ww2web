@@ -135,110 +135,10 @@ html, body{
   position: absolute;
 }
 
-#picbox {
-  display: block;
-  position: relative;
-}
-
-#img{
-  position: relative;
-  border: 3px solid white;
-}
-
-#popup {
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
-}
-
-#popup img {
-  border: 3px solid white;
-  box-sizing: border-box;
-  -webkit-transition: .5s ease-in-out;
-  -moz-transition: .5s ease-in-out;
-  -o-transition: .5s ease-in-out;
-  transition: .5s ease-in-out;
-}
-
-#popup-close {
-  opacity: 0;
-  display: block;
-  width:50px;
-  height:50px;
-  box-sizing: border-box;
-  background: white;
-  color: black;
-  text-decoration: none;
-  position: fixed;
-  top: 80px;
-  left: 0;
-  -webkit-transition: .5s ease-in-out;
-  -moz-transition: .5s ease-in-out;
-  -o-transition: .5s ease-in-out;
-  transition: .5s ease-in-out;
-  z-index: 3;
-}
-
-#popup-close:before {
-  content: "";
-  display: block;
-  height: 30px;
-  width: 1px;
-  background: black;
+/* Close buttons of the intro and info panels */
+.closeBtn{
   position: absolute;
-  left: 26px;
-  top:10px;
-  -webkit-transform:rotate(45deg);
-  -moz-transform:rotate(45deg);
-  -o-transform:rotate(45deg);
-  transform:rotate(45deg);
-}
-
-#popup-close:after {
-  content: "";
-  display: block;
-  height: 30px;
-  width: 1px;
-  background: black;
-  position: absolute;
-  left: 26px;
-  top:10px;
-  -webkit-transform:rotate(-45deg);
-  -moz-transform:rotate(-45deg);
-  -o-transform:rotate(-45deg);
-  transform:rotate(-45deg);
-}
- 
-#popup:target {
-  opacity: 1;
-  top: 0;
-  bottom: 0;
-}
-  
-#popup:target img {
-  position: fixed;
-  display: block;
-  background-color: #00000075;
-  top: 0px;
-  left: 0px;
-  width: calc(100% - 0%);
-  margin-left: auto;
-  margin-right: auto;
-  padding: calc( 85vh - 95%) calc(77vw - 45%);
-  padding-bottom: 75%;
-  overflow: auto;
-}
-  
-#popup:target #popup-close {
-  opacity:1;
-  top: 0;
-}
-
-#close{
-  position: absolute;
+  cursor: pointer;
   right: 1rem;
   top: 0.3rem;
 }
@@ -305,30 +205,473 @@ footer{
     #editDiv .field-row { grid-template-columns: 1fr; }
 }
 
-@media (max-width: 768px) {
-  /* turn the side panels into bottom sheets */
-  .split { top: auto; bottom: 0; left: 0; right: 0; }
+/* ==========================================================================
+   MAP PAGE: legend chips, photo, bottom sheet (phone), photo viewer
+   ========================================================================== */
 
-  #homeDiv, #infoDiv, #editDiv {
+/* Desktop: the sheet wrappers do not draw anything; legend, search and the
+   panels keep their own fixed positions above the map. */
+#sheet, #sheetBody { display: contents; }
+#sheetHandle, #sheetTitle { display: none; }
+
+/* Legend chips */
+#legenda .chips { display: inline; }
+.chip { display: inline-flex; align-items: center; gap: 0.25rem; margin: 0 0.4rem 0.3rem; cursor: pointer; font-weight: bold; }
+.chip input { margin: 0; }
+.chip img { width: 18px; height: 25px; }
+.chip:has(input:not(:checked)) img,
+.chip:has(input:not(:checked)) .cnt,
+.chip:has(input:not(:checked)) .icon-label { opacity: 0.4; }
+
+/* Photo in the info panel: a button that opens the viewer */
+.photo {
+  display: block;
+  margin: 0 auto 0.5rem;
+  padding: 0;
+  border: 3px solid white;
+  background: #ddd;
+  cursor: zoom-in;
+  width: 350px;
+  max-width: 100%;
+}
+.photo img { display: block; width: 100%; height: auto; }
+#markerInfo video { display: block; margin: 0 auto 0.5rem; width: 350px; max-width: 100%; height: auto; background: #000; }
+
+/* --------------------------------------------------------------------------
+   Phone: one bottom sheet that holds search, chips, intro and info
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  /* Admin page: the form panel sits at the bottom */
+  .split { top: auto; bottom: 0; left: 0; right: 0; }
+  #editDiv { position: static; min-width: 0; width: auto; max-height: 45vh; margin: 0 0.3rem 0.3rem; font-size: 0.9rem; }
+
+  footer { display: none; }
+  #map { border: 0; }
+
+  /* Leaflet's zoom buttons and attribution stay above the sheet */
+  .leaflet-bottom { bottom: var(--sheet-peek, 0); }
+
+  #sheet {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1100;                       /* above Leaflet's panes and controls */
+    height: 11rem;                       /* replaced by the script */
+    max-height: 100dvh;
+    background: #f5f2ea;
+    border-top: 4px solid #34504a;
+    border-radius: 1.2rem 1.2rem 0 0;
+    box-shadow: 0 -4px 18px rgba(0, 0, 0, 0.35);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    transition: height 0.25s cubic-bezier(.2, .8, .3, 1);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  #sheet.dragging { transition: none; }
+
+  #sheetHandle {
+    display: flex;
+    justify-content: center;
+    padding: 0.5rem 0 0.35rem;
+    touch-action: none;
+    cursor: grab;
+  }
+  #sheetHandle span { width: 2.6rem; height: 0.3rem; border-radius: 1rem; background: #9aa8a4; }
+
+  #sheetTitle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0 0.9rem 0.4rem;
+    touch-action: none;
+    font-size: 0.95rem;
+    color: #1d2b28;
+  }
+  #sheetTitle strong { font-family: Impact, Charcoal, sans-serif; font-weight: normal; letter-spacing: 0.02em; }
+  #sheetTitle small { display: block; color: #5d6b67; font-size: 0.75rem; }
+
+  #infoToggle {
+    flex: none;
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 50%;
+    border: 2px solid #34504a;
+    background: white;
+    font: bold italic 1.05rem Georgia, serif;
+    color: #34504a;
+  }
+  #infoToggle[aria-expanded="true"] { background: #34504a; color: white; }
+
+  /* Search: full width, 16px text so iOS does not zoom in on focus */
+  #sheet #search {
     position: static;
+    display: flex;
+    gap: 0.4rem;
+    padding: 0 0.75rem 0.5rem;
+    font-size: 1rem;
+  }
+  #sheet #search input {
+    flex: 1;
     min-width: 0;
-    width: auto;
-    max-height: 45vh;
-    margin: 0 0.3rem 0.3rem;
+    height: 2.6rem;
+    padding: 0 0.9rem;
+    font-size: 16px;
+    border: 1px solid #b9c3c0;
+    border-radius: 1.3rem;
+    background: white;
+  }
+  #sheet #search button {
+    height: 2.6rem;
+    padding: 0 0.9rem;
+    border: 0;
+    border-radius: 1.3rem;
+    background: #34504a;
+    color: white;
     font-size: 0.9rem;
   }
 
-  /* images and video must not overflow */
-  #markerInfo img, #markerInfo video { max-width: 100%; height: auto; }
+  /* Legend: one row of chips that scrolls sideways */
+  #sheet #legenda {
+    position: static;
+    display: block;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    padding: 0;
+    text-align: left;
+  }
+  #sheet #legenda .chips {
+    display: flex;
+    gap: 0.45rem;
+    overflow-x: auto;
+    padding: 0 0.75rem 0.6rem;
+    scrollbar-width: none;
+  }
+  #sheet #legenda .chips::-webkit-scrollbar { display: none; }
+  #sheet .chip {
+    position: relative;
+    flex: none;
+    margin: 0;
+    min-height: 2.5rem;                  /* comfortable tap target */
+    padding: 0.2rem 0.75rem 0.2rem 0.5rem;
+    border: 2px solid #34504a;
+    border-radius: 1.3rem;
+    background: white;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+  #sheet .chip .icon-label { display: inline; font-weight: normal; }
+  #sheet .chip input { position: absolute; opacity: 0; pointer-events: none; }
+  #sheet .chip:has(input:checked) { background: #dfe9e4; }
+  #sheet .chip:has(input:not(:checked)) { border-color: #b9c3c0; border-style: dashed; }
+  #sheet .chip:focus-within { outline: 3px solid #428608; outline-offset: 1px; }
 
-  /* bigger tap targets */
-  #close { font-size: 1.2rem; padding: 0.4rem; }
-  #legenda input[type="checkbox"] { width: 1.3rem; height: 1.3rem; }
+  /* Sheet content: intro or info, scrolls inside the sheet */
+  #sheetBody {
+    display: block;
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    border-top: 1px solid #d9d4c7;
+  }
+  #sheet .split { position: static; }
+  #sheet #homeDiv, #sheet #infoDiv {
+    position: relative;
+    top: auto;
+    right: auto;
+    left: auto;
+    min-width: 0;
+    max-height: none;
+    margin: 0;
+    padding: 0.9rem 1rem 1.5rem;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    font-size: 0.95rem;
+    line-height: 1.45;
+  }
+  #sheet #homeDiv { display: none; }
+  #sheet.show-intro #homeDiv { display: block; }
+  #sheet.show-intro #infoDiv { display: none !important; }
+  #sheet #homeDiv h1 { font-size: 1.6rem; margin-top: 0; }
+  #sheet #title { padding-right: 4.5rem; }
+  #sheet #title h3, #sheet #title h5 { margin-top: 0; }
+  #sheet .closeBtn { top: 0.5rem; right: 0.6rem; padding: 0.4rem 0.5rem; font-size: 0.95rem; }
+  #sheet .photo { width: 100%; border-radius: 0.4rem; overflow: hidden; }
+  #sheet #markerInfo video { width: 100%; border-radius: 0.4rem; }
+  #sheet .list-group-item { padding: 0.75rem 0.9rem; }
+  #sheet #speakButton { font-size: 0.85rem; }
+  #sheet #speakButton button {
+    padding: 0.4rem 0.9rem;
+    border: 2px solid #34504a;
+    border-radius: 1.2rem;
+    background: white;
+    color: #34504a;
+    font-weight: 600;
+  }
+}
 
-  /* search under the legend, full width */
-  #search { top: 4.5rem; left: 0.5rem; right: 0.5rem; font-size: 0.9rem; }
-  #search input { width: 70%; }
+/* --------------------------------------------------------------------------
+   Full-screen photo viewer
+   -------------------------------------------------------------------------- */
+#viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.97);
+  touch-action: none;                    /* the script handles pinch and pan */
+  user-select: none;
+  -webkit-user-select: none;
+}
+#viewer[hidden] { display: none; }
+#viewerImg {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  transform-origin: center center;
+  will-change: transform;
+  -webkit-user-drag: none;
+}
+#viewerClose {
+  position: absolute;
+  top: calc(0.6rem + env(safe-area-inset-top));
+  right: 0.6rem;
+  width: 2.8rem;
+  height: 2.8rem;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  color: #111;
+  font-size: 1.8rem;
+  line-height: 1;
+}
+#viewerHint {
+  position: absolute;
+  bottom: calc(0.8rem + env(safe-area-inset-bottom));
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.75);
+  font: 0.8rem system-ui, sans-serif;
+  pointer-events: none;
+}
+@media (hover: hover) {
+  #viewerHint { display: none; }
+}
+body.viewer-open { overflow: hidden; }
 
-  /* the fixed footer eats screen space */
-  footer { display: none; }
+/* ==========================================================================
+   MODES: Then & Now (default) and Tours
+   ========================================================================== */
+
+/* Mode switch: a two-button toggle */
+#modeSwitch {
+  position: fixed;
+  z-index: 2;
+  top: 4.3rem;
+  left: 3.5rem;
+  display: flex;
+  gap: 0;
+  padding: 3px;
+  border: 3px solid #34504a;
+  border-radius: 1.6rem;
+  background: #f5f2ea;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+#modeSwitch button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 2.2rem;
+  padding: 0 0.9rem;
+  border: 0;
+  border-radius: 1.3rem;
+  background: transparent;
+  color: #34504a;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+#modeSwitch button[aria-pressed="true"] { background: #34504a; color: #f5f2ea; }
+#modeSwitch button:focus-visible { outline: 3px solid #b9741f; outline-offset: 1px; }
+
+/* In tour mode the search and the type filter do not apply */
+body.mode-tours #search,
+body.mode-tours #legenda,
+body.mode-tours #sheet #search,
+body.mode-tours #sheet #legenda { display: none; }
+body.mode-tours #homeDiv { display: none; }
+
+/* Footage that has a "now" photo glows on the map */
+.leaflet-marker-icon.has-now { filter: drop-shadow(0 0 2px #e2b062) drop-shadow(0 0 3px #e2b062); }
+
+/* Then & Now compare slider */
+.compare {
+  --pos: 50%;
+  position: relative;
+  width: 350px;
+  max-width: 100%;
+  margin: 0 auto 0.4rem;
+  overflow: hidden;
+  border: 3px solid white;
+  border-radius: 0.4rem;
+  background: #222;
+  touch-action: pan-y;          /* vertical swipes scroll the panel, sideways drags compare */
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: ew-resize;
+}
+.compare > img { display: block; width: 100%; height: auto; pointer-events: none; }
+.compare-now { position: absolute; inset: 0; clip-path: inset(0 0 0 var(--pos)); pointer-events: none; }
+.compare-now img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.compare-line { position: absolute; top: 0; bottom: 0; left: var(--pos); width: 2px; margin-left: -1px; background: white; pointer-events: none; }
+.compare-knob {
+  position: absolute;
+  top: 50%;
+  left: var(--pos);
+  width: 40px;
+  height: 40px;
+  margin: -20px 0 0 -20px;
+  border-radius: 50%;
+  background: white;
+  color: #1b2420;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+  pointer-events: none;
+}
+.compare-tag {
+  position: absolute;
+  top: 8px;
+  padding: 2px 8px;
+  border-radius: 5px;
+  background: rgba(27, 36, 32, 0.82);
+  color: #f5f2ea;
+  font: 600 13px Impact, Charcoal, sans-serif;
+  letter-spacing: 0.05em;
+  pointer-events: none;
+}
+.compare-tag-then { left: 8px; }
+.compare-tag-now { right: 8px; }
+.compare-range { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.compare:focus-within { outline: 3px solid #b9741f; outline-offset: 2px; }
+.compare-expand {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(27, 36, 32, 0.82);
+  color: #f5f2ea;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.compare-credit, .now-missing { margin: 0 0 0.5rem; font-size: 0.8em; color: #5d6b67; text-align: center; }
+
+/* Tours: list */
+.tour-card {
+  display: flex;
+  gap: 0.75rem;
+  width: 100%;
+  margin: 0 0 0.6rem;
+  padding: 0.6rem;
+  border: 2px solid #34504a;
+  border-radius: 0.8rem;
+  background: white;
+  color: #1b2420;
+  text-align: left;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+.tour-card:hover { background: #eef3f0; }
+.tour-card img { width: 96px; height: 96px; flex: none; object-fit: cover; border-radius: 0.5rem; }
+.tour-card-body { display: flex; flex-direction: column; gap: 0.2rem; min-width: 0; }
+.tour-card-body strong { font: 600 17px Impact, Charcoal, sans-serif; letter-spacing: 0.02em; }
+.tour-card-meta { color: #8a5414; font-weight: 600; font-size: 12px; }
+.tour-card-intro { color: #3c4541; line-height: 1.4; }
+
+/* Tours: numbered stops on the map */
+.tour-pin span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  box-sizing: border-box;
+  border: 2px solid #f5f2ea;
+  border-radius: 50%;
+  background: #1b2420;
+  color: #f5f2ea;
+  font: 700 12px system-ui, sans-serif;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+.tour-pin.done span { background: #34504a; }
+.tour-pin.current span { background: #e2b062; color: #1b2420; transform: scale(1.25); }
+
+/* Tours: stop card */
+.tour-head { padding-right: 4.5rem; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+.tour-name { font: 600 18px Impact, Charcoal, sans-serif; letter-spacing: 0.03em; color: #1b2420; }
+.tour-step { margin-top: 0.15rem; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #8a5414; }
+.tour-progress { display: block; height: 6px; margin: 0.4rem 0 0.7rem; border-radius: 3px; background: #ddd6c5; overflow: hidden; }
+.tour-progress span { display: block; height: 100%; background: #34504a; }
+.unit-chip {
+  display: inline-block;
+  margin: 0 0 0.5rem;
+  padding: 0.2rem 0.7rem;
+  border-radius: 1rem;
+  background: #34504a;
+  color: #f5f2ea;
+  font-size: 12px;
+  font-weight: 600;
+}
+.tour-stop-title { margin: 0.4rem 0 0.3rem; font: 600 18px Impact, Charcoal, sans-serif; letter-spacing: 0.02em; }
+.tour-nav { display: flex; gap: 0.5rem; margin: 0.6rem 0 0.4rem; }
+.tour-btn {
+  height: 44px;
+  border-radius: 22px;
+  border: 2px solid #34504a;
+  background: transparent;
+  color: #34504a;
+  font: 600 14px system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.tour-btn.round { width: 44px; flex: none; }
+.tour-btn.primary { flex: 1; border: 0; background: #34504a; color: #f5f2ea; }
+.tour-btn:disabled { opacity: 0.35; cursor: default; }
+.tour-back { margin: 0.2rem 0 0.4rem; padding: 0.4rem 0; border: 0; background: none; color: #34504a; text-decoration: underline; font-size: 13px; cursor: pointer; }
+
+/* Desktop: the info panel is wider in tour mode so the card breathes */
+@media (min-width: 769px) {
+  body.mode-tours #infoDiv { width: 24.8rem; padding: 0.9rem 1rem 0.8rem; font-size: 0.8rem; background-color: rgba(255, 255, 255, 0.92); max-height: calc(100vh - 6rem); top: 1rem; }
+  body.mode-tours .compare, body.mode-tours .photo { width: 100%; }
+}
+
+@media (max-width: 768px) {
+  #sheet #modeSwitch {
+    position: static;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 0 0.75rem 0.5rem;
+  }
+  #sheet #modeSwitch button { justify-content: center; min-height: 2.5rem; font-size: 0.9rem; }
+  #sheet .compare { width: 100%; }
+  #sheet .tour-card { font-size: 14px; }
 }
