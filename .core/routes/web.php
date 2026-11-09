@@ -1,31 +1,19 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-
-	use Illuminate\Auth\Middleware\Authenticate;
-	use Illuminate\Routing\Middleware\ThrottleRequests;
-	use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LoginController;
+use Illuminate\Support\Facades\Route;
 
 // Public
-	Route::get('/', 'HomeController@index');
+Route::get('/', [HomeController::class, 'index']);
 
 // Login: 5 attempts per minute
-	Route::get('/login', 'LoginController@show')->name('login');
-	Route::post('/login', 'LoginController@store')->middleware(ThrottleRequests::class . ':5,1');
+Route::get('/login', [LoginController::class, 'show'])->name('login');
+Route::post('/login', [LoginController::class, 'store'])->middleware('throttle:5,1');
 
 // Everything below needs a logged-in user
-	Route::middleware(Authenticate::class)->group(function () {
-   	Route::post('/logout', 'LoginController@destroy')->name('logout');
-   	Route::resource('/admin', 'AdminController')->only(['index', 'store']);
+Route::middleware('auth')->group(function () {
+    Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
+    Route::resource('/admin', AdminController::class)->only(['index', 'store']);
 });
-

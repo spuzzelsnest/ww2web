@@ -209,10 +209,11 @@ $(function () {
         layers: [imagery]
     });
  
-    // City labels in their own pane so they always sit on top of the imagery.
+    // City labels in their own pane: above the imagery (tilePane 200), below
+    // the markers (markerPane 600).
     // pointer-events none: dragging the marker and clicking the map still work.
     map.createPane('labels');
-    map.getPane('labels').style.zIndex = 650;
+    map.getPane('labels').style.zIndex = 350;
     map.getPane('labels').style.pointerEvents = 'none';
  
     // Esri's place-name layer: same server and same tile scheme as the imagery above,

@@ -3,40 +3,45 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\File;
 
 class DatabaseBackUp extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'database:backup';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Backup Database';
+    protected $description = 'Dump the MySQL database to storage/app/backup/backup-YYYY-MM-DD.gz';
 
-    /**
-     * Execute the console command.
-     *
-     * @return int
-     */
-    public function handle()
+    public function handle(): int
     {
-        $filename = "backup-" . Carbon::now()->format('Y-m-d') . ".gz";
+        // config() instead of env(): env() returns null once the config is cached.
+        $db = config('database.connections.mysql');
 
-        $command = "mysqldump --no-tablespaces --user=" . env('DB_USERNAME') ." --password=" . env('DB_PASSWORD') . " --host=" . env('DB_HOST') . " " . env('DB_DATABASE') . "  | gzip > " . storage_path() . "/app/backup/" . $filename;
-        
-        $returnVar = NULL;
-        $output  = NULL;
-  
-        exec($command, $output, $returnVar);
+        $dir = storage_path('app/backup');
+        File::ensureDirectoryExists($dir);
 
-        return Command::SUCCESS;
+        $file = $dir.'/backup-'.now()->format('Y-m-d').'.gz';
+
+        // Password via the environment so it does not show up in the process list.
+        $command = sprintf(
+            'MYSQL_PWD=%s mysqldump --no-tablespaces --user=%s --host=%s --port=%s %s | gzip > %s',
+            escapeshellarg((string) $db['password']),
+            escapeshellarg((string) $db['username']),
+            escapeshellarg((string) $db['host']),
+            escapeshellarg((string) $db['port']),
+            escapeshellarg((string) $db['database']),
+            escapeshellarg($file)
+        );
+
+        exec('set -o pipefail; '.$command, $output, $status);
+
+        if ($status !== 0) {
+            $this->error('Backup failed (mysqldump exit code '.$status.').');
+
+            return self::FAILURE;
+        }
+
+        $this->info('Backup written to '.$file);
+
+        return self::SUCCESS;
     }
 }

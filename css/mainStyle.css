@@ -135,110 +135,10 @@ html, body{
   position: absolute;
 }
 
-#picbox {
-  display: block;
-  position: relative;
-}
-
-#img{
-  position: relative;
-  border: 3px solid white;
-}
-
-#popup {
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
-}
-
-#popup img {
-  border: 3px solid white;
-  box-sizing: border-box;
-  -webkit-transition: .5s ease-in-out;
-  -moz-transition: .5s ease-in-out;
-  -o-transition: .5s ease-in-out;
-  transition: .5s ease-in-out;
-}
-
-#popup-close {
-  opacity: 0;
-  display: block;
-  width:50px;
-  height:50px;
-  box-sizing: border-box;
-  background: white;
-  color: black;
-  text-decoration: none;
-  position: fixed;
-  top: 80px;
-  left: 0;
-  -webkit-transition: .5s ease-in-out;
-  -moz-transition: .5s ease-in-out;
-  -o-transition: .5s ease-in-out;
-  transition: .5s ease-in-out;
-  z-index: 3;
-}
-
-#popup-close:before {
-  content: "";
-  display: block;
-  height: 30px;
-  width: 1px;
-  background: black;
+/* Close buttons of the intro and info panels */
+.closeBtn{
   position: absolute;
-  left: 26px;
-  top:10px;
-  -webkit-transform:rotate(45deg);
-  -moz-transform:rotate(45deg);
-  -o-transform:rotate(45deg);
-  transform:rotate(45deg);
-}
-
-#popup-close:after {
-  content: "";
-  display: block;
-  height: 30px;
-  width: 1px;
-  background: black;
-  position: absolute;
-  left: 26px;
-  top:10px;
-  -webkit-transform:rotate(-45deg);
-  -moz-transform:rotate(-45deg);
-  -o-transform:rotate(-45deg);
-  transform:rotate(-45deg);
-}
- 
-#popup:target {
-  opacity: 1;
-  top: 0;
-  bottom: 0;
-}
-  
-#popup:target img {
-  position: fixed;
-  display: block;
-  background-color: #00000075;
-  top: 0px;
-  left: 0px;
-  width: calc(100% - 0%);
-  margin-left: auto;
-  margin-right: auto;
-  padding: calc( 85vh - 95%) calc(77vw - 45%);
-  padding-bottom: 75%;
-  overflow: auto;
-}
-  
-#popup:target #popup-close {
-  opacity:1;
-  top: 0;
-}
-
-#close{
-  position: absolute;
+  cursor: pointer;
   right: 1rem;
   top: 0.3rem;
 }
@@ -305,30 +205,799 @@ footer{
     #editDiv .field-row { grid-template-columns: 1fr; }
 }
 
-@media (max-width: 768px) {
-  /* turn the side panels into bottom sheets */
-  .split { top: auto; bottom: 0; left: 0; right: 0; }
+/* ==========================================================================
+   MAP PAGE: legend chips, photo, bottom sheet (phone), photo viewer
+   ========================================================================== */
 
-  #homeDiv, #infoDiv, #editDiv {
-    position: static;
-    min-width: 0;
-    width: auto;
-    max-height: 45vh;
-    margin: 0 0.3rem 0.3rem;
-    font-size: 0.9rem;
+/* Desktop: the sheet wrappers do not draw anything; legend, search and the
+   panels keep their own fixed positions above the map. */
+#sheet, #sheetBody { display: contents; }
+#sheetHandle, #sheetTitle { display: none; }
+
+/* Legend chips */
+#legenda .chips { display: inline; }
+.chip { display: inline-flex; align-items: center; gap: 0.25rem; margin: 0 0.4rem 0.3rem; cursor: pointer; font-weight: bold; }
+.chip input { margin: 0; }
+.chip img { width: 18px; height: 25px; }
+.chip:has(input:not(:checked)) img,
+.chip:has(input:not(:checked)) .cnt,
+.chip:has(input:not(:checked)) .icon-label { opacity: 0.4; }
+
+/* Photo in the info panel: a button that opens the viewer */
+.photo {
+  display: block;
+  margin: 0 auto 0.5rem;
+  padding: 0;
+  border: 3px solid white;
+  background: #ddd;
+  cursor: zoom-in;
+  width: 350px;
+  max-width: 100%;
+}
+.photo img { display: block; width: 100%; height: auto; }
+#markerInfo video { display: block; margin: 0 auto 0.5rem; width: 350px; max-width: 100%; height: auto; background: #000; }
+
+/* --------------------------------------------------------------------------
+   Phone (layout 2): header with menu, search under it, tabs at the bottom,
+   preview card for a tapped marker, the opened photo full screen.
+   On bigger screens these elements are not shown.
+   -------------------------------------------------------------------------- */
+#mHeader, #tabs, #peek { display: none; }
+#detail[hidden], #peek[hidden] { display: none !important; }
+
+@media (max-width: 768px) {
+  /* Admin page: the form panel sits at the bottom */
+  .split { top: auto; bottom: 0; left: 0; right: 0; }
+  #editDiv { position: static; min-width: 0; width: auto; max-height: 45vh; margin: 0 0.3rem 0.3rem; font-size: 0.9rem; }
+
+  footer { display: none; }
+  #map { border: 0; }
+
+  /* Pinch to zoom; the attribution stays above the tabs */
+  .leaflet-control-zoom { display: none; }
+  .leaflet-bottom { bottom: var(--bottom-cover, 70px); }
+  .leaflet-control-attribution {
+    max-width: 100vw;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 10px;
   }
 
-  /* images and video must not overflow */
-  #markerInfo img, #markerInfo video { max-width: 100%; height: auto; }
+  #sheet, #sheetBody, #topBar { display: contents; }
+  #modeSwitch, #homeDiv, #lastUpdate { display: none !important; }
 
-  /* bigger tap targets */
-  #close { font-size: 1.2rem; padding: 0.4rem; }
-  #legenda input[type="checkbox"] { width: 1.3rem; height: 1.3rem; }
+  /* Header */
+  #mHeader {
+    display: flex;
+    position: fixed;
+    z-index: 1200;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: calc(60px + env(safe-area-inset-top));
+    box-sizing: border-box;
+    padding: env(safe-area-inset-top) 12px 0 18px;
+    align-items: center;
+    justify-content: space-between;
+    background: #f5f2ea;
+    border-bottom: 3px solid #34504a;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  .m-title { font: 22px Impact, Charcoal, sans-serif; letter-spacing: 0.04em; color: #34504a; line-height: 1; }
+  .m-updated { margin-top: 2px; font-size: 11px; color: #4d5753; }
+  #menuButton {
+    position: relative;
+    width: 44px;
+    height: 44px;
+    border: 2px solid #34504a;
+    border-radius: 22px;
+    background: #ffffff;
+    color: #34504a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  #menuButton[aria-expanded="true"] { background: #34504a; color: #f5f2ea; }
+  #menuBadge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    min-width: 18px;
+    height: 18px;
+    border-radius: 9px;
+    background: #e2b062;
+    color: #1b2420;
+    font: 700 11px system-ui, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-  /* search under the legend, full width */
-  #search { top: 4.5rem; left: 0.5rem; right: 0.5rem; font-size: 0.9rem; }
-  #search input { width: 70%; }
+  /* Search under the header */
+  #search {
+    position: fixed;
+    z-index: 1150;
+    top: calc(72px + env(safe-area-inset-top));
+    left: 12px;
+    right: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 50px;
+    box-sizing: border-box;
+    padding: 0 6px 0 16px;
+    border-radius: 25px;
+    background: #ffffff;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.3);
+    color: #34504a;
+  }
+  #search .searchIcon { display: block; flex: none; }
+  #search .searchField {
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+    border: 0;
+    outline: none;
+    background: transparent;
+    font: 500 16px system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;   /* 16px: iOS does not zoom in */
+    color: #1b2420;
+  }
+  #search .searchField::placeholder { color: #5d6b67; }
+  #searchButton {
+    flex: none;
+    height: 38px;
+    padding: 0 16px;
+    border: 0;
+    border-radius: 19px;
+    background: #34504a;
+    color: #f5f2ea;
+    font: 600 14px system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
 
-  /* the fixed footer eats screen space */
-  footer { display: none; }
+  /* Menu: the type filters, under the menu button */
+  #legenda {
+    display: none;
+    position: fixed;
+    z-index: 1250;
+    top: calc(64px + env(safe-area-inset-top));
+    right: 12px;
+    left: auto;
+    width: min(300px, calc(100vw - 24px));
+    box-sizing: border-box;
+    padding: 12px 14px;
+    border: 3px solid #34504a;
+    border-radius: 16px;
+    background: #f5f2ea;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    text-align: left;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  body.menu-open #legenda,
+  body.mode-tours.menu-open #legenda,
+  body.mode-tours.menu-open #sheet #legenda { display: block; }
+  #legenda::before {
+    content: "Show on the map";
+    display: block;
+    margin-bottom: 4px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #8a5414;
+  }
+  #legenda .chips { display: flex; flex-direction: column; gap: 0; }
+  #legenda .chip {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    min-height: 44px;
+    font: 500 15px system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    color: #1b2420;
+  }
+  #legenda .chip input { width: 20px; height: 20px; accent-color: #34504a; order: 0; }
+  #legenda .chip img { order: 1; }
+  #legenda .chip .icon-label { display: inline; order: 2; }
+  #legenda .chip .cnt { order: 3; margin-left: auto; font-weight: 700; }
+  #legenda .chip:has(input:not(:checked)) img,
+  #legenda .chip:has(input:not(:checked)) .cnt,
+  #legenda .chip:has(input:not(:checked)) .icon-label { opacity: 0.45; }
+
+  /* Bottom tabs */
+  #tabs {
+    display: flex;
+    position: fixed;
+    z-index: 1200;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: calc(70px + env(safe-area-inset-bottom));
+    box-sizing: border-box;
+    padding: 6px 6px env(safe-area-inset-bottom);
+    background: #f5f2ea;
+    border-top: 1px solid #d9d4c7;
+  }
+  #tabs button {
+    flex: 1;
+    border: 0;
+    background: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    color: #5d6b67;
+    font: 500 11px system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    cursor: pointer;
+  }
+  #tabs .tab-icon { display: flex; align-items: center; justify-content: center; width: 56px; height: 30px; border-radius: 15px; }
+  #tabs button[aria-current="page"] { color: #34504a; font-weight: 700; }
+  #tabs button[aria-current="page"] .tab-icon { background: #dfe9e4; }
+
+  /* Panel above the tabs: search results, tours, about */
+  #infoDiv,
+  body.mode-tours #infoDiv {
+    position: fixed;
+    z-index: 1100;
+    top: auto;
+    left: 0;
+    right: 0;
+    bottom: calc(70px + env(safe-area-inset-bottom));
+    width: auto;
+    min-width: 0;
+    max-height: 58vh;
+    margin: 0;
+    box-sizing: border-box;
+    padding: 14px 16px 18px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border: 0;
+    border-top: 4px solid #34504a;
+    border-radius: 18px 18px 0 0;
+    background: #f5f2ea;
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.3);
+    font: 15px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  #infoDiv .closeBtn { top: 10px; right: 12px; padding: 0.3rem 0.4rem; font-size: 0.95rem; }
+  #infoDiv #title { padding-right: 4.5rem; }
+  #infoDiv #title h3, #infoDiv #title h5 { margin-top: 0; }
+  #infoDiv .compare, #infoDiv .photo { width: 100%; }
+  #infoDiv .tour-card { font-size: 14px; }
+
+  /* Preview card for a tapped marker */
+  #peek {
+    display: flex;
+    position: fixed;
+    z-index: 1100;
+    left: 12px;
+    right: 12px;
+    bottom: calc(82px + env(safe-area-inset-bottom));
+    gap: 12px;
+    height: 106px;
+    box-sizing: border-box;
+    padding: 8px;
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+    color: #1b2420;
+    text-decoration: none;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  #peek:focus-visible { outline: 3px solid #b9741f; outline-offset: 2px; }
+  .peek-thumb { position: relative; width: 120px; height: 90px; flex: none; border-radius: 10px; overflow: hidden; background: #33413b; }
+  .peek-thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .peek-thumb .peek-now { clip-path: inset(0 0 0 50%); }
+  .peek-line { position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; margin-left: -1px; background: #ffffff; }
+  .peek-tag { position: absolute; bottom: 4px; padding: 1px 5px; border-radius: 4px; background: rgba(27, 36, 32, 0.85); color: #f5f2ea; font: 600 10px system-ui, sans-serif; }
+  .peek-tag-then { left: 4px; }
+  .peek-tag-now { right: 4px; }
+  .peek-video { display: flex; align-items: center; justify-content: center; color: #f5f2ea; }
+  .peek-body { display: flex; flex-direction: column; gap: 3px; min-width: 0; padding-top: 2px; }
+  .peek-title { font: 18px Impact, Charcoal, sans-serif; letter-spacing: 0.02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .peek-sub { font-size: 12px; font-weight: 600; color: #8a5414; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .peek-open { margin-top: auto; padding-bottom: 4px; font-size: 13px; font-weight: 700; color: #34504a; }
+
+  /* The opened photo, full screen */
+  #detail {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    background: #f5f2ea;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  body.detail-open { overflow: hidden; }
+  #detailClose {
+    position: fixed;
+    z-index: 2010;
+    top: calc(12px + env(safe-area-inset-top));
+    right: 12px;
+    width: 48px;
+    height: 48px;
+    border: 0;
+    border-radius: 24px;
+    background: rgba(245, 242, 234, 0.95);
+    color: #1b2420;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+  }
+  .detail-media { background: #1b2420; padding-top: env(safe-area-inset-top); }
+  .detail-media .compare,
+  .detail-media .photo { width: 100%; margin: 0; border: 0; border-radius: 0; }
+  .detail-media video { display: block; width: 100%; height: auto; margin: 0; border-radius: 0; }
+  .detail-media .now-missing,
+  .detail-media .compare-credit { margin: 0; padding: 6px 12px 8px; color: #d6d0c0; }
+  .detail-body { padding: 18px 20px 32px; }
+  .detail-body h2 { margin: 0; font: 26px/1.1 Impact, Charcoal, sans-serif; letter-spacing: 0.02em; color: #1b2420; }
+  .detail-sub { margin: 6px 0 12px; font-size: 13px; font-weight: 600; color: #8a5414; }
+  .detail-text { margin: 0 0 10px; font-size: 16px; line-height: 1.5; color: #2c3532; }
+  .detail-source { margin: 0; font-size: 13px; color: #4d5753; }
+  .detail-actions { display: flex; gap: 10px; margin-top: 16px; }
+  .detail-actions .tour-btn { flex: 1; height: 48px; border-radius: 24px; }
+}
+
+/* --------------------------------------------------------------------------
+   Full-screen photo viewer
+   -------------------------------------------------------------------------- */
+#viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.97);
+  touch-action: none;                    /* the script handles pinch and pan */
+  user-select: none;
+  -webkit-user-select: none;
+}
+#viewer[hidden] { display: none; }
+#viewerImg {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  transform-origin: center center;
+  will-change: transform;
+  -webkit-user-drag: none;
+}
+#viewerClose {
+  position: absolute;
+  top: calc(0.6rem + env(safe-area-inset-top));
+  right: 0.6rem;
+  width: 2.8rem;
+  height: 2.8rem;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  color: #111;
+  font-size: 1.8rem;
+  line-height: 1;
+}
+#viewerHint {
+  position: absolute;
+  bottom: calc(0.8rem + env(safe-area-inset-bottom));
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.75);
+  font: 0.8rem system-ui, sans-serif;
+  pointer-events: none;
+}
+@media (hover: hover) {
+  #viewerHint { display: none; }
+}
+body.viewer-open { overflow: hidden; }
+
+/* ==========================================================================
+   MODES: Then & Now (default) and Tours
+   ========================================================================== */
+
+/* Mode switch: a two-button toggle */
+#modeSwitch {
+  position: fixed;
+  z-index: 2;
+  top: 4.3rem;
+  left: 3.5rem;
+  display: flex;
+  gap: 0;
+  padding: 3px;
+  border: 3px solid #34504a;
+  border-radius: 1.6rem;
+  background: #f5f2ea;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+#modeSwitch button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 2.2rem;
+  padding: 0 0.9rem;
+  border: 0;
+  border-radius: 1.3rem;
+  background: transparent;
+  color: #34504a;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+#modeSwitch button[aria-pressed="true"] { background: #34504a; color: #f5f2ea; }
+#modeSwitch button:focus-visible { outline: 3px solid #b9741f; outline-offset: 1px; }
+
+/* In tour mode the search and the type filter do not apply */
+body.mode-tours #search,
+body.mode-tours #legenda,
+body.mode-tours #sheet #search,
+body.mode-tours #sheet #legenda { display: none; }
+body.mode-tours #homeDiv { display: none; }
+
+/* Footage that has a "now" photo glows on the map */
+.leaflet-marker-icon.has-now { filter: drop-shadow(0 0 2px #e2b062) drop-shadow(0 0 3px #e2b062); }
+
+/* Then & Now compare slider */
+.compare {
+  --pos: 50%;
+  position: relative;
+  width: 350px;
+  max-width: 100%;
+  margin: 0 auto 0.4rem;
+  overflow: hidden;
+  border: 3px solid white;
+  border-radius: 0.4rem;
+  background: #222;
+  touch-action: pan-y;          /* vertical swipes scroll the panel, sideways drags compare */
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: ew-resize;
+}
+.compare > img { display: block; width: 100%; height: auto; pointer-events: none; }
+.compare-now { position: absolute; inset: 0; clip-path: inset(0 0 0 var(--pos)); pointer-events: none; }
+.compare-now img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.compare-line { position: absolute; top: 0; bottom: 0; left: var(--pos); width: 2px; margin-left: -1px; background: white; pointer-events: none; }
+.compare-knob {
+  position: absolute;
+  top: 50%;
+  left: var(--pos);
+  width: 40px;
+  height: 40px;
+  margin: -20px 0 0 -20px;
+  border-radius: 50%;
+  background: white;
+  color: #1b2420;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+  pointer-events: none;
+}
+.compare-tag {
+  position: absolute;
+  top: 8px;
+  padding: 2px 8px;
+  border-radius: 5px;
+  background: rgba(27, 36, 32, 0.82);
+  color: #f5f2ea;
+  font: 600 13px Impact, Charcoal, sans-serif;
+  letter-spacing: 0.05em;
+  pointer-events: none;
+}
+.compare-tag-then { left: 8px; }
+.compare-tag-now { right: 8px; }
+.compare-range { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.compare:focus-within { outline: 3px solid #b9741f; outline-offset: 2px; }
+.compare-expand {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(27, 36, 32, 0.82);
+  color: #f5f2ea;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.compare-credit, .now-missing { margin: 0 0 0.5rem; font-size: 0.8em; color: #5d6b67; text-align: center; }
+
+/* Tours: list */
+.tour-card {
+  display: flex;
+  gap: 0.75rem;
+  width: 100%;
+  margin: 0 0 0.6rem;
+  padding: 0.6rem;
+  border: 2px solid #34504a;
+  border-radius: 0.8rem;
+  background: white;
+  color: #1b2420;
+  text-align: left;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+.tour-card:hover { background: #eef3f0; }
+.tour-card img { width: 96px; height: 96px; flex: none; object-fit: cover; border-radius: 0.5rem; }
+.tour-card-body { display: flex; flex-direction: column; gap: 0.2rem; min-width: 0; }
+.tour-card-body strong { font: 600 17px Impact, Charcoal, sans-serif; letter-spacing: 0.02em; }
+.tour-card-meta { color: #8a5414; font-weight: 600; font-size: 12px; }
+.tour-card-intro { color: #3c4541; line-height: 1.4; }
+
+/* Tours: numbered stops on the map */
+.tour-pin span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  box-sizing: border-box;
+  border: 2px solid #f5f2ea;
+  border-radius: 50%;
+  background: #1b2420;
+  color: #f5f2ea;
+  font: 700 12px system-ui, sans-serif;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+.tour-pin.done span { background: #34504a; }
+.tour-pin.current span { background: #e2b062; color: #1b2420; transform: scale(1.25); }
+
+/* Tours: stop card */
+.tour-head { padding-right: 4.5rem; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+.tour-name { font: 600 18px Impact, Charcoal, sans-serif; letter-spacing: 0.03em; color: #1b2420; }
+.tour-step { margin-top: 0.15rem; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #8a5414; }
+.tour-progress { display: block; height: 6px; margin: 0.4rem 0 0.7rem; border-radius: 3px; background: #ddd6c5; overflow: hidden; }
+.tour-progress span { display: block; height: 100%; background: #34504a; }
+.unit-chip {
+  display: inline-block;
+  margin: 0 0 0.5rem;
+  padding: 0.2rem 0.7rem;
+  border-radius: 1rem;
+  background: #34504a;
+  color: #f5f2ea;
+  font-size: 12px;
+  font-weight: 600;
+}
+.tour-stop-title { margin: 0.4rem 0 0.3rem; font: 600 18px Impact, Charcoal, sans-serif; letter-spacing: 0.02em; }
+.tour-nav { display: flex; gap: 0.5rem; margin: 0.6rem 0 0.4rem; }
+.tour-btn {
+  height: 44px;
+  border-radius: 22px;
+  border: 2px solid #34504a;
+  background: transparent;
+  color: #34504a;
+  font: 600 14px system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.tour-btn.round { width: 44px; flex: none; }
+.tour-btn.primary { flex: 1; border: 0; background: #34504a; color: #f5f2ea; }
+.tour-btn:disabled { opacity: 0.35; cursor: default; }
+.tour-back { margin: 0.2rem 0 0.4rem; padding: 0.4rem 0; border: 0; background: none; color: #34504a; text-decoration: underline; font-size: 13px; cursor: pointer; }
+
+/* Desktop: the info panel is wider in tour mode so the card breathes */
+/* Desktop and tablet: the info panel grows with the screen.
+   Width: 34% of the window, at least 26rem (416 px), at most 46rem (736 px)
+   1280 px screen -> 435 px, 1440 -> 490, 1920 -> 653, 2560 and up -> 736.
+   Height: never taller than the window. The photo always fills the panel. */
+@media (min-width: 769px) {
+  #infoDiv {
+    box-sizing: border-box;
+    width: clamp(26rem, 34vw, 46rem);
+    min-width: 0;
+    max-height: calc(100vh - 7rem);
+    padding: 1rem 1rem 0.8rem;
+    font-size: clamp(0.75rem, 0.55rem + 0.25vw, 0.9rem);
+    background-color: rgba(255, 255, 255, 0.85);
+  }
+  #infoDiv .photo,
+  #infoDiv .compare,
+  #infoDiv #markerInfo video { width: 100%; }
+
+  body.mode-tours #infoDiv { background-color: rgba(255, 255, 255, 0.92); max-height: calc(100vh - 6rem); top: 1rem; }
+}
+
+
+/* ==========================================================================
+   DESKTOP TOP BAR (design A2): mode switch | search, filters below
+   ========================================================================== */
+#topBar { display: contents; }
+.searchIcon { display: none; }
+
+@media (min-width: 769px) {
+  #topBar {
+    position: fixed;
+    z-index: 1000;                 /* above the map panes and Leaflet controls */
+    top: 8px;
+    left: 56px;                    /* clear of the zoom buttons */
+    right: 8px;
+    box-sizing: border-box;
+    padding: 12px 20px;
+    border: 4px solid #34504a;
+    border-radius: 22px;
+    background: rgba(245, 242, 234, 0.94);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    grid-template-areas: "mode search ." "filters filters filters";
+    align-items: center;
+    gap: 10px 16px;
+  }
+
+  #topBar #modeSwitch { position: static; grid-area: mode; justify-self: start; }
+
+  #topBar #search {
+    position: static;
+    grid-area: search;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: min(600px, 44vw);
+    height: 52px;
+    box-sizing: border-box;
+    padding: 0 6px 0 18px;
+    border: 3px solid #34504a;
+    border-radius: 26px;
+    background: #ffffff;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+    color: #34504a;
+    font-size: 1rem;
+  }
+  #topBar #search:focus-within { box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25), 0 0 0 4px rgba(226, 176, 98, 0.45); }
+  #topBar .searchIcon { display: block; flex: none; }
+  #topBar .searchField {
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+    border: 0;
+    outline: none;
+    background: transparent;
+    font: 500 16px system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    color: #1b2420;
+  }
+  #topBar .searchField::placeholder { color: #5d6b67; }
+  #topBar #searchButton {
+    flex: none;
+    height: 38px;
+    padding: 0 20px;
+    border: 0;
+    border-radius: 19px;
+    background: #34504a;
+    color: #f5f2ea;
+    font: 600 15px system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    cursor: pointer;
+  }
+  #topBar #searchButton:hover { background: #26352f; }
+
+  #topBar #legenda {
+    position: static;
+    grid-area: filters;
+    display: block;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+  }
+  #topBar #legenda .chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 22px; }
+  #topBar .chip { margin: 0; font-size: 17px; font-weight: normal; }
+
+  /* Tours: no search or filters, the bar shrinks to the switch */
+  body.mode-tours #topBar { grid-template-areas: "mode . ."; }
+
+  /* Panels start just below the bar (its bottom edge is measured by the page script) */
+  .split { top: calc(var(--bar-bottom, 8rem) + 0.6rem); }
+  #homeDiv { top: 0; }
+  #infoDiv,
+  body.mode-tours #infoDiv { top: 0; max-height: calc(100vh - var(--bar-bottom, 8rem) - 1.6rem); }
+}
+
+/* Top bar on tablets and small laptops (e.g. iPad 820-1180 px wide):
+   - the switch never wraps and always keeps its full width
+   - always a clear gap between the switch and the search field
+   - below 1100 px the search takes the rest of the row instead of being centred */
+@media (min-width: 769px) {
+  #topBar {
+    column-gap: 20px;
+    grid-template-columns: minmax(max-content, 1fr) auto minmax(0, 1fr);
+  }
+  #topBar #modeSwitch button { white-space: nowrap; }
+}
+@media (min-width: 769px) and (max-width: 1099px) {
+  #topBar {
+    padding: 10px 14px;
+    grid-template-columns: max-content minmax(0, 1fr);
+    grid-template-areas: "mode search" "filters filters";
+  }
+  #topBar #search { width: 100%; max-width: 600px; justify-self: start; }
+  #topBar #modeSwitch button { padding: 0 0.75rem; }
+  #topBar .chip { font-size: 16px; }
+  body.mode-tours #topBar { grid-template-areas: "mode ."; }
+}
+
+/* ==========================================================================
+   SEARCH RESULTS
+   ========================================================================== */
+.search-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin: 0 0 0.6rem;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 13px;
+}
+.search-clear {
+  flex: none;
+  height: 32px;
+  padding: 0 0.8rem;
+  border: 2px solid #34504a;
+  border-radius: 16px;
+  background: #ffffff;
+  color: #34504a;
+  font: 600 13px system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  cursor: pointer;
+}
+.search-note { margin: 0 0 0.6rem; font: 13px system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: #4d5753; }
+.search-link { padding: 0; border: 0; background: none; color: #34504a; font: 600 13px system-ui, sans-serif; text-decoration: underline; cursor: pointer; }
+
+.results { list-style: none; margin: 0; padding: 0; }
+.results li + li { border-top: 1px solid #ddd6c5; }
+.result {
+  display: flex;
+  gap: 0.7rem;
+  padding: 0.55rem 0.2rem;
+  color: #1b2420;
+  text-decoration: none;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+.result:hover, .result:focus-visible { background: rgba(52, 80, 74, 0.08); color: #1b2420; text-decoration: none; }
+.result img, .result-icon {
+  width: 56px;
+  height: 56px;
+  flex: none;
+  border-radius: 6px;
+  object-fit: cover;
+  background: #ddd6c5;
+}
+.result-icon { display: flex; align-items: center; justify-content: center; color: #34504a; }
+.result-body { display: flex; flex-direction: column; gap: 0.1rem; min-width: 0; }
+.result-body strong { font-size: 14px; }
+.result-meta { font-size: 12px; font-weight: 600; color: #8a5414; }
+.result-text { font-size: 13px; line-height: 1.35; color: #3c4541; }
+.result mark { padding: 0 1px; border-radius: 2px; background: #f3d48a; color: inherit; }
+
+/* "Last updated" in the top bar: right end of the first row on desktops,
+   right end of the filter row on tablets; on phones it is in the sheet title. */
+#lastUpdate { display: none; }
+@media (min-width: 769px) {
+  #topBar #lastUpdate {
+    display: block;
+    grid-area: update;
+    justify-self: end;
+    padding: 0.3rem 0.8rem;
+    border-radius: 1rem;
+    background: rgba(52, 80, 74, 0.1);
+    color: #34504a;
+    font: 600 13px system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    white-space: nowrap;
+  }
+  #topBar #lastUpdate time { font-weight: 700; }
+  #topBar { grid-template-areas: "mode search update" "filters filters filters"; }
+  body.mode-tours #topBar { grid-template-areas: "mode . update"; }
+}
+@media (min-width: 769px) and (max-width: 1099px) {
+  #topBar {
+    grid-template-columns: max-content minmax(0, 1fr) max-content;
+    grid-template-areas: "mode search search" "filters filters update";
+  }
+  #topBar #legenda .chips { justify-content: flex-start; }
+  body.mode-tours #topBar { grid-template-areas: "mode . update"; }
 }

@@ -14,7 +14,7 @@ class sourcesSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('sources')->insert(
+        \Illuminate\Support\Facades\DB::table('sources')->insert(
             array(
                 array(
                     'source' => 'replica'
