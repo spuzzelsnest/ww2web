@@ -140,12 +140,18 @@ $(function () {
         return $('<div>').text(value == null ? '' : value).html();
     }
 
-    // Lower-case and strip accents so "Kraków" matches "krakow".
+    // Lower-case, strip accents ("Kraków" -> "krakow") and turn hyphens and
+    // other punctuation into spaces ("Sainte-Mère-Église" -> "sainte mere eglise").
+    // Dashes inside dates stay, so "1944-06" still matches "1944-06-07".
     function normalise(text) {
-        return String(text == null ? '' : text)
+        return ' ' + String(text == null ? '' : text)
             .toLowerCase()
             .normalize('NFD')
-            .replace(/[̀-ͯ]/g, '');
+            .replace(/[̀-ͯ]/g, '')
+            .replace(/(\d)-(?=\d)/g, '$1\u0000')
+            .replace(/[^a-z0-9\u0000]+/g, ' ')
+            .replace(/\u0000/g, '-')
+            .trim() + ' ';
     }
 
     function el(tag, attrs) {
@@ -346,7 +352,17 @@ $(function () {
             source: item.source,
             remark: item.remark,
             latLng: marker.getLatLng(),
-            haystack: normalise([item.place, item.date, item.info, item.remark].join(' '))
+            operation: item.operation,
+            typeName: item.type_name,
+            // Searchable fields, normalised once. Weight: how much a match counts.
+            fields: [
+                { text: normalise(item.place), weight: 10 },
+                { text: normalise([item.operation, item.operation_aliases].join(' ')), weight: 8 },
+                { text: normalise((item.units || []).join(' ')), weight: 7 },
+                { text: normalise([item.country, item.type_name].join(' ')), weight: 4 },
+                { text: normalise(item.date), weight: 4 },
+                { text: normalise([item.info, item.remark, item.source].join(' ')), weight: 2 }
+            ]
         };
 
         marker.on('click', displayInfo);
@@ -556,68 +572,218 @@ $(function () {
         }
     }
 
-    // ---- Legend filter ---------------------------------------------------
+    // ---- Legend filter + search filter --------------------------------------
 
     var typeBoxes = "input:checkbox[name='type']";
+    var searchHits = null;          // null: no search; otherwise the matching markers
 
+    function checkedTypes() {
+        return $(typeBoxes + ':checked').map(function () { return String(this.value); }).get();
+    }
+
+    function typeVisible(marker, checked) {
+        return checked.indexOf(String(marker.meta.typeId)) !== -1;
+    }
+
+    // The map shows: the switched-on types, and during a search only the hits.
     function applyFilter() {
-        var checked = $(typeBoxes + ':checked').map(function () {
-            return String(this.value);
-        }).get();
-
+        var checked = checkedTypes();
         cluster.clearLayers();
         cluster.addLayers(markers.filter(function (marker) {
-            return checked.indexOf(String(marker.meta.typeId)) !== -1;
+            return typeVisible(marker, checked) && (!searchHits || searchHits.indexOf(marker) !== -1);
         }));
     }
 
-    $(typeBoxes).on('change', applyFilter);
+    $(typeBoxes).on('change', function () {
+        applyFilter();
+        if (searchHits) { search({ fit: false }); }
+    });
 
     // ---- Search ----------------------------------------------------------
 
     var MAX_RESULTS = 50;
     var searchTimer = null;
 
-    function search() {
+    // How well a marker matches: every word must be found somewhere; a word in
+    // the place name counts more than one in the operation, unit, country,
+    // date or description, and a match at the start of a word counts extra.
+    function score(marker, words) {
+        var total = 0;
+        for (var i = 0; i < words.length; i++) {
+            var word = words[i];
+            var best = 0;
+            marker.meta.fields.forEach(function (field) {
+                if (field.text.indexOf(word) === -1) { return; }
+                var points = field.weight;
+                if (field.text.indexOf(' ' + word) !== -1) { points += field.weight / 2; }       // starts a word
+                if (field.text.indexOf(' ' + word + ' ') !== -1) { points += field.weight / 2; } // whole word
+                best = Math.max(best, points);
+            });
+            if (best === 0) { return 0; }
+            total += best;
+        }
+        return total;
+    }
+
+    // Wrap the searched words in <mark>, ignoring case and accents.
+    var ACCENTS = { a: 'aàáâãäå', e: 'eèéêë', i: 'iìíîï', o: 'oòóôõöø', u: 'uùúûü', c: 'cç', n: 'nñ', y: 'yÿ' };
+    function wordPattern(word) {
+        return word.split('').map(function (ch) {
+            if (ACCENTS[ch]) { return '[' + ACCENTS[ch] + ACCENTS[ch].toUpperCase() + ']'; }
+            return ch.replace(/[.*+?^${}()|[\]\\\-]/g, '\\$&');
+        }).join('');
+    }
+    function wordsRegex(words, flags) {
+        return new RegExp(words.map(wordPattern).join('|'), flags);
+    }
+    function highlight(text, words) {
+        text = String(text == null ? '' : text);
+        if (!words.length || !text) { return esc(text); }
+        var re = wordsRegex(words, 'gi');
+        var out = '', last = 0, m;
+        while ((m = re.exec(text)) !== null) {
+            if (m[0] === '') { re.lastIndex++; continue; }
+            out += esc(text.slice(last, m.index)) + '<mark>' + esc(m[0]) + '</mark>';
+            last = m.index + m[0].length;
+        }
+        return out + esc(text.slice(last));
+    }
+
+    // A piece of the description around the first matching word.
+    function snippet(text, words) {
+        text = String(text || '');
+        if (!text) { return ''; }
+        var m = wordsRegex(words, 'i').exec(text);
+        var start = m ? Math.max(0, m.index - 40) : 0;
+        var piece = text.substr(start, 130);
+        return (start > 0 ? '…' : '') + piece + (start + 130 < text.length ? '…' : '');
+    }
+
+    function resultThumb(meta) {
+        if (meta.typeId < 3 && meta.thumb) {
+            return el('img', {
+                src: '/images/thumbs/' + encodeURIComponent(meta.name) + '-480.' + meta.thumb,
+                alt: '', loading: 'lazy', decoding: 'async', width: '56', height: '56'
+            });
+        }
+        var box = el('span', { 'class': 'result-icon', 'aria-hidden': 'true' });
+        box.innerHTML = meta.typeId >= 3
+            ? '<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg>'
+            : '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"></rect><circle cx="9" cy="10" r="2"></circle><path d="M21 16l-5-5-9 8"></path></svg>';
+        return box;
+    }
+
+    function clearSearch() {
+        clearTimeout(searchTimer);
+        $('.searchField').val('');
+        searchHits = null;
+        applyFilter();
+        closeIDiv();
+    }
+
+    function search(options) {
+        options = options || {};
         var $title = $('#title');
         var $info  = $('#markerInfo');
         var raw    = ($('.searchField').first().val() || '').trim();
 
         document.getElementById('infoDiv').style.display = 'block';
         sheet.classList.remove('show-intro');
+        if (!mobile.matches) { document.getElementById('homeDiv').style.display = 'none'; }  // make room for the results on the map
         $('#speakButton').empty();
         $title.html('<h3><u>Search</u></h3>');
 
-        if (raw === '') {
-            $info.html('<br>What are you looking for? Search for Places, Units, Operations or dates e.g.:1944-06-07');
-            return;
-        }
         if (raw.length < 2) {
-            $info.html('<br>Type at least 2 characters.');
+            if (searchHits) { searchHits = null; applyFilter(); }
+            $info.html(raw === ''
+                ? '<p>Search for places, operations, units, countries or dates, e.g. <i>Bastogne</i>, <i>Market Garden</i>, <i>101st</i> or <i>1944-06</i>.</p>'
+                : '<p>Type at least 2 characters.</p>');
             return;
         }
 
-        // Every word must appear somewhere in place, date, info or remark.
-        var words = normalise(raw).split(/\s+/);
+        var words = normalise(raw).trim().split(/\s+/).filter(Boolean);
+        var checked = checkedTypes();
 
-        // Only markers that are currently visible (legend types switched on).
-        var results = markers.filter(function (marker) {
-            return cluster.hasLayer(marker) && words.every(function (word) {
-                return marker.meta.haystack.indexOf(word) !== -1;
-            });
+        var scored = [];
+        var hidden = 0;
+        markers.forEach(function (marker) {
+            var points = score(marker, words);
+            if (points === 0) { return; }
+            if (!typeVisible(marker, checked)) { hidden++; return; }
+            scored.push({ marker: marker, points: points });
         });
 
-        var list = $('<ul class="list-group"></ul>');
+        // Best match first; equal scores in date order, unknown dates (0000) last.
+        function sortDate(marker) {
+            var d = String(marker.meta.date || '');
+            return /^19[3-5]\d/.test(d) ? d : '9999' + d;
+        }
+        scored.sort(function (a, b) {
+            return (b.points - a.points) || sortDate(a.marker).localeCompare(sortDate(b.marker));
+        });
+        var results = scored.map(function (r) { return r.marker; });
 
+        // The map shows only the hits, zoomed to fit them.
+        searchHits = results;
+        applyFilter();
+        if (results.length && options.fit !== false) {
+            fitWithPanel(L.latLngBounds(results.map(function (m) { return m.getLatLng(); })));
+        }
+
+        var head = el('div', { 'class': 'search-head' });
+        var count = el('span');
+        count.innerHTML = '<strong>' + results.length + '</strong> result' + (results.length === 1 ? '' : 's') +
+            ' for <i>' + esc(raw) + '</i>' + (results.length ? ', shown on the map' : '');
+        var clear = el('button', { type: 'button', 'class': 'search-clear' });
+        clear.textContent = 'Clear search';
+        clear.addEventListener('click', clearSearch);
+        head.appendChild(count);
+        head.appendChild(clear);
+        $info.empty().append(head);
+
+        if (hidden) {
+            var note = el('p', { 'class': 'search-note' });
+            note.appendChild(document.createTextNode(hidden + ' more ' + (hidden === 1 ? 'is' : 'are') + ' hidden by the type filters. '));
+            var showAll = el('button', { type: 'button', 'class': 'search-link' });
+            showAll.textContent = 'Show all types';
+            showAll.addEventListener('click', function () {
+                $(typeBoxes).prop('checked', true);
+                search();
+            });
+            note.appendChild(showAll);
+            $info.append(note);
+        }
+
+        if (!results.length) {
+            $info.append($('<p class="search-note"></p>').text('Try fewer or other words, a place name, or an operation such as "Overlord".'));
+            return;
+        }
+
+        var list = el('ul', { 'class': 'results' });
         results.slice(0, MAX_RESULTS).forEach(function (marker) {
-            var link = $('<a href="#"></a>').append($('<strong></strong>').text(marker.meta.title));
+            var meta = marker.meta;
+            var li = el('li');
+            var link = el('a', { href: '#', 'class': 'result' });
+            link.appendChild(resultThumb(meta));
 
-            if (marker.meta.info) {
-                var snippet = marker.meta.info.substring(0, 80) + (marker.meta.info.length > 80 ? '...' : '');
-                link.append('<br>').append($('<small class="text-muted"></small>').text(snippet));
+            var body = el('span', { 'class': 'result-body' });
+            var title = el('strong');
+            title.innerHTML = highlight(meta.title, words);
+            body.appendChild(title);
+
+            var sub = el('span', { 'class': 'result-meta' });
+            sub.innerHTML = highlight([meta.operation, meta.typeName].filter(Boolean).join(' · '), words);
+            body.appendChild(sub);
+
+            var text = snippet(meta.info, words);
+            if (text) {
+                var p = el('span', { 'class': 'result-text' });
+                p.innerHTML = highlight(text, words);
+                body.appendChild(p);
             }
+            link.appendChild(body);
 
-            link.on('click', function (e) {
+            link.addEventListener('click', function (e) {
                 e.preventDefault();
                 $('.searchField').blur();          // closes the phone keyboard
                 if (mobile.matches) { setSheet('half'); }
@@ -626,16 +792,14 @@ $(function () {
                 });
             });
 
-            $('<li class="list-group-item link-class"></li>').append(link).appendTo(list);
+            li.appendChild(link);
+            list.appendChild(li);
         });
-
-        $title.append('Found: ' + results.length + ' results for ' + esc(raw));
-
-        $info.empty();
-        if (results.length > MAX_RESULTS) {
-            $info.append($('<p></p>').text('Showing the first ' + MAX_RESULTS + '. Narrow your search to see more.'));
-        }
         $info.append(list);
+
+        if (results.length > MAX_RESULTS) {
+            $info.append($('<p class="search-note"></p>').text('The list shows the best ' + MAX_RESULTS + '; the map shows all ' + results.length + '.'));
+        }
     }
 
     $('.searchField')
@@ -644,7 +808,7 @@ $(function () {
         })
         .on('input', function () {
             clearTimeout(searchTimer);
-            searchTimer = setTimeout(search, 250);
+            searchTimer = setTimeout(search, 350);
         })
         .on('keydown', function (e) {
             if (e.key === 'Enter') {
@@ -652,10 +816,12 @@ $(function () {
                 clearTimeout(searchTimer);
                 search();
                 this.blur();
+            } else if (e.key === 'Escape') {
+                clearSearch();
             }
         });
 
-    $('#searchButton').on('click', search);
+    $('#searchButton').on('click', function () { clearTimeout(searchTimer); search(); });
 
     // ---- Modes: Then & Now (default) and Tours ------------------------------
 
@@ -780,7 +946,10 @@ $(function () {
         if (mobile.matches) {
             options.paddingBottomRight = [40, sheetHeights().half + 30];
         } else {
-            options.paddingBottomRight = [440, 40];
+            var panel = document.getElementById('infoDiv');
+            var barBottom = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--bar-bottom'), 10) || 130;
+            options.paddingTopLeft = [40, barBottom + 20];
+            options.paddingBottomRight = [(panel.offsetWidth || 420) + 40, 40];
         }
         map.fitBounds(bounds, options);
     }

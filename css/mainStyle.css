@@ -806,3 +806,55 @@ body.mode-tours #homeDiv { display: none; }
   #topBar .chip { font-size: 16px; }
   body.mode-tours #topBar { grid-template-areas: "mode ."; }
 }
+
+/* ==========================================================================
+   SEARCH RESULTS
+   ========================================================================== */
+.search-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin: 0 0 0.6rem;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 13px;
+}
+.search-clear {
+  flex: none;
+  height: 32px;
+  padding: 0 0.8rem;
+  border: 2px solid #34504a;
+  border-radius: 16px;
+  background: #ffffff;
+  color: #34504a;
+  font: 600 13px system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  cursor: pointer;
+}
+.search-note { margin: 0 0 0.6rem; font: 13px system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: #4d5753; }
+.search-link { padding: 0; border: 0; background: none; color: #34504a; font: 600 13px system-ui, sans-serif; text-decoration: underline; cursor: pointer; }
+
+.results { list-style: none; margin: 0; padding: 0; }
+.results li + li { border-top: 1px solid #ddd6c5; }
+.result {
+  display: flex;
+  gap: 0.7rem;
+  padding: 0.55rem 0.2rem;
+  color: #1b2420;
+  text-decoration: none;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+.result:hover, .result:focus-visible { background: rgba(52, 80, 74, 0.08); color: #1b2420; text-decoration: none; }
+.result img, .result-icon {
+  width: 56px;
+  height: 56px;
+  flex: none;
+  border-radius: 6px;
+  object-fit: cover;
+  background: #ddd6c5;
+}
+.result-icon { display: flex; align-items: center; justify-content: center; color: #34504a; }
+.result-body { display: flex; flex-direction: column; gap: 0.1rem; min-width: 0; }
+.result-body strong { font-size: 14px; }
+.result-meta { font-size: 12px; font-weight: 600; color: #8a5414; }
+.result-text { font-size: 13px; line-height: 1.35; color: #3c4541; }
+.result mark { padding: 0 1px; border-radius: 2px; background: #f3d48a; color: inherit; }

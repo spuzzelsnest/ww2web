@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Footage;
 use App\Models\Tour;
+use App\Models\TourStop;
 use App\Support\Thumbnails;
 use Illuminate\Support\Facades\DB;
 
@@ -31,6 +32,7 @@ class HomeController extends Controller
             ->join('types', 'footages.typeId', '=', 'types.id')
             ->join('countries', 'footages.countryId', '=', 'countries.id')
             ->join('sources', 'footages.sourceId', '=', 'sources.id')
+            ->leftJoin('operations', 'footages.operationId', '=', 'operations.id')
             ->where('footages.published', true)
             ->select(
                 'footages.id',
@@ -47,14 +49,27 @@ class HomeController extends Controller
                 'footages.lat',
                 'footages.lng',
                 'sources.source',
-                'countries.country'
+                'countries.country',
+                'types.description as type_name',
+                'operations.operation',
+                'operations.aliases as operation_aliases'
             )
             ->get();
 
         // Extension of the small copies (webp/jpg), or null: then the page
         // uses the original picture.
         $available = $thumbs->available();
-        $footages->each(function (Footage $footage) use ($available) {
+
+        // Units seen in each footage (from the tour stops), for the search.
+        $units = TourStop::query()
+            ->join('units', 'tour_stops.unit_id', '=', 'units.id')
+            ->select('tour_stops.footage_id', 'units.name', 'units.full_name')
+            ->get()
+            ->groupBy('footage_id')
+            ->map(fn ($rows) => $rows->flatMap(fn ($r) => array_filter([$r->name, $r->full_name]))->unique()->values()->all());
+
+        $footages->each(function (Footage $footage) use ($available, $units) {
+            $footage->setAttribute('units', $units[$footage->id] ?? []);
             $footage->setAttribute('thumb', $available[$footage->name] ?? null);
             $footage->setAttribute('now_thumb', $footage->now_name ? ($available[$footage->now_name] ?? null) : null);
         });

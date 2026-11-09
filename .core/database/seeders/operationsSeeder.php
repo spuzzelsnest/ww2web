@@ -60,7 +60,7 @@ class operationsSeeder extends Seeder
                     'operation' => 'Armistice'
                 ),              
                 array(
-                    'operation' => 'Falaise Gab'
+                    'operation' => 'Falaise Gap'
                 ),
                 array(
                     'operation' => 'Liberation of The Netherlands'
