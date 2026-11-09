@@ -360,7 +360,14 @@ $(function () {
     // ---- Desktop top bar: panels start just below it -------------------------
 
     var topBar = document.getElementById('topBar');
+    var searchInput = document.querySelector('.searchField');
+    var wide = window.matchMedia('(min-width: 1100px)');
     function syncBar() {
+        // A shorter hint where the search field is narrow (phones, tablets).
+        searchInput.placeholder = wide.matches
+            ? 'Search places, units, operations or dates...'
+            : 'Search places, units, dates...';
+
         var bottom = mobile.matches ? 0 : Math.ceil(topBar.getBoundingClientRect().bottom);
         document.documentElement.style.setProperty('--bar-bottom', bottom + 'px');
     }

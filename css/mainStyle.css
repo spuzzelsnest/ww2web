@@ -783,3 +783,26 @@ body.mode-tours #homeDiv { display: none; }
   #infoDiv,
   body.mode-tours #infoDiv { top: 0; max-height: calc(100vh - var(--bar-bottom, 8rem) - 1.6rem); }
 }
+
+/* Top bar on tablets and small laptops (e.g. iPad 820-1180 px wide):
+   - the switch never wraps and always keeps its full width
+   - always a clear gap between the switch and the search field
+   - below 1100 px the search takes the rest of the row instead of being centred */
+@media (min-width: 769px) {
+  #topBar {
+    column-gap: 20px;
+    grid-template-columns: minmax(max-content, 1fr) auto minmax(0, 1fr);
+  }
+  #topBar #modeSwitch button { white-space: nowrap; }
+}
+@media (min-width: 769px) and (max-width: 1099px) {
+  #topBar {
+    padding: 10px 14px;
+    grid-template-columns: max-content minmax(0, 1fr);
+    grid-template-areas: "mode search" "filters filters";
+  }
+  #topBar #search { width: 100%; max-width: 600px; justify-self: start; }
+  #topBar #modeSwitch button { padding: 0 0.75rem; }
+  #topBar .chip { font-size: 16px; }
+  body.mode-tours #topBar { grid-template-areas: "mode ."; }
+}
