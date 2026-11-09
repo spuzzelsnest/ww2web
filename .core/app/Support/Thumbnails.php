@@ -106,9 +106,7 @@ class Thumbnails
 
         try {
             foreach (self::WIDTHS as $width) {
-                // Never upscale small originals.
-                $target = min($width, imagesx($image));
-                $resized = imagescale($image, $target, -1, IMG_BICUBIC);
+                $resized = $this->resize($image, $width);
 
                 $file = $this->path($name, $width);
                 $tmp = $file.'.tmp';
@@ -134,6 +132,26 @@ class Thumbnails
         return true;
     }
 
+    /**
+     * Scale to $width px wide (never upscale). imagecopyresampled works on
+     * every GD build; imagescale() returns false on some (e.g. Homebrew PHP).
+     */
+    private function resize(\GdImage $image, int $width): \GdImage
+    {
+        $srcW = imagesx($image);
+        $srcH = imagesy($image);
+        $w = min($width, $srcW);
+        $h = max(1, (int) round($srcH * $w / $srcW));
+
+        $resized = imagecreatetruecolor($w, $h);
+
+        if ($resized === false || ! imagecopyresampled($resized, $image, 0, 0, 0, 0, $w, $h, $srcW, $srcH)) {
+            throw new RuntimeException('GD could not resize the picture');
+        }
+
+        return $resized;
+    }
+
     /** Phone photos are often stored sideways with an EXIF rotation flag. */
     private function applyExifOrientation(\GdImage $image, string $source): \GdImage
     {
@@ -155,6 +173,11 @@ class Thumbnails
         }
 
         $rotated = imagerotate($image, $angle, 0);
+
+        if ($rotated === false) {
+            return $image;      // keep it unrotated rather than fail
+        }
+
         imagedestroy($image);
 
         return $rotated;
