@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Footage;
+use App\Models\Footage;
 use App\Http\Requests\StoreFootageRequest;
 use Illuminate\Support\Facades\DB;
 

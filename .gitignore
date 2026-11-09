@@ -1,21 +1,27 @@
+# Dependencies
 .core/vendor/
 node_modules/
-npm-debug.log
-yarn-error.log
 
-# Laravel 4 specific
-.core/app/storage/
-.core/bootstrap/compiled.php
-.core/bootstrap/cache/*
-.core/composer.lock
-.core/storage/*
+# Local config and runtime files
 .core/.env
-
-/.vagrant
+.core/.env.backup
+.core/.env.production
+.core/bootstrap/cache/*.php
+.core/storage/*.key
+.core/storage/app/*
+.core/storage/framework/cache/*
+.core/storage/framework/sessions/*
+.core/storage/framework/views/*
+.core/storage/logs/*
 .core/.phpunit.result.cache
+.core/.phpunit.cache
 
+# Deploy settings (server login and path)
+deploy.env
+
+# Content uploaded on the server
 /images/*
 /media/*
 /img
+
 .DS_Store
-!/.gitignore

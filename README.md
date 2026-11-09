@@ -1,110 +1,99 @@
-# Laravel 12.69.3 and Leaflet Maps POI settings with pictures
+# ww2maps.net – WW2 footage on a Leaflet map
 
-### Prerequisites
+Laravel 13 app that shows WW2 press photos and film footage as markers on a Leaflet map.
 
-- php 8.2
-- mysql
-- composer
+## Layout
 
-> Aptitude
-``` 
-sudo apt install curl php-cli php-mbstring git unzip composer
-```
-
-> Pacman
-```
-sudo pacman -Syu php81 php81-fpm composer
-```
-
-> if composer is not directly available on the system, make sure you have a copy of composer.phar in the .core directory.
-```
-cd ~
-php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-php composer-setup.php
-mv composer.phar [rootdir]/.core
-```
-
-
-### Download and Config
-
-Download into folder by adding the folder at the end.
-```
-git clone https://github.com/spuzzelsnest/ww2web.git ww2maps.loc 
-```
-
-Create missing directories and files.
-```
-mkdir -p .core/bootstrap/cache 
-mkdir -p .core/storage/logs
-mkdir -p .core/storage/framework/sessions
-mkdir -p .core/storage/framework/views
-mkdir -p .core/storage/framework/cache/data
-
-touch .core/storage/logs/laravel.log
-```
-
-Change the permissions of the created folders. These need to have full read and write access for the cache files.
-```
-chmod 777 .core/storage/logs
-chmod 777 .core/storage/framework/sessions
-chmod 777 .core/storage/framework/views
-```
-
-
-Edit .core/.env.example and edit it to your neeeds.
-```
-cp .core/.env.example .core/.env
-nano .core/.env
-```
-
-
-### Update a new install
+The repository root is the **web root**: `index.php`, `css/`, `js/`, `images/`, `media/`.
+The Laravel app lives in the hidden `.core/` folder (it is blocked from the web by `.htaccess`).
+`public_path()` points to the repository root (set in `.core/bootstrap/app.php`).
 
 ```
-composer update
+index.php            front controller
+.htaccess            HTTPS redirect, blocks .core/ and dot-files, pretty URLs
+css/ js/             static assets (Bootstrap, Leaflet, MarkerCluster)
+images/ media/       footage files (not in git, live only on the server)
+.core/
+  app/Models         Footage, Type, Operation, Country, Source, User
+  app/Http           controllers, SecurityHeaders middleware, form request
+  app/Console        admin:create and database:backup commands
+  bootstrap/app.php  routing, middleware and exception setup
+  config/            only the values that differ from Laravel's defaults
+  routes/web.php     map, login, admin
+  tests/Feature      smoke tests
+deploy.sh            one-command deploy to ww2maps.net
+```
+
+## Requirements
+
+- PHP 8.3 or newer (the live site runs 8.4), with pdo_mysql, mbstring, gd
+- MySQL / MariaDB
+- Composer
+
+## Local install
 
 ```
-or
-```
-php composer.phar update
-```
+git clone https://github.com/spuzzelsnest/ww2web.git ww2maps.loc
+cd ww2maps.loc/.core
 
-
-Generate a new Key that will be added to the .env file.
-```
+composer install
+cp .env.example .env          # then edit DB_* , CARTO_API_KEY, LAST_UPDATE
 php artisan key:generate
+
+mkdir -p storage/framework/{cache/data,sessions,views} storage/logs storage/app bootstrap/cache
+
+php artisan migrate --seed     # tables plus the footage data
+php artisan admin:create you@example.com   # admin login for /admin
+
+php artisan serve              # http://127.0.0.1:8000
 ```
 
+(`php artisan serve` serves `public_path()`, which is the repository root.)
 
-### Setup the database
+## Tests
 
-Default migrations are already created in .core/database/migrations/ generated with the following command. They are here just as a usecase if new migrations need to be created.
 ```
-php artisan make:migration create_types_table
-```
-you can edit the files in the directory .core/database/migrations/
-
-Check the status of the migrations with the following command from the .core directory.
-```
-php artisan migrate:status
+cd .core
+php artisan test
 ```
 
-To migrate to the database use:
+## Updating dependencies
+
 ```
-php artisan migrate
+cd .core
+composer update
+php artisan test
+git add composer.json composer.lock
 ```
 
-The needed seeders are available from the directory .core/database/seeders, seed as follows.
+Commit `composer.lock`: the deploy installs exactly the versions in it.
+
+## Deploying to ww2maps.net
+
+One-time setup:
+
+1. Enable SSH in the one.com control panel and check you can log in:
+   `ssh <user>@<host>`. Run `pwd` inside the web root to get its full path.
+2. `cp deploy.env.example deploy.env` and fill in host, user and path
+   (`deploy.env` is git-ignored).
+3. Make sure `.core/.env` exists **on the server** with the production values:
+   `APP_ENV=production`, `APP_DEBUG=false`, `APP_URL=https://ww2maps.net`,
+   the DB settings, `SESSION_SECURE_COOKIE=true`.
+4. On macOS, install a current rsync: `brew install rsync`.
+
+Then, from the repository root:
+
 ```
-php artisan db:seed
+./deploy.sh --dry-run    # list what would change, change nothing
+./deploy.sh              # test, build, upload, migrate, cache
 ```
 
-To refresh the data after changes have been made, you can do so using:
-```
- php artisan migrate:refresh --seed
-```
+The script deploys the last **commit** of `master` (not uncommitted changes), installs
+production dependencies locally, puts the site in maintenance mode, rsyncs, runs
+`migrate --force` and `optimize`, and brings the site back up.
+It never touches `.core/.env`, `.core/storage/`, `images/` or `media/` on the server.
 
-### Display the app
+## Backups
 
-Visit the page in your browser via http://localhost.
-Add new POI via the Admin Page.
+`php artisan database:backup` writes `storage/app/backup/backup-YYYY-MM-DD.gz`.
+It is scheduled daily, but only runs if a cron job calls `php artisan schedule:run`.

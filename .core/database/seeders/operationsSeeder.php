@@ -15,7 +15,7 @@ class operationsSeeder extends Seeder
     public function run()
     {
         //operation
-        \DB::table('operations')->insert(
+        \Illuminate\Support\Facades\DB::table('operations')->insert(
             array(
                 array(
                     'operation' => 'Fall Gelb'

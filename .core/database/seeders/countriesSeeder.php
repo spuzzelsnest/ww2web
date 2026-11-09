@@ -15,7 +15,7 @@ class countriesSeeder extends Seeder
     public function run()
     {
         //operation
-        \DB::table('countries')->insert(
+        \Illuminate\Support\Facades\DB::table('countries')->insert(
             array(
                 array(      
                     'country' => 'Belgium'

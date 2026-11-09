@@ -14,7 +14,7 @@ class typesSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('types')->insert(
+        \Illuminate\Support\Facades\DB::table('types')->insert(
             array(
                 array(      
                     'type'          => 'Afoto',

@@ -1,28 +1,21 @@
 {
-    "name": "laravel/laravel",
-    "description": "The Laravel Framework.",
-    "keywords": [
-        "framework",
-        "laravel"
-    ],
+    "$schema": "https://getcomposer.org/schema.json",
+    "name": "spuzzelsnest/ww2web",
+    "description": "WW2 footage map (ww2maps.net) built on Laravel and Leaflet.",
+    "keywords": ["laravel", "leaflet", "ww2"],
     "license": "MIT",
     "type": "project",
     "require": {
-        "php": "^8.2",
-        "doctrine/dbal": "^3.8",
-        "laravel/framework": "^12.0",
-        "laravel/sanctum": "^4.0",
-        "laravel/tinker": "^2.9",
-        "symfony/polyfill-iconv": "^1.27"
+        "php": "^8.3",
+        "laravel/framework": "^13.0",
+        "laravel/tinker": "^3.0"
     },
     "require-dev": {
-        "fakerphp/faker": "^1.9.1",
-        "laravel/pint": "^1.0",
-        "laravel/sail": "^1.26",
-        "mockery/mockery": "^1.4.4",
-        "nunomaduro/collision": "^8.1",
-        "phpunit/phpunit": "^11.0",
-        "spatie/laravel-ignition": "^2.0"
+        "fakerphp/faker": "^1.23",
+        "laravel/pint": "^1.18",
+        "mockery/mockery": "^1.6",
+        "nunomaduro/collision": "^8.6",
+        "phpunit/phpunit": "^12.0"
     },
     "autoload": {
         "psr-4": {
@@ -49,6 +42,10 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
+        ],
+        "test": [
+            "@php artisan config:clear --ansi",
+            "@php artisan test"
         ]
     },
     "extra": {
@@ -60,10 +57,10 @@
         "optimize-autoloader": true,
         "preferred-install": "dist",
         "sort-packages": true,
-        "allow-plugins": {
-            "pestphp/pest-plugin": true
+        "platform": {
+            "php": "8.4"
         }
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true
 }
