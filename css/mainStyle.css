@@ -1001,3 +1001,36 @@ body.mode-tours #homeDiv { display: none; }
   #topBar #legenda .chips { justify-content: flex-start; }
   body.mode-tours #topBar { grid-template-areas: "mode . update"; }
 }
+
+/* Desktop and tablet: the panels end above the footer, with the same gap
+   under them (0.6rem) as above them under the top bar. Tall (portrait)
+   photos are scaled down to fit; the panel scrolls for the text. */
+@media (min-width: 769px) {
+  :root { --panel-gap: 0.6rem; }
+  .split { top: calc(var(--bar-bottom, 8rem) + var(--panel-gap)); }
+  /* The info panel always runs from just under the bar to just above the
+     footer: the same gap at the top and at the bottom. */
+  #infoDiv,
+  body.mode-tours #infoDiv {
+    height: calc(100vh - var(--bar-bottom, 8rem) - var(--footer-space, 0px) - 2 * var(--panel-gap));
+    max-height: none;
+    overflow-y: auto;
+  }
+  #homeDiv {
+    max-height: calc(100vh - var(--bar-bottom, 8rem) - var(--footer-space, 0px) - 2 * var(--panel-gap));
+    overflow-y: auto;
+  }
+
+  /* Photo and compare slider: as wide as the panel, but never taller than
+     60% of the free height between the bar and the footer. */
+  #infoDiv .photo,
+  #infoDiv .compare { width: fit-content; max-width: 100%; margin-left: auto; margin-right: auto; }
+  #infoDiv .photo img,
+  #infoDiv .compare > img,
+  #infoDiv #markerInfo video {
+    width: auto;
+    max-width: 100%;
+    max-height: calc((100vh - var(--bar-bottom, 8rem) - var(--footer-space, 0px)) * 0.6);
+    margin: 0 auto;
+  }
+}

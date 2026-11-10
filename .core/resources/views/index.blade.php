@@ -417,6 +417,13 @@ $(function () {
 
         var bottom = mobile.matches ? 0 : Math.ceil(topBar.getBoundingClientRect().bottom);
         document.documentElement.style.setProperty('--bar-bottom', bottom + 'px');
+
+        // Space the footer takes at the bottom, so the panels stop above it.
+        var footer = document.querySelector('footer');
+        var footerSpace = (!mobile.matches && footer && getComputedStyle(footer).display !== 'none')
+            ? Math.ceil(window.innerHeight - footer.getBoundingClientRect().top)
+            : 0;
+        document.documentElement.style.setProperty('--footer-space', footerSpace + 'px');
     }
     if (window.ResizeObserver) { new ResizeObserver(syncBar).observe(topBar); }
     $(window).on('resize', syncBar);
